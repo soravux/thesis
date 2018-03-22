@@ -1,0 +1,119 @@
+%%!TEX root = main.tex
+\section{Dataset preparation}
+\label{sec:dataset}
+
+\begin{figure}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{cccc} 
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_1_envmap.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_3_envmap.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_7_envmap.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_10_envmap.png} \\
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_1.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_3.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_7.png} &
+\includegraphics[width=.24\linewidth]{figures/hwmodel/t_10.png} \\
+$t = 1$ & $t = 3$ & $t = 7$ & $t = 10$ 
+\end{tabular}
+\caption{Impact of sky turbidity $t$ on rendered objects. The top row shows environment maps (in latitude-longitude format), and the bottom row shows corresponding renders of a bunny model on a ground plane for varying values for the turbidity $t$, ranging from low (left) to high (right). Images have been tonemapped with $\gamma = 2.2$ for display.}
+\label{fig:turbidity-comparison}
+\end{figure}
+
+In this section, we detail the steps taken to augment the SUN360 dataset~\cite{xiao-cvpr-12} with HDR data via the use of the Ho\v{s}ek-Wilkie sky model, and simultaneously extract lighting parameters that can be learned by the network. We first briefly describe the sky model parameterization, followed by the optimization strategy used to recover its parameters from a LDR panorama. 
+
+\subsection{Sky lighting model}
+
+We employ the model proposed by Ho\v{s}ek and Wilkie~\cite{hosek-siggraph-12}, which has been shown~\cite{kider-tog-14} to more accurately represent skylight than the popular Preetham model~\cite{preetham-siggraph-99}. The model has also been extended to include a solar radiance function~\cite{hosek-cga-13}, which we also exploit.
+
+In its simplest form, the Ho\v{s}ek-Wilkie (HW) model expresses the spectral radiance $L_\lambda$ of a lighting direction along the sky hemisphere $\mathbf{l} \in \Omega_\text{sky}$ as a function of several parameters:
+%
+\begin{equation}
+L_\lambda(\mathbf{l}) = f_\text{HW}(\mathbf{l}, \lambda, t, \sigma_g, \mathbf{l}_s) \,,
+\end{equation}
+%
+where $\lambda$ is the wavelength, $t$ the atmospheric turbidity (a measure of the amount of aerosols in the air), $\sigma_g$ the ground albedo, and $\mathbf{l}_s$ the sun position. Here, we fix $\sigma_g = 0.3$ (approximate average albedo of the Earth~\cite{goode-grl-01}). 
+
+From this spectral model, we obtain RGB values by rendering it at a discrete set wavelengths spanning the 360--700nm spectrum, convert to CIE XYZ via the CIE standard observer color matching functions, and finally convert again from XYZ to CIE RGB~\cite{hosek-siggraph-12}. Referring to this conversion process as $f_\text{RGB}(\cdot)$, we express the RGB color $C_\text{RGB}(\mathbf{l})$ of a sky direction $\mathbf{l}$ as the following expression:
+%
+\begin{equation}
+C_\text{RGB}(\mathbf{l}) = \omega f_\text{RGB}(\mathbf{l}, t, \mathbf{l}_s)\,.
+\label{eqn:rgb-model} 
+\end{equation}
+%
+
+In this equation, $\omega$ is a scale factor applied to all three color channels, which aims at estimating the (arbitrary and varying) exposure for each panorama. To generate a sky environment map from this model, we simply discretize the sky hemisphere $\Omega_\text{sky}$ into several directions (in this paper, we use the latitude-longitude format~\cite{reinhard-book-10}), and render the RGB values with (\ref{eqn:rgb-model}). Pixels which fall within $0.25^\circ$ of the sun position $\mathbf{l}_s$ are rendered with the HW sun model~\cite{hosek-cga-13} instead (converted to RGB as explained above).
+% YAHOG: I removed this sentence as HW explicitly said not to do that :(
+%If no such pixel exists (due to coarse discretization), the closest pixel is assigned to the maximum sun color according to the model.
+
+Thus, we are left with three important parameters: the sun position $\mathbf{l}_s$, which indicate where the main directional light source is located in the sky, the exposure $\omega$, and the turbidity $t$. The turbidity is of paramount importance as it controls the relative sun color (and intensity) with respect to that of the sky. As illustrated in fig.~\ref{fig:turbidity-comparison}, a low turbidity indicates a clear sky with a very bright sun, and a high turbidity represents a sky closer that is closer to overcast situations, where the sun is much dimmer. 
+
+\subsection{Optimization procedure}
+\label{sec:optimization}
+
+We now describe how the sky model parameters are estimated from a panorama in the SUN360 dataset. This procedure is carefully crafted to be robust to the extremely varied set of conditions encountered in the dataset which severely violates the linear relationship between sky radiance and pixel values such as: unknown camera response function and white-balance, manual post-processing by photographers and stitching artifacts. 
+
+Given a panorama $P$ in latitude-longitude format and a set of pixels indices $p \in \mathcal{S}$ corresponding to sky pixels in $P$, we wish to obtain the sun position $\mathbf{l}_s$, exposure $\omega$ and sky turbidity $t$ by minimizing the visible sky reconstruction error in a least-squares sense: 
+%
+\begin{equation}
+\begin{split}
+\mathbf{l}_s^*,\omega^*,t^* =& \argmin_{\mathbf{l}_s,\omega,t} \sum_{p \in \Omega_s} \left(P(p)^\gamma - \omega f_\text{RGB}(\mathbf{l}_p, t, \mathbf{l}_s) \right)^2 \\
+& \text{s.t.} \quad t \in [1, 10] \,, \label{eq:optim_1omega}
+\end{split}
+\end{equation}
+%
+where $f_\text{RGB}(\cdot)$ is defined in (\ref{eqn:rgb-model}) and $\mathbf{l}_p$ is the light direction corresponding to pixel $p \in \Omega_s$ (according to the latitude-longitude mapping). Here, we model the inverse response function of the camera with a simple gamma curve ($\gamma = 2.2$). Optimizing for gamma was found to be unstable and keeping it fixed yielded much more robust results. 
+
+We solve (\ref{eq:optim_1omega}) in a 2-step procedure. First, the sun position $\mathbf{l}_s$ is estimated by finding the largest connected component of the sky above a threshold (98th percentile), and by computing its centroid. The sun position is fixed at this value, as it was determined that optimizing for its position at the next stage too often made the algorithm converge to undesirable local minima. 
+
+Second, the turbidity $t$ is initialized to $\{1, 2, 3, ..., 10\}$ and (\ref{eq:optim_1omega}) is optimized using the Trust Region Reflective algorithm (a variant of the Levenberg-Marquardt algorithm which supports bounds) for each of these starting points. The parameters resulting in the lowest error are kept as the final result. During the optimization loop, for the current value of $t$, $\omega^*$ is obtained through the closed-form solution
+\begin{equation}
+\label{eq:omega_cfs}
+\omega^* = \frac{\sum_{p \in \mathcal{S}} P(p) f_\text{RGB}(\mathbf{l}_p, t, \mathbf{l}_{s})}{\sum_{p \in \mathcal{S}} f_\text{RGB}(\mathbf{l}_p, t, \mathbf{l}_s)^2} \,.
+\end{equation}
+%
+Finally, the sky mask $\mathcal{S}$ is obtained with the sky segmentation method of~\cite{tsai-siggraph-16}, followed by a CRF refinement~\cite{krahenbuhl-nips-12}.
+
+%% CNN architecture
+\begin{figure}
+\centering
+\begin{tabu} to 7cm {lX[c]X[c]}
+\toprule
+\textbf{Layer} & \textbf{Stride} & \textbf{Resolution} \\
+\midrule
+Input & & $320 \times 240$ \\
+\midrule
+conv7-64  & 2 & $160 \times 120$ \\
+conv5-128 & 2 & $80 \times 60$ \\
+conv3-256 & 2 & $40 \times 30$ \\
+conv3-256 & 1 & $40 \times 30$ \\
+conv3-256 & 2 & $20 \times 15$ \\
+conv3-256 & 1 & $20 \times 15$ \\
+conv3-256 & 2 & $10 \times 8$ \\
+\midrule
+\multicolumn{3}{c}{FC-2048} \\
+\midrule
+\end{tabu} \\
+\begin{tabu} to 7cm {X[c]X[c]}
+FC-160 & FC-5 \\
+LogSoftMax & Linear \\*[-.5em]
+\noindent\rule{3.4cm}{.8pt} &
+\noindent\rule{3.4cm}{.8pt} \\
+Output: sun position distribution $\mathbf{s}$ &
+Output: sky and camera parameters $\mathbf{q}$ \\
+\end{tabu}
+\vspace{.5em}
+\caption[]{The proposed CNN architecture. After a series of 7 convolutional layers, a fully-connected layer segues to two heads: one for regressing the sun position, and another one for the sky and camera parameters. The ELU activation function~\cite{clevert-iclr-16} is used on all layers except the outputs. }
+\label{fig:cnn-architecture}
+\end{figure}
+%%
+
+
+\subsection{Validation of the optimization procedure}
+
+While our fitting procedure minimizes reconstruction errors w.r.t.\ the panorama pixel intensities, the radiometrically uncalibrated nature of this data means that these fits may not accurately represent the true lighting conditions. We validate the procedure in two ways. First, the sun position estimation algorithm is evaluated on 543 panoramic sky images from the Laval HDR sky database~\cite{hdrdb,lalonde-3dv-14}, which contains ground truth sun position, and which we tonemapped and converted to JPG to simulate the conditions in SUN360. The median sun position estimation error of this algorithm is 4.59\degree ~(25th prct. = 1.96\degree, 75th prct. = 8.42\degree). Second, we ask a user to label 1,236 images from the SUN360 dataset, by indicating whether the estimated sky parameters agree with the scene visible in the panorama. To do so, we render a bunny model on a ground plane, and light it with the sky synthesized by the physical model. We then ask the user to indicate whether the bunny is lit similarly to the other elements present in the scene. In all, 65.6\% of the images were deemed to be a successful fit, which is testament to the challenging imaging conditions present in the dataset.
+
+
+
+

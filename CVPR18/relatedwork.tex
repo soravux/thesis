@@ -1,0 +1,33 @@
+% %!TEX root = main.tex
+
+\section{Related Work}
+
+% = References dump =
+
+% Multiple images:
+% calibration targets~\cite{Sturm1999,Zhang2002}
+
+% Single image classical approaches:
+% single view metrology~\cite{Criminisi2000}
+% single-image plumb-line approach~\cite{Melo2013}
+% single-image two circles~\cite{Fefilatyev2006}
+% single-image calibration in architectural environments~\cite{Rother2000}
+% sun as calibration target~\cite{Lalonde2010}
+% calibration from vanishing lines~\cite{Beardsley1992}
+% Upright~\cite{Lee2014}
+% texture uprightPritts2014
+
+% Single image learned:
+% DEEPFOCAL~\cite{Workman2016}
+
+% Horizon lines:
+% DEEPHORIZON~\cite{Workman2015a}
+
+% perceptual study:
+% "Perception of Perspective Distortions in Image-Based Rendering"~\cite{Vangorp2013}
+
+Geometric camera calibration is a widely studied topic that has a significant impact on a variety of applications including metrology~\cite{Criminisi2000} and 3D inference~\cite{Criminisi00,Fouhey2013}. As such, many techniques were developed to perform precise geometric calibration using a calibration target inserted beforehand in the image~\cite{Sturm1999,Zhang2002,Heikkila1997,Chen2004}. For after-the-fact calibration, most work on camera calibration aim to detect specific geometric objects in the image typically present in human-made environments~\cite{Rother2000,Melo2013}. More recently, methods for straighting up photographs like Upright~\cite{Lee2014} recover calibration by finding vanishing points. Other work proposed to take advantage of lighting cues to calibrate~\cite{Lalonde2010,Workman2014}, circumventing the need for human-made environments. However, these techniques often fail on complex scenes where semantic reasoning is required to discard misleading textures and visual cues. To solve the need for high-level reasoning, deep convolutional neural networks were recently used to estimate field of view~\cite{Workman2015a} and horizon lines~\cite{Workman2016}, bringing camera calibration on single images to a wider variety of scenes.
+
+Understanding the limits of the human visual system has also received significant attention, with studies quantifying color sensitivity~\cite{fairchild2013color}, how reliably we can detect photo manipulations artifacts~\cite{Farid2010} and how people perceive distortion in street-level image-based rendering~\cite{Vangorp2013}.
+
+In this work, we go one step further by proposing a CNN-based method estimating jointly field of view and the horizon line. We further explore this topic by understanding human sensitivity to calibration errors and comparing the features sought by our method to traditional vanishing-lines-based methods.

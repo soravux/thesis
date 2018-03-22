@@ -1,0 +1,6 @@
+%%!TEX root = main.tex
+\section{Overview}
+
+We aim to train a CNN to predict illumination conditions from a single outdoor image. We use full spherical, 360\degree ~panoramas, as they capture scene appearance while also providing a direct view of the sun and sky, which are the most important sources of light outdoors. Unfortunately, there exists no database containing true high dynamic range outdoor panoramas, and we must resort to using the saturated, low dynamic range panoramas in the SUN360 dataset~\cite{xiao-cvpr-12}. To overcome this limitation, and to provide a small set of meaningful parameters to learn to the CNN, we first fit a physically-based sky model to the panoramas (sec.~\ref{sec:dataset}). Then, we design and train a CNN that given an input image sampled from the panorama, outputs the fit illumination parameters (sec.~\ref{sec:cnn}), and thoroughly evaluate its performance in sec.~\ref{sec:evaluation}.
+
+Throughout this paper, and following~\cite{xiao-cvpr-12}, will use the term \emph{photo} to refer to a standard limited-field-of-view image as taken with a normal camera, and the term \emph{panorama} to denote a 360-degree full-view panoramic image.

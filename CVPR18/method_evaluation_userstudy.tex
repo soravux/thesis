@@ -1,0 +1,16 @@
+% %!TEX root = main.tex
+\subsection{CNN evaluation on human perception}
+\label{sec:cnn-evaluation-perception}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/method/human_sensitivity_performance_SUN360.pdf}
+\begin{tabular}{p{0.5\linewidth}p{0.5\linewidth}}
+\hspace{1.5cm}(a) & \hspace{1.3cm}(b)
+\end{tabular}
+\caption{Performance of our method, Upright and DEEPHORIZON on (a) pitch and (b) roll using our human sensitivity measure. Reported sensitivity takes into account estimation errors on all three parameters at the same time.}
+\label{fig:method_human_performance}
+\end{figure}
+
+
+We further evaluate the method we proposed in sec.~\ref{sec:proposed_method} against other learning and non-learning-based methods in terms of the human sensitivity. To obtain a human sensitivity function, we fit a kNN with k=15 to the human sensitivity study results of this section. Specifically, we use error and parameter values on pitch, roll and field of view, yielding a 6 degrees of freedom function. We use the Euclidean distance for neighbor selection and scaled each value according to observed tolerance in the user study: $1{:}0.2$ for pitch in image units, $1{:}12$ for roll in angle and $1{:}15$ for field of view in angle. We convert the reported percentage of human choosing the ground truth values to human sensitivity by mapping the 50-100\% range (confusion-detection) to 0-100\%. Performance on this human sensitivity function on our SUN360 test set for horizon estimation is shown in fig.~\ref{fig:method_human_performance}. Our method has the third quartile of its predictions under 20\% of human sensitivity across the parameter range, systematically lower than every other method.
