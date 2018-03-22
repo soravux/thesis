@@ -35,6 +35,7 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{mathtools}
 \usepackage{expl3}
 \usepackage{xspace}
 \usepackage{graphicx}
@@ -45,6 +46,9 @@
 
 \let\newfloat\undefined
 \usepackage{floatrow}
+
+\usepackage{nicefrac}
+\usepackage{booktabs,tabu}
 
   %% Gestion des hyperliens dans le document. S'assurer que hyperref
   %% est le dernier paquetage chargé.
@@ -60,6 +64,8 @@
     {#1.\@}}}
 \ExplSyntaxOff
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \newcommand{\boldomega}{\boldsymbol \omega} % bold omega
 \newcommand{\boldmu}{\boldsymbol \mu} % bold omega
@@ -78,7 +84,7 @@
 
 \newcommand\degr[0]{^{\circ}}
 
-\graphicspath{{figures/}, {ECCV18/}}
+\graphicspath{{figures/}, {ECCV18/}, {CVPR17/}, {CVPR18/}}
 
   %% Options de mise en forme du mode français de babel. Consulter la
   %% documentation du paquetage babel pour les options disponibles.
@@ -148,6 +154,7 @@
 \include{chapitre3-articles}
 \include{chapitre4-articles}
 \include{conclusion}
+
 
 \appendix                       % annexes le cas échéant
 

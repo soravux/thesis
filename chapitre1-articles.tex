@@ -16,7 +16,7 @@ To make this novel analysis tractable, we make the following assumptions. We con
 
 Although previous work have presented sensitivity analyses for standard PS with point light sources (\eg,~\cite{sun-ivc-07,jiang-bunke-sp-91,klaudiny-prl-14,shen-pg-14}), so far as we know, the case of outdoor PS with more complex illumination models has received little attention.
 
-\subsubsection{Image formation model}
+\section{Image formation model}
 \label{iccp15:ifm}
 
 Consider a small, Lambertian surface patch with normal vector ${\bf n}$ and albedo $\rho$ (w.l.o.g., assume albedo is monochromatic). At time $t$, this surface patch is observed under natural, outdoor illumination represented by the environment map $L_t(\boldomega)$ (\eg, fig.~\ref{fig:database}), with $\boldomega$ denoting a direction in the unit sphere. With an orthographic camera model, this patch is depicted as an image pixel with intensity
@@ -27,6 +27,75 @@ Consider a small, Lambertian surface patch with normal vector ${\bf n}$ and albe
 \end{equation}
 %
 where $\langle \cdot, \cdot \rangle$ denotes the dot product. Integration is carried out over the hemisphere of incoming light, $\Omega_{\bf n}$, defined by the local orientation ${\bf n}$ of the surface, fig.~\ref{fig:normal-diagram}. This hemisphere corresponds to an occlusion (or attached shadow) mask; only half of the pixels in the environment map contribute to the illumination of the surface patch. To make the analysis tractable and independent on object geometry, this paper focuses on the simpler case without cast shadows.
+
+\begin{figure}
+    \centering
+    \setlength{\tabcolsep}{0pt} 
+    \newcommand{\customwidth}{.078\linewidth}
+    \begin{tabular}{@{}rcccccccccccc@{}}
+                                                     &
+    \begin{minipage}{\customwidth}\centering\scriptsize 11:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 11:30 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 12:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 12:30 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 13:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 13:30 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 14:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 14:30 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 15:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 15:30 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 16:00 \end{minipage} &
+    \begin{minipage}{\customwidth}\centering\scriptsize 16:30 \end{minipage}
+    \\
+    \begin{sideways}\begin{minipage}{\customwidth}\centering \scriptsize 08/24/2013 \\ light clouds \vspace{5pt} \end{minipage}\end{sideways} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_110040.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_113038.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_120033.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_123024.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_130014.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_133006.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_140002.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_142960.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_145957.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_152946.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_155938.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20130824_162933.jpg}
+    \\
+    \begin{sideways}\begin{minipage}{\customwidth}\centering \scriptsize 11/06/2013 \\ mixed \vspace{5pt} \end{minipage}\end{sideways} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_110951.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_112948.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_115943.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_122939.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_125937.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_132936.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_135932.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_142922.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_145915.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_152913.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_155906.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20131106_163057.jpg}
+    \\
+    \begin{sideways}\begin{minipage}{\customwidth}\centering \scriptsize 11/08/2014 \\ heavy clds.\vspace{5pt} \end{minipage}\end{sideways} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_110025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_113025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_120025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_123025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_130025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_133025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_140025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_143025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_150025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_153025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_160025.jpg} &
+    \includegraphics[width=\customwidth]{./figures/database/20141108_163025.jpg}
+
+    \\
+
+    \end{tabular}
+    \caption[]{Examples from our dataset of HDR outdoor illumination conditions. In all, our dataset contains 3,800 different illumination conditions, captured from 10:30 until 16:30, during 23 days, spread over ten months and at two geographical locations. Each image is stored in the 32-bit floating point EXR format, and shown tone mapped here for display (with $\gamma = 1.6$). The companion video\footnote{Available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/index.html}} shows time-lapse sequences for these sky environment maps.}
+    \label{fig:database}
+\end{figure}
+
 
 \begin{figure}
     \centering
@@ -73,7 +142,7 @@ With~\eqref{eqn:matrix-form}, this model of natural environmental illumination b
 
 Most importantly, in outdoor PS, a well-defined solution ${\bf x}$ may exist even if the relative sun motion is nearly planar during a certain time interval. Instead of relying solely on sun direction, now, the solution requires non-coplanar mean light vectors ${\bf \bar l}_t$, which are determined by a comprehensive set of natural illumination factors.
 
-\subsubsection{Modeling uncertainty}
+\section{Modeling uncertainty}
 
 From~\eqref{eqn:matrix-form}, the least-squares solution ${\bf x} = ({\bf L}^T{\bf L})^{-1}{\bf L}^T{\bf b}$ of outdoor PS is clearly affected by the condition number of ${\bf L}$. Thus, we next characterize how well the solution ${\bf x}$ is constrained by natural, outdoor illumination within a given time interval (\eg, one day)---which is encoded by the set of mean light vectors ${\bf \bar l}_t$ in ${\bf L}$ or, equivalently, the set of environment maps $L_t(\cdot)$.
 
@@ -107,7 +176,7 @@ The marginal distributions in~\eqref{eqn:normal-distrib} allow us to derive conf
 %
 where $\lambda_k$ is the square root of the $k$th element on the diagonal of $({\bf L}^T{\bf L})^{-1}$. As expected, the sensor-dependent noise level $\sigma$ is not the only factor that determines uncertainty. The gain factor $\lambda_k/\rho$ in \eqref{eqn:confidence-xyz} reveals how outdoor illumination (the conditioning of ${\bf L}$) and albedo can amplify the effect of noise on the solution ${\bf \hat n}$. The lower the albedo $\rho$ is, the larger is the variance in the obtained estimate $\bf \hat n$ (as less light is reflected towards the camera). Our goal is then to answer the remaining question: how do natural changes in outdoor illumination affect this gain factor ($\lambda_k$) and, therefore, uncertainty?
 
-\subsubsection{An intuitive measure of uncertainty}
+\section{An intuitive measure of uncertainty}
 \label{subsec:measure_uncertainty}
 
 To provide a measure of uncertainty that is more intuitive than~\eqref{eqn:confidence-xyz}, we consider angular distances in degrees,
@@ -162,7 +231,7 @@ Now that we are equipped with a tool to characterize the stability of surface no
 \end{figure*}
 
 
-\subsubsection{Computing the stability of outdoor PS}
+\section{Computing the stability of outdoor PS}
 \label{iccp-computingstability}
 
 We aim to apply the stability analysis of sec.~\ref{sec:ch1_analysis} on all 23 days from our dataset, and on all possible normal directions. To do so, we consider each day independently, and first sample directions on the sphere by subdividing an icosahedron three times, yielding a set of 642 potential orientations $\mathcal{N} = \{\mathbf{n}_1, ..., \mathbf{n}_{642} \}$. Then, for each $\mathbf{n}_j \in \mathcal{N}$, we build the illumination matrix $\mathbf{L}$ in~\eqref{eqn:matrix-form}, given all 6 hours of data for that day. Finally, the 95\% confidence interval $\mathcal{C}_{\mathbf{n}_j}$ is computed using~\eqref{eqn:confidence-degrees}, indicating the uncertainty (possible reconstruction error) for that normal---the higher the interval, the less stable the solution.
@@ -174,7 +243,7 @@ Fig.~\ref{fig:confidence-intervals} shows the result of such an analysis on the 
 At first glance, we notice that normals pointing down (towards Nadir) consistently have high confidence intervals, irrespective of the illumination conditions. The stability of outdoor PS on these normals is thus expected to be low. This behavior concords with expectation: normals pointing down define integration domains $\Omega_{\mathbf{n}}$ (see fig.~\ref{fig:normal-diagram}) which mostly include the ground, whose intensity does not vary spatially throughout the day. Another interesting observation from fig.~\ref{fig:confidence-intervals} is that the same normal exhibits different confidence intervals depending on the day. This raises the question: what is the relation between outdoor illumination conditions and uncertainty in the recovered surface normal?
 
 
-\subsubsection{Influence of cloud cover}
+\section{Influence of cloud cover}
 \label{sec:cloud-cover-results}
 
 It is already apparent from fig.~\ref{fig:confidence-intervals} that cloud coverage has an effect on the uncertainty of normal reconstruction, since an overcast day (last row) clearly does not behave the same way as a day with light clouds (top row). Here, we present a more systematic analysis of the influence of cloud coverage. To control for the effect of the sun elevation (which will be explored in sec.~\ref{sec:sun-elevation-results}), the analysis is performed on days with similar sun elevations by keeping only the skies captured in October and November.
@@ -218,7 +287,7 @@ The improved conditioning in mixed skies is explained by the following key obser
 
 This key observation also demonstrates the advantages of adopting more elaborate illumination models (\eg, \cite{yu-iccp-13}). For instance, the simpler point light model was used in \cite{shen-pg-14} to study the conditioning of outdoor PS. Because the atmospheric component is not modeled, the conclusion was that single-day reconstruction breaks down in two cases of nearly coplanar sun directions: closer to the poles near the winter solstice, and worldwide near an equinox. Our results suggest that more attention should be placed on the illumination model, without focusing exclusively on the sun.
 
-\subsubsection{Influence of sun elevation}
+\section{Influence of sun elevation}
 \label{sec:sun-elevation-results}
 
 We also hypothesized the position of the sun to have an important effect on the ability to recover surface normals outdoors. Since our dataset is already aligned in terms of sun azimuths (see sec.~\ref{sec:hdrdb}), we now analyze the influence of sun elevation. For this purpose, we retain only the days for which the sun visibility was between 15--85\% of the time. We then compute the relation between sun elevation and expected reconstruction confidence, as illustrated in fig.~\ref{fig:sun-elevation-plot}.
@@ -231,7 +300,7 @@ Our data-driven analysis shows that higher sun elevations---predicted as prefera
 % Section 3 has a note about non-coplanar sun directions  vs  non-coplanar mean light vectors (zenith, sun elevation),
 
 
-\subsubsection{Analyzing full objects}
+\section{Analyzing full objects}
 
 So far, our analysis has focused solely on one patch (one normal direction) at a time. But can we also say something about an entire object? Clearly, a full answer to this question would require analyzing non-local effects such as occlusions, inter-reflections, cast shadows, etc. However, we hypothesize that a simpler analysis ignoring these effects can still provide useful results. We therefore predict the performance of an outdoor PS algorithm by computing the expected value of the confidence interval, $\mathbb{E}_{\bf n}[\mathcal{C}_{\bf n}]$, over an entire object; expectation over the normal vector is computed using a prior distribution taken from a simpler convex shape (\eg, a sphere). Fig.~\ref{fig:objects} shows the expected reconstruction performance for two objects: a bottle, and the bunny. Overall, surface reconstruction performance is expected to be best when objects face south (\ie, the sun).
 
@@ -346,7 +415,7 @@ Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruct
 \end{figure}
 
 
-\subsubsection{Discussion and future work}
+\section{Discussion and future work}
 \label{sec:iccp-discussion}
 
 This paper has presented the first data-driven analysis of the expected behavior of PS under outdoor illumination. In this scenario, we have no control over the illumination conditions themselves, so existing methods to determine an optimal illumination setup~\cite{drbohlav-iccv-05,klaudiny-prl-14} cannot be applied. Our goal is, therefore, to reveal natural factors that distinguish good and unfavorable daylight conditions for outdoor PS.
@@ -458,7 +527,7 @@ This section provides the first answers to the questions raised above by looking
 \end{figure*}
 % -----------------------------------------------------------------------------
 
-\subsubsection{Cloud coverage and MLV shifting}
+\section{Cloud coverage and MLV shifting}
 \label{subsec:mlv-clouds}
 
 As shown in~\cite{holdgeoffroy-iccp-15}, with data captured under clear skies, the MLVs of the model above will point nearly towards the sun, from which arrives most of the incoming light. Thus, near an equinox (worldwide), the resulting set of MLVs are nearly coplanar~\cite{shen-pg-14}, resulting in poor performance, fig.~\ref{fig:MLVshift}(a). For a day with an overcast sky, performance is also poor because the set of MLVs are nearly colinear and shifted towards the patch normal ${\bf n}$, fig.~\ref{fig:MLVshift}(b). Finally, in partly cloudy days (mixed skies), the sun is often obscured by clouds and such occlusion shifts some MLVs away from the solar plane, improving numerical stability, fig.~\ref{fig:MLVshift}(c). 
@@ -467,7 +536,7 @@ As shown in~\cite{holdgeoffroy-iccp-15}, with data captured under clear skies, t
 % This improvement in conditioning is more significant with lower sun elevations, as the MLVs are shifted towards zenith.
 
 
-\subsubsection{Solar arcs and MLV elevation}
+\section{Solar arcs and MLV elevation}
 \label{subsec:solararcs-mlvelevation}
 
 %If we assume equinox, then the sun actually moves on a plane worldwide (i.e. independent of latitude) and is also visible 12 hours worldwide (although terrain and atmosphere play a small role and change that). Thus, this simulation requires the equinox assumption. What does vary with latitude (at equinox) is: (1) the inclination of the solar plane, and (2) the frequency of cloud coverage (if the sun is lower in the sky most of the day). Anything else?
@@ -491,7 +560,7 @@ Fig.~\ref{fig:v123gain}(a) shows that the noise gain $\lambda_{\max}$ drops quic
 A second important prediction from fig.~\ref{fig:v123gain}, considering (more realistic) small to moderate amounts of MLV shifts $\theta_e \leq 40^\circ$, is that conditioning will improve very little for data capture intervals above 3 hours ($45^\circ$ solar arcs). Reducing data capture from 3 to 2 hours would lead to an additional increase in uncertainty ($\lambda_{\max}$) of less than $30\%$ (from about 2.8 to nearly 3.6). Still, 2-hour outdoor PS with noise gains under $4\times$ may be possible if an MLV shift of $\theta_e > 20^\circ$ is introduced by atmospheric events during capture. Uncertainty in the results of 1-hour outdoor PS would be about 5 to 7 times that of full-day (6-hour) outdoor PS.
 
 
-\subsubsection{MLV shifts in real sky probes}
+\section{MLV shifts in real sky probes}
 
 % how much MLV shift is expected?
 % but how much uncertainty can we expect? look into real sky probes...
@@ -555,7 +624,7 @@ Although these MLVs were computed from environment maps captured in the Northern
 % -----------------------------------------------------------------------------
 
 
-\subsubsection{Evolution of noise gain over time}
+\section{Evolution of noise gain over time}
 
 In this section, we show how the conditioning of outdoor PS evolves over time. Analyzing the patterns in its evolution will allow us to isolate important ``events''---points at which uncertainty suddenly drops---and investigate whether such events occur in close succession.
 
@@ -585,7 +654,7 @@ Of course, this could be due to a simple fact: the first interval is longer than
 \label{fig:events}
 \end{figure*}
 
-\subsubsection{Overall performance of $x$-hour PS}  
+\section{Overall performance of $x$-hour PS}  
 
 We noted in fig.~\ref{fig:events}(d) that sufficient conditions for low uncertainty could be met in as little as 2 hours. In this section, we evaluate how often one can achieve low uncertainty in short time intervals. This is done by assessing the distribution of noise gains from short time intervals, and aggregating results over multiple days.
 
@@ -687,7 +756,7 @@ Another similar experiment considered real photos of a real owl statuette. To ca
 The validation results with real data are shown in fig.~\ref{fig:real-results}. As predicted by the noise gain values of fig.~\ref{fig:real-results}~(left), similar reconstruction performance is obtained from three different time intervals shown in the top three rows of fig.~\ref{fig:real-results}~(right). Once again, the performances of 1-hour (15:30--16:30) and 3.5-hour (13:00--16:30) outdoor PS are indeed quite close to that of ``full-day'' outdoor PS (10:30--16:30). However, not all one-hour intervals are equally good, as shown for the interval 12:00--13:00 at the bottom of fig.~\ref{fig:real-results}.
 
 
-\subsubsection{Discussion}
+\section{Discussion}
 \label{sec:3dv-discussion}
 
 In this paper, we present what we believe is the first study of the time requirements for single-day outdoor PS. In particular, we seek to determine the relationship between expected performance in normal estimation and: 1) the duration of data capture within a single, arbitrary day; and 2) specific atmospheric events that introduce beneficial lighting variations during that time interval. To achieve this goal, we use a large database of natural, outdoor illumination (sky probes) and take a detailed look at the conditions under which surface normals can be reconstructed reliably. \mbox{Finally,} we investigate whether these conditions are observed in less than a full day of data capture.
