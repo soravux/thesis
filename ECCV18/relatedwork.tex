@@ -1,0 +1,82 @@
+%!TEX root = main.tex
+\section{Related work}
+
+This section focuses on the more relevant work on outdoor PS, for conciseness. For an overview of general PS, the reader is referred to the recent, excellent review in~\cite{shi-tpami-18}.
+
+% solar plane, nearly singular (ill-conditioned) light matrix, 2-image PS
+% regularization breaks at (sharp) surface discontinuities
+
+As shown in Woodham's seminal work~\cite{woodham-opteng-80}, for Lambertian surfaces, calibrated PS computes a (scaled) normal vector in closed form as a simple linear function of the input image pixels; this linear mapping is only well-defined for images obtained under three or more (known) non-coplanar lighting directions.
+% webcams, solar plane
+Subsequent work on outdoor PS has struggled to meet this requirement since, over the course of a day, the sun shines from directions that nearly lie on a plane. These co-planar sun directions then yield an ill-posed problem known as two-source PS; despite extensive research using integrability and smoothness constraints~\cite{onn-ijcv-90,hernandez-pami-11}, results still present strong regularization artifacts on surfaces that are not smooth everywhere. To avoid this problem in outdoor PS, authors initially proposed gathering months of data, watching the sun elevation change over the seasons~\cite{abrams-eccv-12,ackermann-cvpr-12}. More recently, Shen~{\em et al.}~\cite{shen-pg-14} noted that the coplanarity of the daily sun directions actually varies throughout the year, with single-day outdoor PS becoming more ill-posed at high latitudes near the winter solstice, and worldwide near the equinoxes.
+
+% single day, ditch the even with a point light source model
+
+% richer lighting models
+To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. This is done by employing (hemi-)spherical environment maps~\cite{debevec-siggraph-98} that are either real sky images~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15} or synthesized by parametric sky models~\cite{inose-tcva-13,jung-cvpr-15}. Using a large database of real sky images, Hold-Geoffroy~{\em et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour.
+
+Despite these developments, state-of-the-art approaches in calibrated~\cite{yu-iccp-13} and semi-calibrated~\cite{jung-cvpr-15} (based on precise geolocation) outdoor PS are still prone to potentially long waits for ideal conditions to arise in the sky; and verifying the occurrence of such events is still a trial-and-error process. These facts have motivated our goal of developing a smarter approach that uses deep learning techniques to resolve ambiguities in outdoor PS by aggregating prior knowledge on object geometry, material and their interaction with natural outdoor illumination. The approach we propose is the first of its kind; so far, deep PS had only been applied in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
+
+%\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18} Deep learning methods applied to photometric stereo (not one-day)
+
+% Talk about DiLiGent~\cite{shi-tpami-18}? (Their objects have homogeneous material, with piecewise constant albedo, our method would work with any albedo pattern using the division trick. Also, only normal maps, no 3D models. Their sampling of 96 lighting directions does not approximate well the path of the sun through a day.)
+
+% single image (nishino, deep learning)
+Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\cite{oxholm-eccv-12,johnson-cvpr-11,barron-pami-15} attempt to recover 3D normals from a single input image, in which case the shading cue alone is obviously insufficient to uniquely define a solution. Thus, SfS relies strongly on priors of different complexities and deep learning is quickly bringing advances to the field~\cite{eigen-iccv-15,shu-cvpr-17,wu-nips-17}. While this is encouraging, here we seek to improve the accuracy of 3D normal estimation by relying less heavily on priors and more strongly on the photometric cues obtained from multiple images. In addition, we also avoid restricting the approach to a specific type of object and reflectance model ({\em e.g.}, human faces, Lambertian~\cite{shu-cvpr-17}).
+
+% deep learning PS and shape from shading, which rely on machine learning and priors, relate to original linear mapping in PS above.}
+%
+% This section could end by motivating the CNN: learning spatial priors is important.
+
+
+% Move these to Sec 3-4 to further motivate CNN?
+%
+% Although there exists a closed-form least squares solution to the simplest Lambertian surfaces, such ideally diffuse materials rarely exist in the real word. Photometric stereo for surfaces with unknown general reflectance properties (i.e., bidirectional reflectance distribution functions or BRDFs) still remains as a fundamental challenge (Shi
+%
+% We know from data-driven, calibrated Lambertian PS that albedo and normals are obtained as a linear mapping from the input pixels. Here we relax the Lambertian and fully calibrated assumptions to learn a more generic, nonlinear mapping for recovering normal maps outdoors.
+%
+% Relate to 2-image PS problem early on? But that is for Lambertian case!
+%
+% Thus, 3D normal estimation based solely on the photometric cue remains under-constrained, even with strong assumptions of Lambertian reflectance and fully-calibrated illumination (the well-studied 2-image PS problem~\cite{}). 
+
+
+%\section{Image formation model}
+
+% Establish basic notation/formulation but only enough background as needed to support CNN-based method in next section...
+
+
+% Linear and Lambertian assumptions
+% We consider a small planar surface with normal vector $\mathbf{n} \in \mathbb{R}^3$ and Lambertian reflectance with albedo $\rho$. Under Lambertian assumption, all incoming lighting from the visible hemisphere can be formulated as a single point light source, the \emph{mean light vector} $\mathbf{\bar{l}­} \in \mathbb{R}^3$~\cite{holdgeoffroy-iccp-15,hung-wacv-15}.
+
+% Given $m$ intensity observations of the same surface $b_1, b_2, ... b_m \in \mathbb{R}$ taken at different times of the day, yielding different mean light vectors $\mathbf{\bar{l}}_1, \mathbf{\bar{l}}_2, ... \mathbf{\bar{l}}_m \in \mathbb{R}^3$, we collect all photometric constraints for that pixel and obtain the PS equation in matrix form:
+% \begin{equation}
+%     \mathbf{b} = 
+%     \begin{bmatrix}
+%     b_1 \\
+%     b_2 \\
+%     \vdots \\
+%     b_m
+%     \end{bmatrix}
+%     =
+%     \begin{bmatrix}
+%     \mathbf{\bar{l}}_1^T \\
+%     \mathbf{\bar{l}}_2^T \\
+%     \vdots \\
+%     \mathbf{\bar{l}}_m^T
+%     \end{bmatrix}
+%     \mathbf{x}, = \rho\mathbf{Lx} \;,
+% \label{eq:ifm}
+% \end{equation}
+% where $\mathbf{x} \in \mathbb{R}^3$ is the surface normal $\mathbf{n}$ scaled by the albedo $\rho$.
+
+% The goal of PS is to recover the surface normal $\mathbf{n}$ from the pixel intensities $\mathbf{b}$ by solving eq.~\eqref{eq:ifm}. As discussed in~\cite{holdgeoffroy-3dv-15}, the uncertainty of the recovered surface normal is proportional to the conditioning of the lighting matrix $\mathbf{L}$.
+
+% Throughout a clear day, the sun pursue a coplanar trajectory in the sky, yielding a poorly conditioned lighting matrix $\mathbf{L}$.
+
+%\todo{Maybe we only briefly mention this in related work, unless the CNN builds on top of it (e.g., can we claim that often clouds cause small MLV shift, but still nearby the analema?). MLV implies Lambertian and we want to relax this limitation. Also, we have a directional light model now (don't we?), not a full envmap anymore.}
+
+% 2-source PS is an approximation of single-day with Lambertian model, pt light
+
+% \todo{Only add stuff that helps explain/motivate CNN in next section, so likely better to start writing Sec.4 first.}
+
+% \todo{describe preliminaries for albedo division trick here?}

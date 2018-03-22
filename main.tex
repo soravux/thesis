@@ -12,7 +12,7 @@
 %% défaut du document. L'option 'bibsection' permet de créer des
 %% bibliographies par chapitre présentées sous forme de section
 %% numérotée.
-\documentclass[PhD,bibsection,english,french]{ulthese}
+\documentclass[PhD,bibsection,english,french,oldfontcommands]{ulthese}
   %% Encodage utilisé pour les caractères accentués dans les fichiers
   %% source du document. Les gabarits sont encodés en UTF-8. Inutile
   %% avec XeLaTeX, qui gère Unicode nativement.
@@ -33,10 +33,52 @@
   %\setmainfont{TeX Gyre Termes}       % texte en Termes (Times)
   %\setmathfont{TeX Gyre Termes Math}  % mathématiques en Termes (Times)
 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{expl3}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{makecell}
+\usepackage{rotating}
+\usepackage{gensymb}
+\usepackage{xcolor}
+
+\let\newfloat\undefined
+\usepackage{floatrow}
+
   %% Gestion des hyperliens dans le document. S'assurer que hyperref
   %% est le dernier paquetage chargé.
   \usepackage{hyperref}
   \hypersetup{colorlinks,allcolors=ULlinkcolor}
+
+\ExplSyntaxOn
+\newcommand\latinabbrev[1]{
+  \peek_meaning:NTF . {% Same as \@ifnextchar
+    #1\@}%
+  { \peek_catcode:NTF a {% Check whether next char has same catcode as \'a, i.e., is a letter
+      #1.\@ }%
+    {#1.\@}}}
+\ExplSyntaxOff
+
+
+\newcommand{\boldomega}{\boldsymbol \omega} % bold omega
+\newcommand{\boldmu}{\boldsymbol \mu} % bold omega
+\newcommand{\bolddelta}{\boldsymbol \delta} % bold delta
+\newcommand{\boldtheta}{\boldsymbol \theta}
+\newcommand{\boldrho}{\boldsymbol \rho}
+\newcommand{\Reals}{\mathbb{R}}
+
+\newcommand{\etal}{\latinabbrev{et al}.}
+\newcommand{\ie}{\latinabbrev{i.e.}}
+\newcommand{\eg}{\latinabbrev{e.g.}}
+
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\newcommand\todo[1]{\textcolor{red}{TODO: #1}}
+
+\newcommand\degr[0]{^{\circ}}
+
+\graphicspath{{figures/}, {ECCV18/}}
 
   %% Options de mise en forme du mode français de babel. Consulter la
   %% documentation du paquetage babel pour les options disponibles.
@@ -100,10 +142,16 @@
 
 \mainmatter                     % corps du document
 
-\include{introduction}          % introduction
-\include{chapitre1-articles}    % chapitre 1
-\include{chapitre2-articles}    % chapitre 2, etc.
-\include{conclusion}            % conclusion
+\include{introduction}
+\include{chapitre1-articles}
+\include{chapitre2-articles}
+\include{chapitre3-articles}
+\include{chapitre4-articles}
+\include{conclusion}
+
+
+\bibliographystyle{ieee}
+\bibliography{library}
 
 \appendix                       % annexes le cas échéant
 
