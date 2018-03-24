@@ -1,29 +1,53 @@
 \chapter{Analysis of Short-Term Outdoor Photometric Stereo}     % numéroté
 
-To explore the influence of these effects, we exploit the database of outdoor HDR environment maps detailed in the last section, which provides a rich sampling of the variability in outdoor illumination. To ensure the data is properly aligned temporally, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30, are considered\footnote{Companion video with sample images is available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/}.}. Through a theoretical analysis (inspired by \cite{sun-ivc-07}) and supported by an extensive empirical evaluation as well as a preliminary quantitative validation, we derive confidence intervals that allow us to predict when surface normals can be reconstructed more accurately and solely from the photometric cue. Instead of focusing exclusively on sun position~\cite{shen-pg-14}, our analysis incorporates the influence of all components of natural lighting: sun, sky, clouds, etc., as well as noise and surface albedo.
+% intro on PS
+Since its inception in the early 80s, Photometric Stereo~(PS)~\cite{woodham-opteng-80} has been explored under many an angle. Whether it has been to improve its ability to deal with complex materials~\cite{alldrin-cvpr-08} or lighting conditions~\cite{basri-ijcv-2007}, the myriad of papers published on the topic are testament to the interest this technique has garnered in the community. While most of the papers on this topic have focused on images captured in the lab, recent progress has allowed the application of PS on images captured outdoors, lit by the more challenging case of uncontrollable, natural illumination. 
 
-In this chapter, we explore the conditions in which Photometric Stereo (PS) may or may not work, when faced with the challenging case of uncontrollable outdoor illumination. Our main goal is to assess the \emph{reconstructibility} of surface patches as a function of their orientation and the illumination conditions, given a set of HDR environment maps captured throughout a single day or less.
+% ask the question: how many images do we need?
+A central question to any PS practitioner is that of the quality and amount of data required to achieve good performance. What should the lighting conditions be during data capture? How many images (illumination conditions) are needed? What is the shortest time interval required to collect these samples?
 
-A promising approach to answer this question is to use more elaborate models of illumination---high dynamic range (HDR) environment maps~\cite{reinhard-book-05}---as input to outdoor PS. Promising results have been reported in~\cite{yu-iccp-13} for outdoor images taken within an interval of just eight hours (in a single day). However, the quality of outdoor results is reported to be inferior to that obtained in indoor environments, the decline being attributed to modest variation in sunlight. This observation leads to an interesting, yet unanswered question: had the sun path and atmosphere conditions been different on that day, could the quality of their results have been better? Or, in other words: what makes it a good day for outdoor Photometric Stereo?
+In the lab, theoretical analyses for Lambertian surfaces, lit by point light sources, reveal that the minimum number of images is three~\cite{woodham-opteng-80} and that the optimal light configuration yields an orthogonal triplet of light directions~\cite{drbohlav-iccv-05}. While such theoretical guarantees are reassuring, they are however much harder to obtain for the case of more complex, non-Lambertian reflectance, or with more general lighting models. Thus, practitioners are left without guidance in the task of determining when to stop capturing data, an inherently tedious trial-and-error process. As a result, it is not rare for PS datasets to include hundreds of images~\cite{alldrin-cvpr-08} in an uncertain attempt to obtain accurate reconstruction.
 
-%As one might expect, the answer to the question above is intrinsically tied to the orientation of a particular surface patch, the associated hemisphere of lighting directions observed by the patch, and the variation in lighting intensity in that hemisphere over the course of a day. So far, this question has only been explored in laboratory conditions or with simple directional illumination, where optimal lighting configurations can be theoretically derived~\cite{drbohlav-iccv-05,klaudiny-prl-14,shen-pg-14}. No attempt has been made at answering this question with more realistic illumination models in an outdoor setup, where lighting cannot be controlled and atmospheric effects are difficult to predict.
+While capturing more data in the lab can be done relatively easily, the same cannot be said for outdoor imagery. Indeed, one does not control the sun and the other atmospheric elements in the sky; so one must wait for lighting conditions to change on their own. A creative solution to this problem was proposed in~\cite{hung-wacv-15}, but it is limited to objects that can be placed on a small moving platform. Therefore, capturing more data for fixed, large objects still means waiting days, or even months, potentially~\cite{ackermann-cvpr-12,abrams-eccv-12}. 
 
-% Assumptions
-To make this novel analysis tractable, we make the following assumptions. We consider Lambertian surface patches, and assume that at most one day of data can be used. We also assume that the dominant part of the light comes from the sky hemisphere (sun, sky, clouds, etc.) and surface patches are independent (cast shadows and inter-reflections are not modeled).
+Luckily, techniques that reduce the requirement to a single day's worth of data have also been proposed~\cite{yu-iccp-13,shen-pg-14,jung-cvpr-15}. However, this is still much longer than what can be done in the lab, where light sources can be waved around rapidly and data be captured in minutes. And although recent work has investigated which days provide more favorable atmospheric conditions for outdoor PS~\cite{holdgeoffroy-iccp-15,shen-pg-14}, so far, no study has systematically demonstrated the performance of outdoor PS with less than a full day's worth of data. Is a full day of observations indeed necessary to obtain good results in outdoor PS? Or could similar results be obtained over a shorter time interval (say, 1 hour)? If so, what should be happening in the sky over that time interval? Besides easing the requirements on data capture, these questions are also important in that, in future work, they could extend the applicability of outdoor PS to new scenarios (\eg, to more quickly capture non-static outdoor objects that show gradual changes in shape or appearance over time).
 
-Although previous work have presented sensitivity analyses for standard PS with point light sources (\eg,~\cite{sun-ivc-07,jiang-bunke-sp-91,klaudiny-prl-14,shen-pg-14}), so far as we know, the case of outdoor PS with more complex illumination models has received little attention.
+% TODO: maybe move the sentence above to discussion only? We want to show the importance/impact of asking these questions, but we don't want to disappoint the reviewers by not showing dynamic PS results. Maybe this is ok as it is?
 
-\section{Image formation model}
-\label{iccp15:ifm}
+This chapter presents the first answers to the questions above, originally published in~\cite{holdgeoffroy-iccp-15,holdgeoffroy-3dv-15}. Here, we seek to determine the relationship between expected surface reconstruction performance and photometric cues available outdoors over the course of the day. To achieve this goal, we use a large database of natural, outdoor illumination (sky probes)~\cite{holdgeoffroy-iccp-15}, which we will discuss first. Then, a detailed look at the conditions under which normals can be reconstructed reliably will be presented, followed by an analysis of surface reconstruction stability. Finally, we explore the occurrence of these conditions over the course of a single day and whether PS can be applied over intervals less than one day.
 
-Consider a small, Lambertian surface patch with normal vector ${\bf n}$ and albedo $\rho$ (w.l.o.g., assume albedo is monochromatic). At time $t$, this surface patch is observed under natural, outdoor illumination represented by the environment map $L_t(\boldomega)$ (\eg, fig.~\ref{fig:database}), with $\boldomega$ denoting a direction in the unit sphere. With an orthographic camera model, this patch is depicted as an image pixel with intensity
-%
-\begin{equation}
-    b_t = \frac{\rho}{\pi} \int_{\Omega_{\bf n}} L_t(\mathbf{\boldomega}) \langle \boldomega, {\bf n} \rangle d\omega \,,
-    \label{eqn:imageformation-continuous}
-\end{equation}
-%
-where $\langle \cdot, \cdot \rangle$ denotes the dot product. Integration is carried out over the hemisphere of incoming light, $\Omega_{\bf n}$, defined by the local orientation ${\bf n}$ of the surface, fig.~\ref{fig:normal-diagram}. This hemisphere corresponds to an occlusion (or attached shadow) mask; only half of the pixels in the environment map contribute to the illumination of the surface patch. To make the analysis tractable and independent on object geometry, this chapter focuses on the simpler case without cast shadows.
+\section{HDR database}
+\label{sec:hdrdb}
+
+
+% From ICCP
+So far, in most literature on Photometric Stereo, the light visible by a surface patch is modeled with simple directional illumination, where optimal lighting configurations can be theoretically derived~\cite{drbohlav-iccv-05,klaudiny-prl-14,shen-pg-14}. No attempt has been made yet to model natural lighting conditions with more realistic illumination models in an outdoor setup, where lighting cannot be controlled and atmospheric effects are difficult to predict. In such an uncontrolled environment, exploiting the subtlety and richness of natural lighting is key to increase the efficiency of PS and successfully apply it to short intervals of time in the wild.
+
+In order to understand this complex natural phenomenon, we built a rich dataset of High Dynamic Range (HDR) images of the sky, captured under a wide variety of conditions. The database built is based on and used by~\cite{lalonde-3dv-14,holdgeoffroy-iccp-15,holdgeoffroy-3dv-15} as well as sec.~\ref{sec:ch2}. A public version of this database is available at \url{http://hdrdb.com/}.
+
+The HDR images of the sky hemisphere were captured using the approach described in \cite{stumpfel-afrigraph-04}. Pictures of the capture system are shown in fig.~\ref{fig:capture-apparatus}. For each image, we captured seven exposures of the sky ranging from 1/8000 to 1 second, using a Canon EOS 5D Mark III camera installed on a tripod, and fitted with a SIGMA EXDG 8mm fisheye lens. A 3.0 ND filter was installed behind the lens, necessary to accurately measure the sun intensity. The exposures were stored as 14-bit RAW images at the full resolution of the camera. The camera was controlled using a Raspberry Pi via a USB connection, and the setup was mounted on the roof of a tall building to capture the entire sky hemisphere. The seven exposures were captured every two minutes over a span of a day. The fisheye lens was radiometrically calibrated to account for chromaticity shifts caused by the ND filter, geometrically calibrated using~\cite{scaramuzza-iros-09}, and the resulting light probes mapped to the angular environment map representation~\cite{reinhard-book-05} for storage in floating-point EXR format. We merged the seven exposures using~\cite{debevec-siggraph-97} to create one HDR sky probe per exposure set. Because the camera may have shifted from one capture day to another, we automatically align all sky probes to the world reference frame.
+
+This was done by detecting the sun in at least 3 images for a given day, and by computing the rotation matrix which best aligned the detected positions and the real sun coordinates (obtained with~\cite{reda-se-04}). For days when the sun was never visible, the probes were manually aligned using other aligned light probes as examples, and by matching visible buildings close to the horizon.
+
+In all, the dataset totals more than 5,000 illumination conditions, captured over 50 different days. Fig.~\ref{fig:database} shows examples of these environment maps. Note that while the examples have been tone mapped for display, the actual sky images have extremely high dynamic range, and span the full 22 stops required to properly capture outdoor lighting, as shown in fig.~\ref{fig:exposure}.
+
+\begin{figure}
+\centering
+%\includegraphics[width=0.96\linewidth]{exposureFig/exposureFig-row.pdf}
+\includegraphics[width=0.96\linewidth]{exposureFig/exposureFig-row.jpg}
+\caption{Dynamic range in our sky database. Four different exposures of the same sky probe are shown, each expressed as factors (indicated as insets) of a reference image (1). The left-most image appears completely black, but zooming in (inset) reveals that the sun intensity is captured without saturation.}
+\label{fig:exposure}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\linewidth]{database/capture_apparatus.jpg}
+\includegraphics[width=0.45\linewidth]{database/capture_apparatus_inside.jpg}
+\caption{Left: sky capture apparatus we developed. Right: the inside of the box, holding the Canon 5D mark III and the Raspberry Pi control system.}
+\label{fig:capture-apparatus}
+\end{figure}
+
 
 \begin{figure}
     \centering
@@ -93,6 +117,34 @@ where $\langle \cdot, \cdot \rangle$ denotes the dot product. Integration is car
     \label{fig:database}
 \end{figure}
 
+\section{Analysis}
+
+\todo{introduction}
+
+To explore the influence of these effects, we exploit the database of outdoor HDR environment maps detailed in the last section, which provides a rich sampling of the variability in outdoor illumination. To ensure the data is properly aligned temporally, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30, are considered\footnote{Companion video with sample images is available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/}.}. Through a theoretical analysis (inspired by \cite{sun-ivc-07}) and supported by an extensive empirical evaluation as well as a preliminary quantitative validation, we derive confidence intervals that allow us to predict when surface normals can be reconstructed more accurately and solely from the photometric cue. Instead of focusing exclusively on sun position~\cite{shen-pg-14}, our analysis incorporates the influence of all components of natural lighting: sun, sky, clouds, etc., as well as noise and surface albedo.
+
+In the rest of this chapter, we explore the conditions in which Photometric Stereo (PS) may or may not work, when faced with the challenging case of uncontrollable outdoor illumination. Our main goal is to assess the \emph{reconstructibility} of surface patches as a function of their orientation and the illumination conditions, given a set of HDR environment maps captured throughout a single day or less.
+
+A promising approach to answer this question is to use more elaborate models of illumination---high dynamic range (HDR) environment maps~\cite{reinhard-book-05}---as input to outdoor PS. Promising results have been reported in~\cite{yu-iccp-13} for outdoor images taken within an interval of just eight hours (in a single day). However, the quality of outdoor results is reported to be inferior to that obtained in indoor environments, the decline being attributed to modest variation in sunlight. This observation leads to an interesting, yet unanswered question: had the sun path and atmosphere conditions been different on that day, could the quality of their results have been better? Or, in other words: what makes it a good day for outdoor Photometric Stereo?
+
+%As one might expect, the answer to the question above is intrinsically tied to the orientation of a particular surface patch, the associated hemisphere of lighting directions observed by the patch, and the variation in lighting intensity in that hemisphere over the course of a day. So far, this question has only been explored in laboratory conditions or with simple directional illumination, where optimal lighting configurations can be theoretically derived~\cite{drbohlav-iccv-05,klaudiny-prl-14,shen-pg-14}. No attempt has been made at answering this question with more realistic illumination models in an outdoor setup, where lighting cannot be controlled and atmospheric effects are difficult to predict.
+
+% Assumptions
+To make this novel analysis tractable, we make the following assumptions. We consider Lambertian surface patches, and assume that at most one day of data can be used. We also assume that the dominant part of the light comes from the sky hemisphere (sun, sky, clouds, etc.) and surface patches are independent (cast shadows and inter-reflections are not modeled).
+
+Although previous work have presented sensitivity analyses for standard PS with point light sources (\eg,~\cite{sun-ivc-07,jiang-bunke-sp-91,klaudiny-prl-14,shen-pg-14}), so far as we know, the case of outdoor PS with more complex illumination models has received little attention.
+
+\section{Image formation model}
+\label{iccp15:ifm}
+
+Consider a small, Lambertian surface patch with normal vector ${\bf n}$ and albedo $\rho$ (w.l.o.g., assume albedo is monochromatic). At time $t$, this surface patch is observed under natural, outdoor illumination represented by the environment map $L_t(\boldomega)$ (\eg, fig.~\ref{fig:database}), with $\boldomega$ denoting a direction in the unit sphere. With an orthographic camera model, this patch is depicted as an image pixel with intensity
+%
+\begin{equation}
+    b_t = \frac{\rho}{\pi} \int_{\Omega_{\bf n}} L_t(\mathbf{\boldomega}) \langle \boldomega, {\bf n} \rangle d\omega \,,
+    \label{eqn:imageformation-continuous}
+\end{equation}
+%
+where $\langle \cdot, \cdot \rangle$ denotes the dot product. Integration is carried out over the hemisphere of incoming light, $\Omega_{\bf n}$, defined by the local orientation ${\bf n}$ of the surface, fig.~\ref{fig:normal-diagram}. This hemisphere corresponds to an occlusion (or attached shadow) mask; only half of the pixels in the environment map contribute to the illumination of the surface patch. To make the analysis tractable and independent on object geometry, this chapter focuses on the simpler case without cast shadows.
 
 \begin{figure}
     \centering
@@ -464,7 +516,9 @@ Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruct
 %\subsection{Time interval analysis}
 \label{sec:ch1_analysis}
 
-we push the analysis of sec.~\ref{iccp15} to the limit to see what is the minimum capture interval required by PS to work. We do so by tying what is happening in the sky to reconstruction performance. The analysis is done, as before, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30.\footnote{Companion video showing data samples available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/xHourPS/}.}
+\todo{intro}
+
+[...] we push the analysis of the previous section to the limit to see what is the minimum capture interval required by PS to work. We do so by tying what is happening in the sky to reconstruction performance. The analysis is done, as before, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30.\footnote{Companion video showing data samples available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/xHourPS/}.}
 
 From the 95\% confidence interval \eqref{eqn:confidence-xyz}, we can deduce that the only light-dependent stability factor in the confidence interval $\bolddelta$ is $\lambda_k$; the other two factors are related to the camera ($\sigma$), and surface reflectance~($\rho$). In this paper, we analyze the maximum uncertainty \mbox{$\lambda_\text{max} = \max_k(\lambda_k)$}, as a conservative performance measure that is independent of albedo and sensor noise; $\lambda_\text{max}$ is a {\em maximum noise gain} factor, \ie, the intensity of noise amplification in the solution. Here, we are interested in 1) investigating how the noise gain $\lambda_\text{max}$ is influenced by the duration of outdoor data capture, and in 2) identifying specific changes, or {\em events}, in outdoor lighting that are associated with more stable PS solutions (smaller $\lambda_\text{max}$).
 
