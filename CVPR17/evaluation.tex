@@ -44,8 +44,8 @@ We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the 
     \footnotesize
     \setlength{\tabcolsep}{1pt}
     \begin{tabular}{cc}
-    \includegraphics[height=3.1cm]{figures/evaluation_performances/dist-turdibity.pdf} &
-    \includegraphics[height=3.1cm]{./figures/evaluation_performances/dist-omega.pdf} \\
+    \includegraphics[height=5cm]{figures/evaluation_performances/dist-turdibity.pdf} &
+    \includegraphics[height=5cm]{./figures/evaluation_performances/dist-omega.pdf} \\
     (a) Turbidity $t$ &
     (b) Exposure $\omega$ 
     \end{tabular}
@@ -57,12 +57,12 @@ We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the 
 \begin{figure}[!t]
 \centering
 \footnotesize
-\includegraphics[width=\linewidth]{figures/validation-sun360/rmse-horiz.pdf} \\
-(a) RMSE
-\includegraphics[width=\linewidth]{figures/validation-sun360/rmse-si-horiz.pdf} \\
-(b) Scale-invariant RMSE
-\includegraphics[width=\linewidth]{figures/validation-sun360/rmse-si-rgb-horiz.pdf} \\
-(c) Per-color scale-invariant RMSE
+\includegraphics[width=0.6\linewidth]{figures/validation-sun360/rmse-horiz.pdf} \\
+(a) RMSE \\
+\includegraphics[width=0.6\linewidth]{figures/validation-sun360/rmse-si-horiz.pdf} \\
+(b) Scale-invariant RMSE \\
+\includegraphics[width=0.6\linewidth]{figures/validation-sun360/rmse-si-rgb-horiz.pdf} \\
+(c) Per-color scale-invariant RMSE \\
 \vspace{.25em}
 \caption{Quantitative relighting comparison with the ground truth lighting parameters on the SUN360 dataset. We compute three types of error metrics: (a) RMSE, (b) scale-invariant RMSE~\cite{grosse-iccv-09}, and (c) per-color scale-invariant RMSE. The plots on the left shows the distribution of errors with the median, 25th and 75th percentiles identified with blue bars. For each measure, examples corresponding to particular error levels are shown to give a qualitative sense of performance. Renders obtained with the ground truth (estimated) lighting parameters are shown in the top (bottom) row.}
 \label{fig:quantitative-relighting-sun360}
@@ -195,8 +195,8 @@ To validate the approach, we extract limited field of view photos from the HDR p
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/sunpos_estim_failure/sunpos_failure_cases.pdf}
-    \caption{Typical failure cases of sun position estimation from a single outdoor image. See fig.~\ref{fig:evaluation_example_sun_position} for an explanation of the annotations. Failure cases occur when illumination cues are mixed with complex geometry (top), absent from the image (middle),  or in the presence of mirror-like surfaces (bottom).}
+    \caption{Typical failure cases of sun position estimation from a single outdoor image. See fig.~\ref{fig:evaluation_example_sun_position} for an explanation of the annotations. Failure cases occur when illumination cues are mixed with complex geometry (top), absent from the image (middle), or in the presence of mirror-like surfaces (bottom).}
     \label{fig:evaluation_example_sun_position_failure_cases}
-    \vspace{-2em}
+    %\vspace{-2em}
 \end{figure}
 
