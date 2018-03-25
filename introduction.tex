@@ -1,3 +1,4 @@
+%!TEX root = main.tex
 \chapter*{Introduction}         % ne pas numéroter
 \phantomsection\addcontentsline{toc}{chapter}{Introduction} % inclure dans TdM
 
@@ -14,15 +15,13 @@ Photometric stereo (PS) is a popular, dense shape reconstruction technique that 
 Simply put, this technique proposes to recover the 3D surface normals of an object observed under varying illumination.
 PS is reputed to give exceptional accuracy on surface normal estimation in fully calibrated environments, where the light is controlled.
 %It was also successfully coupled with multiview stereo techniques to provide great 3D reconstruction outdoors~\cite{snavely-ijcv-08}.
-Recent investigations have turned to the more challenging problem of outdoor PS under uncontrolled, natural illumination. However, it turns out the sun follows a . To solve this issue, recent approaches proposed to capture images over the course of 6 months\cite{ackermann-cvpr-12,abrams-eccv-12}. This time interval provides enough shifting to the sun plane to constrain correctly the PS problem.
+Recent investigations have turned to the more challenging problem of outdoor PS under uncontrolled, natural illumination. However, it turns out the sun follows a coplanar path throughout a single day, leaving the PS problem under-constrained. To solve this issue, recent approaches proposed to capture images over the course of many months\cite{ackermann-cvpr-12,abrams-eccv-12}. This time interval provides enough shifting to the sun plane to constrain correctly the PS problem.
 
-instead of trying to be invariant to natural illumination, 
+In this thesis, instead of trying to be invariant to natural illumination, we propose to leverage its richness to solve the Outdoor Photometric Stereo problem. This brings us to our first main contribution:
+\blockquote{\textbf{Single-Day Photometric Stereo} We present a systematic analysis of the expected performance of PS algorithms in outdoor settings on a single day or less, and then propose approaches to solve the single-day PS problem under various weather conditions.}
 
-In this thesis, we propose to leverage its richness and subtleties to solve. Our first main contribution is:
+The advent of social medias has brought a phenomenal influx of images of all sorts each day to public databases, giving rise to data-driven approaches and enabling the development of data-hungry machine learning algorithms such as deep neural networks. These methods bring a new paradigm to tackle vision problems: learning priors on natural images. These priors (initial beliefs on a probability distribution) are effectively additional constraints over classical physics- or geometric-based approaches which can enhance solutions to ill-posed problems.
 
-\blockquote{\textbf{Single-Day Photometric Stereo} We present a systematic analysis of the expected performance of PS algorithms in outdoor settings on a single day or less, then propose a new machine learning variant to bring this technique.}
+In this dissertation, we argue that machine learning can be used to learn priors on generic scenes and natural illumination to improve current calibration techniques. Our second contribution can be stated as such:
+\blockquote{\textbf{Single Image Lighting and Camera Calibration} We present two learning-based approaches to perform outdoor lighting and camera calibration.}
 
-
-
-
-In
