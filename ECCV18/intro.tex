@@ -1,12 +1,10 @@
 %!TEX root = main.tex
 \section{Introduction}
 
-\todo{merge this paragraph in introduction}
-Photometric stereo (PS) is a popular, dense shape reconstruction technique that has matured extensively over nearly 40 years~\cite{woodham-opteng-80} to work with complex materials and lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12}. Given the excellent PS results obtained in carefully designed laboratory setups, and the success of multiview 3D reconstruction outdoors~\cite{snavely-ijcv-08}, recent investigations have turned to the more challenging problem of outdoor PS under uncontrolled, natural illumination.
-
-As discussed in the previous chapter, the biggest challenge in outdoor Photometric Stereo (PS) remains the fact that the sun, our main light source, moves along a trajectory that nearly lies on a plane throughout the course of the day, leaving the photometric reconstruction under-constrained~\cite{woodham-opteng-80}.
+The biggest challenge in outdoor Photometric Stereo (PS) remains the fact that the sun, our main light source, moves along a trajectory that nearly lies on a plane throughout the course of the day, leaving the photometric reconstruction under-constrained~\cite{woodham-opteng-80}.
 %Researchers have investigated different approaches to address this problem, which include collecting data for several months~\cite{abrams-eccv-12,ackermann-cvpr-12}, waiting for the best time of the year (around summer solstice in the North Hemisphere~\cite{shen-pg-14}) or, more recently, for a day with favorable atmospheric conditions (partly cloudy sky~\cite{holdgeoffroy-iccp-15,holdgeoffroy-3dv-15}).
-In general, the practitioner has no control over these elements and is therefore left with two options: ($i$) a potentially long wait for the ideal conditions to arise; or ($ii$) the use of a smarter reconstruction technique that does not rely solely on the photometric cue.
+As previously discussed, one way to circumvent this issue is to wait for partially cloudy days for the effective lighting direction to shift away from the solar plane.
+In general, the practitioner has no control over the sun or the atmosphere and is therefore left with two options: ($i$) a potentially long wait for the ideal conditions to arise; or ($ii$) the use of a smarter reconstruction technique that does not rely solely on the photometric cue.
 
 In this chapter, we investigate the second option above. By using machine learning to aggregate prior knowledge on the geometry and reflectance of common classes of objects, we aim to resolve the ambiguities cause by the limited photometric cues available in single-day outdoor PS. To avoid restricting the algorithm to a small family of objects, we build knowledge on local geometry based on the fact that complex surfaces are made up of simpler, piecewise smooth patches. Our approach is further motivated by the fact that material properties are also locally correlated within small surface patches. Working with a broad class of small surface patches keeps the approach general and also facilitates the collection of data for machine learning.
 
