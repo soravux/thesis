@@ -3,14 +3,14 @@
 \phantomsection\addcontentsline{toc}{chapter}{Introduction} % inclure dans TdM
 
 % General
-Natural images are but a glimpse of captured light. They depict a morning in the park or some afternoon in the living room, yet they all share something in common: all pictures are taken from lit scenes.
-%Photography is but the art of capturing light.
+Natural images are but a glimpse of captured light. They depict a morning in the park, some afternoon in the living room or any other scene, yet they all resonate strongly with the human visual system. We are able appreciate such images because evolution endowed us with high dynamic range wide-angle stereoscopic sensors, namely the eyes. But even equipped with those high performance sensors, our complex nervous system choose to hallucinate most of what we see based on prior experience. These are only fragments of why automating the human visual system through computer vision tasks are so difficult. The meaning of a pixel values is not only defined by its surroundings and context, but also by what happened in the past, as shaped by the decades of learning experienced by the viewer.
+
+As we begin to understand better our visual system, it becomes clear that, just like humans do, complex vision tasks must rely on priors to be performed successfully. Those priors must be extracted from collected experience, using data as its own representation.
+
+First, we will be interested in shape reconstruction
+
 
 %``There is no model; there is only color.'' (Paul Cézanne)
-
-we propose to understand and leverage this rich natural illumination.
-
-and leverage this knowledge to improve algorithms locked in the laboratory until now.
 
 % First chapter
 Photometric stereo (PS) is a popular, dense shape reconstruction technique that has matured extensively over nearly 40 years~\cite{woodham-opteng-80} to work with complex materials and lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12}.
@@ -22,13 +22,23 @@ Recent investigations have turned to the more challenging problem of outdoor PS 
 
 In this thesis, instead of trying to be invariant to natural illumination, we propose to leverage its richness to solve the Outdoor Photometric Stereo problem. We will discover, as Jean Paul Richter puts it, ``a sky full of silent suns''. This brings us to our first main contribution:
 \begin{quotation}
-\textbf{Single-Day Photometric Stereo} We present a systematic analysis of the expected performance of PS algorithms in outdoor settings on a single day or less, and then propose approaches to solve the single-day PS problem under various weather conditions.
+\textbf{Single-Day Photometric Stereo} We present a systematic analysis of the expected performance of PS algorithms in outdoor settings on a single day or less, and then propose data-driven approaches to solve the single-day PS problem under various weather conditions.
 \end{quotation}
 
-The advent of social medias has brought a phenomenal influx of images of all sorts each day to public databases, giving rise to data-driven approaches and enabling the development of data-hungry machine learning algorithms such as deep neural networks. These methods bring a new paradigm to tackle vision problems: learning priors on natural images. These priors (initial beliefs on a probability distribution) are effectively additional constraints over classical physics- or geometric-based approaches which can enhance solutions to ill-posed problems.
+The advent of social medias has brought a phenomenal influx of images of all sorts each day to public databases, giving rise to data-driven approaches and enabling the development of data-hungry machine learning algorithms such as deep neural networks. These methods bring a new paradigm to tackle vision problems: learning priors on natural images. These priors (initial beliefs on a probability distribution) are effectively additional constraints over classical physics- or geometric-based approaches which can enhance solutions of ill-posed problems. Such data-driven approach are only possible given the recent increase in computing speed and storage capacity of contemporary computers, allowing the handling of the staggering amount of data available nowadays.
 
 In this dissertation, we argue that machine learning can be used to learn priors on generic scenes and natural illumination to improve current calibration techniques. Our second contribution can be stated as such:
 \begin{quotation}
-\textbf{Single Image Lighting and Camera Calibration} We present two learning-based approaches to perform outdoor lighting and camera calibration.
+\textbf{Single Image Lighting and Camera Calibration} We present two single-image learning-based approaches to perform outdoor lighting and camera calibration, working on generic scenes.
 \end{quotation}
+
+\todo{ending}
+
+\section*{Overview}
+
+This thesis is grouped into two main axes: 1) surface reconstruction through photometric cues, and 2) learning-based lighting and camera calibration estimation. Both research axes are executed through a data-driven paradigm, leveraging between thousands and millions of highly dimensional data.
+
+First, chapter~\ref{ch1} provides an in-depth analysis of the information contained in photometric cues throughout a single day and provide performance bounds on Photometric Stereo when performed on intervals down to a single hour. Upon investigation, we found that partially cloudy days brought enough constraints to solve the PS problem using an adapted PS algorithm, but show that sunny days in general are lacking the constraints to provide a stable surface reconstruction. In chapter~\ref{ch2}, we go one step further and propose an approach to perform PS on sunny days. Since there are not enough information in a single sunny day to do a stable surface reconstruction solely from photometric cues, we employ a deep learning method to learn priors on local surface geometry and sun trajectory patterns. This extra information brings enough extra constrains to the PS problem to allow stable surface reconstructions.
+
+Chapters~\ref{ch3} and~\ref{ch4} propose to utilize data to find priors improving single-image outdoor lighting and camera calibration, respectively. Most outdoor lighting estimation relies exclusively on handcrafted features limiting their application to a determined environment, for example urban scenes~\cite{lalonde-ijcv-12}. By learning features on generic scenes, we provide a lighting estimation approach that is robust to generic scenes. Finally, the last chapter covers the problem of camera calibration from a single image. An emphasis is put on extrinsics calibration with respect to the earth, with a focus on finding the horizon within the image, even when hidden. The human perception of this horizon estimation is studied with deeper scrutiny, analyzing when humans are tolerant or not to those calibration errors.
 
