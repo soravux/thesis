@@ -38,7 +38,7 @@ All output layers use the softmax activation function to output a probability di
 \centering
 \includegraphics[width=\linewidth]{figures/method/pitch_roll_performance_hlw.pdf} \\
 \includegraphics[width=\linewidth]{figures/method/pitch_roll_performance_sun360.pdf}
-\caption{Pitch (left) and roll (right) estimation performance on the HLW dataset (top) and our SUN360 test set (bottom). Results are displayed as "box-percentile plots"~\cite{esty-jss-03}, where the envelope of each column represents the percentile and the horizontal bars represents the first quartile, median and third quartile. Estimation errors (y-axis) are grouped into bins according to the parameter value (x-axis).}
+\caption[Pitch and roll estimation performance]{Pitch (left) and roll (right) estimation performance on the HLW dataset (top) and our SUN360 test set (bottom). Negative pitch denotes a camera pointing up. Results are displayed as "box-percentile plots"~\cite{esty-jss-03}, where the envelope of each column represents the percentile and the horizontal bars represents the first quartile, median and third quartile. Estimation errors (y-axis) are grouped into bins according to the parameter value (x-axis).}
 \label{fig:method_pitch_roll_performance}
 \end{figure}
 
@@ -46,7 +46,7 @@ All output layers use the softmax activation function to output a probability di
 \centering
 \includegraphics[width=\linewidth]{figures/method/vfov_performance_sun360.pdf}
 % \includegraphics[width=\linewidth]{figures/method/vfov_performance_1dsfm.pdf}
-\caption{Vertical field of view estimation performance on our SUN360 test set displayed as a "box-percentile plot" (left) and a cumulative distribution function (right). See fig.~\ref{fig:method_pitch_roll_performance} for an explanation of the box plot.
+\caption[Field of view estimation performance]{Vertical field of view estimation performance on our SUN360 test set displayed as a "box-percentile plot" (left) and a cumulative distribution function (right). See fig.~\ref{fig:method_pitch_roll_performance} for an explanation of the box-percentile plot.
 %For the 1DSFM dataset, we also show the performance one would obtain by estimating systematically 38.4\degree, the dataset's median. See fig.~\ref{fig:method_vfov_onedsfm_diversity} for an overview of the diversity of both datasets.
 }
 \label{fig:method_vfov_performance}
@@ -63,7 +63,7 @@ All output layers use the softmax activation function to output a probability di
 
 \section{Evaluation}
 
-We report quantitative horizon line estimation performance of Upright~\cite{Lee2014}, DEEPHORIZON~\cite{Workman2016} and our method on two different datasets, the Horizon Lines in the Wild (HLW) dataset~\cite{Workman2016} and our SUN360 test set in fig.~\ref{fig:method_pitch_roll_performance}. We observe that aside from large roll errors on HLW, our method outperforms the state-of-the-art in most cases. Upright fails to converge on many cases since multiple images in our SUN360 test set do not contain edges on which the technique relies on. Qualitative results are shown in fig.~\ref{fig:method_example_results}.
+We report quantitative horizon line estimation performance of Upright~\cite{Lee2014}, DEEPHORIZON~\cite{Workman2016} (as trained by the authors) and our method (trained on SUN360) on two different datasets, the Horizon Lines in the Wild (HLW) dataset~\cite{Workman2016} and our SUN360 test set in fig.~\ref{fig:method_pitch_roll_performance}. We observe that aside from large roll errors on HLW, our method outperforms the state-of-the-art in most cases. Upright fails to converge on many cases since multiple images in our SUN360 test set do not contain edges on which the technique relies on. Qualitative results are shown in fig.~\ref{fig:method_example_results}.
 
 Fig.~\ref{fig:method_vfov_performance} shows the quantitative field of view estimation performance on our SUN360 test set.
 % and DEEPFOCAL's subset of the 1DSFM dataset~\cite{Workman2015a} 
@@ -92,7 +92,7 @@ Our method significantly outperforms Upright~\cite{Lee2014} across the entire ra
 \end{tabular}
 \egroup
 \def\arraystretch{0.5} % this doesn't seem to do exactly what I want, but it does something
-\caption{\textbf{Analysis of the neural network focus.} The result of smoothed guided backpropagation is displayed as a jet overlay. When present, edges corresponding to important vanishing lines are highlighted while other edges are discarded. When no clear horizontal vanishing lines are detected, the neural network seems to look for the boundary between the sky and land while dismissing the clouds. \textbf{More examples available in the supplementary material.}}
+\caption[Analysis of the neural network focus]{\textbf{Analysis of the neural network focus.} The result of smoothed guided backpropagation is displayed as a jet overlay. When present, edges corresponding to important vanishing lines are highlighted while other edges are discarded. When no clear horizontal vanishing lines are detected, the neural network seems to look for the boundaries of either sky or land textures while dismissing the clouds or objects like trees, probably hinting bounds on horizon location in the image. \textbf{More examples available in the supplementary material.}}
 \label{fig:nn_analysis_smoothed-guided-back-propagation}
 \end{figure*}
 

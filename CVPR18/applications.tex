@@ -5,7 +5,7 @@ We now demonstrate three different uses for camera parameter estimation from a s
 
 \paragraph{Image retrieval}
 
-Our technique can be used to retrieve images in large databases based on their camera geometric properties. To demonstrate this, we estimated the camera parameters using our technique on a subset of 10,000 images randomly selected from the Places2 dataset~\cite{Zhou2017}, computed the intersection of the horizon line with the left and right image boundaries, and ordered images in the dataset based on the L2 distance of these points to ones in the query image. Fig.~\ref{fig:applications_retrieval} presents the results on retrieval for three query images and their 4 closest matches.
+Our technique can be used to retrieve images in large databases based on their camera geometric properties like viewpoint and field of view. To demonstrate this, we estimated the camera parameters using our technique on a subset of 10,000 images randomly selected from the Places2 dataset~\cite{Zhou2017}, computed the intersection of the horizon line with the left and right image boundaries, and ordered images in the dataset based on the L2 distance of these points to ones in the query image. Fig.~\ref{fig:applications_retrieval} presents the 4 closest matches for three query images.
 
 %\vspace{-1.3em}
 \paragraph{Geometrically-consistent object transfer}
@@ -37,6 +37,5 @@ Transferring objects from one image to another requires matching the camera para
 \label{fig:applications_virtual_object_insertion}
 \end{figure}
 
-Our approach also enables the realistic insertion of 3D objects in 2D images. As discussed in sec.~\ref{sec:human_sensitivity_analysis}, camera parameters are needed to plausibly align the virtual object with the background image. Given our automatic estimates, the user only needs to select an insertion point in the image and to specify the virtual camera height. Assuming the local scene around the object is a flat plane aligned with the horizon, we can automatically insert a virtual object and demonstrate several such examples in fig.~\ref{fig:applications_virtual_object_insertion}. For these results, the camera height was set to 1.6m. 
-
+Our approach also enables the realistic insertion of 3D objects in 2D images. As discussed in sec.~\ref{sec:human_sensitivity_analysis}, camera parameters are needed to plausibly align the virtual object with the background image. Given our automatic estimates, the user only needs to select an insertion point in the image and to specify the virtual camera height. Assuming the local scene around the object is a flat plane aligned with the horizon, we can automatically insert a virtual object and demonstrate several such examples in fig.~\ref{fig:applications_virtual_object_insertion}. For these results, the camera height was set to 1.6m and the lighting was automatically estimated by~\cite{Hold-Geoffroy2017,Gardner2017}.
 

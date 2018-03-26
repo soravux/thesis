@@ -1,4 +1,4 @@
-% %!TEX root = main.tex
+%!TEX root = ../main.tex
 \section{Human perception of calibration}
 \label{sec:human_sensitivity_analysis}
 
@@ -16,14 +16,14 @@ An insertion point on the ground was manually selected for each image. The Cycle
 
 Two renders are generated for each image. The first one is obtained by setting the parameters of the virtual (rendering) camera to the ground truth parameters of the background image. This should thus yield a realistic composition. The second render is obtained by distorting the virtual camera parameters, yielding a virtual object that does not have the same camera parameters as the background. For this second render, either pitch, roll, field of view or a combination of these parameters were modified. The parameters were altered by randomly adding or subtracting values sampled from a uniform distribution in $\left[ 1, 30 \right]\degree$ for pitch, $ \left[ 0.5, 20 \right]\degree$ for roll and $\left[ 5, 55\right]\degree$ for field of view. In the distorted renders, the object was moved and scaled in order to appear at the same location and have the same size in the image as the ground truth render. This step is needed as apparent size is a function of field of view. The virtual objects were laid vertically on the ground plane and were randomly rotated about their vertical axis.
 
-To limit biases caused by the virtual object inserted, we inserted 8 different virtual objects on each image. These objects include simple geometric primitives (sphere, cone), real objects with clear vertical directions (toy rocket, metal barrel, the Eiffel tower) and objects with a somewhat organic shape (the Stanford bunny and a horse statue). Several examples of images generated using this process are shown in fig.~\ref{fig:pstudy_sensitivity_per_parameter} and in the supplementary material. 
+To limit biases caused by the virtual object inserted, we inserted 8 different virtual objects on each image. These objects include simple geometric primitives (sphere, cone), real objects with clear vertical directions (toy rocket, metal barrel, the Eiffel tower) and objects with a somewhat organic shape (the Stanford bunny and a horse statue). Several examples of images generated using this process are shown in fig.~\ref{fig:pstudy_sensitivity_per_parameter} and in annex~\ref{annex5}.
 
 \subsection{Perceptual evaluation}
 \label{sec:hsa_perceptual_evaluation}
 
 We use Mechanical Turk to perform a perceptual study where workers were shown two renders of the same object on the same background image: one with ground truth parameters, another one with distorted parameters (see \ref{sec:dataset_organization}). Workers were asked to select the image where the object orientation looks better. To help them focus on camera parameters, they were specifically instructed to ignore the color, texture, shadows or lighting on or around the object. This form of a forced choice A/B test allows us to isolate the effect of the camera calibration and discard any potential issues caused by the way we create these composites (e.g., non-realistic objects, inaccurate lighting estimation, etc.)
 
-In total, 376 workers provided 145,720 submissions, from which 124,740 were accepted, leading to 11 different users annotating each image on average. To ensure quality work, sentinels~\cite{Gingold2012} were inserted throughout the experiment. These sentinels are manually validated images with obviously distorted calibration. Workers were presented batches of 20 images at a time which contained 2 sentinels. 9 workers were blocked from repeatedly selecting the sentinels. An additional 520 annotations were rejected for inattentive workers failing some sentinels over a small time lapse. The median time spent on a single pair of images was 4 seconds.
+In total, 376 workers provided 145,720 submissions, from which 124,740 were accepted, leading to 11 different users annotating each image on average. 4319 of those submissions had a single distorted parameter, while the remaining 5947 had two or more distorted parameters. To ensure quality work, sentinels~\cite{Gingold2012} were inserted throughout the experiment. These sentinels are manually validated images with obviously distorted calibration. Workers were presented batches of 20 images at a time which contained 2 sentinels. 9 workers were blocked from repeatedly selecting the sentinels. An additional 520 annotations were rejected for inattentive workers failing some sentinels over a small time lapse. The median time spent on a single pair of images was 4 seconds.
 %Workers were paid 12¢ each batch of 20 images and the median time spent on a single pair of images is 4 seconds.
 
 
@@ -49,7 +49,7 @@ We manually labeled the images into either outdoor or indoors, and found no stat
 \begin{tabular}{p{0.3\linewidth}p{0.3\linewidth}p{0.3\linewidth}}
 \hspace{1.15cm}(a) & \hspace{1cm}(b) & \hspace{0.85cm}(c)
 \end{tabular}
-\caption{Human sensitivity to errors in (a) pitch, (b) roll and (c) field of view. We use the percentage of users choosing the image with an object inserted with the ground truth calibration as a measure of human sensitivity. 50\% represents confusion, meaning users are as likely to choose an insertion with a distorted calibration than the ground truth, and 100\% means that all humans could detect the ground truth image. The line represents the median of the percentage of people who pick the ground truth human for each image. The light shaded regions shows the first and third quartile.}
+\caption[Human sensitivity to calibration errors]{Human sensitivity to errors in (a) pitch, (b) roll and (c) field of view. We use the percentage of users choosing the image with an object inserted with the ground truth calibration as a measure of human sensitivity. 50\% represents confusion, meaning users are as likely to choose an insertion with a distorted calibration than the ground truth, and 100\% means that all humans could detect the ground truth image. The line represents the median of the percentage of people who pick the ground truth human for each image. The light shaded regions shows the first and third quartile.}
 \label{fig:pstudy_overall_sensitivity}
 \end{figure}
 
@@ -64,7 +64,7 @@ Participants could tolerate an error in pitch up to 0.2 in rescaled image units 
 \begin{figure*}
 \centering
 \includegraphics[width=\linewidth]{figures/pstudy/pstudy.pdf}
-\caption{Human sensitivity to errors in pitch (left), roll (center) and field of view (right) as a function of individual parameter values, along with examples of image pairs shown to the users. We bin the percentage of people choosing the ground truth per image of the user study. The colors in the plot represents the median over all values in each bin. Note the strong relation between the roll value and its human sensitivity to error. Some combinations of parameters and errors makes it impossible to perform insertion leading to missing values in the figure (e.g., the ground is not visible anymore in the image (bottom left in pitch) or the resulting field of view would be too low or negative (bottom left in field of view)). \textbf{More examples available in the supplementary material}.}
+\caption[Human sensitivity to errors in calibration per parameter]{Human sensitivity to errors in pitch (left), roll (center) and field of view (right) as a function of individual parameter values, along with examples of image pairs shown to the users. We bin the percentage of people choosing the ground truth per image of the user study. The colors in the plot represents the median over all values in each bin. Note the strong relation between the roll value and its human sensitivity to error. Some combinations of parameters and errors makes it impossible to perform insertion leading to missing values in the figure (e.g., the ground is not visible anymore in the image (bottom left in pitch) or the resulting field of view would be too low or negative (bottom left in field of view)). \textbf{More examples available in annex~\ref{annex5}.}}
 \label{fig:pstudy_sensitivity_per_parameter}
 \end{figure*}
 
@@ -98,7 +98,7 @@ First, our results suggest that human sensitivity to pitch error does not correl
 Query & NN1 & NN2 & NN3 & NN4
 \end{tabular}
 \vspace{1em}
-\caption{Examples of image retrieval on Places2. The horizon line is estimated using our method from the query image, and used to find  closest matches in a 10k random subset from Places2. The top-4 matches are shown on the right.}
+\caption[Examples of image retrieval]{Examples of image retrieval by horizon location on Places2. The horizon line is estimated using our method from the query image, and used to find closest matches in a 10k random subset from Places2. The top-4 matches are shown on the right.}
 \label{fig:applications_retrieval}
 \end{figure*}
 

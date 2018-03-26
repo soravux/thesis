@@ -43,7 +43,7 @@ C_\text{RGB}(\mathbf{l}) = \omega f_\text{RGB}(\mathbf{l}, t, \mathbf{l}_s)\,.
 \end{equation}
 %
 
-In this equation, $\omega$ is a scale factor applied to all three color channels, which aims at estimating the (arbitrary and varying) exposure for each panorama. To generate a sky environment map from this model, we simply discretize the sky hemisphere $\Omega_\text{sky}$ into several directions (in this paper, we use the latitude-longitude format~\cite{reinhard-book-10}), and render the RGB values with (\ref{eqn:rgb-model}). Pixels which fall within $0.25^\circ$ of the sun position $\mathbf{l}_s$ are rendered with the HW sun model~\cite{hosek-cga-13} instead (converted to RGB as explained above).
+In this equation, $\omega$ is a scale factor applied to all three color channels, which aims at estimating the (arbitrary and varying) exposure for each panorama. To generate a sky environment map from this model, we simply discretize the sky hemisphere $\Omega_\text{sky}$ into several directions (in this work, we use the latitude-longitude format~\cite{reinhard-book-10}), and render the RGB values with (\ref{eqn:rgb-model}). Pixels which fall within $0.25^\circ$ of the sun position $\mathbf{l}_s$ are rendered with the HW sun model~\cite{hosek-cga-13} instead (converted to RGB as explained above).
 % YAHOG: I removed this sentence as HW explicitly said not to do that :(
 %If no such pixel exists (due to coarse discretization), the closest pixel is assigned to the maximum sun color according to the model.
 
