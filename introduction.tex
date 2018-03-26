@@ -3,12 +3,9 @@
 \phantomsection\addcontentsline{toc}{chapter}{Introduction} % inclure dans TdM
 
 % General
-Natural images are but a glimpse of captured light. They depict a morning in the park, some afternoon in the living room or any other scene, yet they all resonate strongly with the human visual system. We are able appreciate such images because evolution endowed us with high dynamic range wide-angle stereoscopic sensors, namely the eyes. But even equipped with those high performance sensors, our complex nervous system choose to hallucinate most of what we see based on prior experience. These are only fragments of why automating the human visual system through computer vision tasks are so difficult. The meaning of a pixel values is not only defined by its surroundings and context, but also by what happened in the past, as shaped by the decades of learning experienced by the viewer.
+Natural images are but a glimpse of captured light. They depict a morning in the park, some afternoon in the living room or any other scene that a human can witness, yet they all resonate strongly with the human visual system. We are able appreciate such images because evolution endowed us with high dynamic range wide-angle stereoscopic sensors, namely the eyes. But even equipped with those high performance sensors, our complex nervous system choose to hallucinate most of what we see based on prior experience. These are only fragments of why automating the human visual system through computer vision tasks is so difficult. The meaning of a pixel values is not only defined by its surroundings and context, but also by what happened in the past, as shaped by the decades of learning experienced by the observer.
 
-As we begin to understand better our visual system, it becomes clear that, just like humans do, complex vision tasks must rely on priors to be performed successfully. Those priors must be extracted from collected experience, using data as its own representation.
-
-First, we will be interested in shape reconstruction
-
+As we begin to understand better our visual system, it becomes clear that, just like humans, complex vision tasks must rely on priors to be performed successfully. Those priors must be extracted from collected experience, using data as its own representation. This is the main topic of this dissertation: developing data-driven approaches to solve problems that are ill-posed when considering them exclusively from a physics or geometric perspective. Specifically, two problems will be covered: the problem of 3D surface reconstruction using photometric cues, and lighting and camera calibration. In both cases, we are interested in cases when the environment is mostly uncontrolled and the problem under-constrained.
 
 %``There is no model; there is only color.'' (Paul Cézanne)
 
@@ -42,3 +39,8 @@ First, chapter~\ref{ch1} provides an in-depth analysis of the information contai
 
 Chapters~\ref{ch3} and~\ref{ch4} propose to utilize data to find priors improving single-image outdoor lighting and camera calibration, respectively. Most outdoor lighting estimation relies exclusively on handcrafted features limiting their application to a determined environment, for example urban scenes~\cite{lalonde-ijcv-12}. By learning features on generic scenes, we provide a lighting estimation approach that is robust to generic scenes. Finally, the last chapter covers the problem of camera calibration from a single image. An emphasis is put on extrinsics calibration with respect to the earth, with a focus on finding the horizon within the image, even when hidden. The human perception of this horizon estimation is studied with deeper scrutiny, analyzing when humans are tolerant or not to those calibration errors.
 
+
+\todo{remove bib section number}
+
+\bibliographystyle{abbrvnat}
+\bibliography{library}

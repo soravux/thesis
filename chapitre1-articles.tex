@@ -1,3 +1,4 @@
+%!TEX root = main.tex
 \chapter{Analysis of Short-Term Outdoor Photometric Stereo}     % numéroté
 
 \label{ch1}
@@ -115,7 +116,7 @@ In all, the dataset totals more than 5,000 illumination conditions, captured ove
     \\
 
     \end{tabular}
-    \caption[]{Examples from our dataset of HDR outdoor illumination conditions. In all, our dataset contains 3,800 different illumination conditions, captured from 10{:}30 until 16{:}30, during 23 days, spread over ten months and at two geographical locations. Each image is stored in the 32-bit floating point EXR format, and shown tone mapped here for display (with $\gamma = 1.6$). The companion video\footnote{Available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/index.html}} shows time-lapse sequences for these sky environment maps.}
+    \caption[HDRDB dataset excerpt]{Examples from our dataset of HDR outdoor illumination conditions. In all, our dataset contains 3,800 different illumination conditions, captured from 10{:}30 until 16{:}30, during 23 days, spread over ten months and at two geographical locations. Each image is stored in the 32-bit floating point EXR format, and shown tone mapped here for display (with $\gamma = 1.6$). The companion video\footnote{Available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/index.html}} shows time-lapse sequences for these sky environment maps.}
     \label{fig:database}
 \end{figure}
 
@@ -152,7 +153,7 @@ where $\langle \cdot, \cdot \rangle$ denotes the dot product. Integration is car
     \centering
     \includegraphics[width=.495\linewidth]{./figures/diagramFig/diagram1.jpg}
     \includegraphics[width=.495\linewidth]{./figures/diagramFig/diagram2.jpg}
-    \caption{A normal $\mathbf{n}$ defines an integration domain $\Omega_{\mathbf{n}}$ equivalent to a hemisphere on the entire spherical environment map. Only light emanating from this hemisphere contribute to the shading on that patch. Therefore, patches with different normals are lit differently even if the environment map is the same.}
+    \caption[Hemispheres defined by surface normals]{A normal $\mathbf{n}$ defines an integration domain $\Omega_{\mathbf{n}}$ equivalent to a hemisphere on the entire spherical environment map. Only light emanating from this hemisphere contribute to the shading on that patch. Therefore, patches with different normals are lit differently even if the environment map is the same.}
     \label{fig:normal-diagram}
 \end{figure}
 
@@ -269,7 +270,7 @@ Now that we are equipped with a tool to characterize the stability of surface no
     \end{minipage}
     \vspace{3mm}
     \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
-    \caption{Uncertainty in normal estimation with $\sigma=1\%$ is indicated by 95\% confidence intervals (in degrees), as a function of ground-truth surface normal. Results are shown for three different days in our dataset (same days as in fig.~\ref{fig:database}). The plots show the full sphere of normals from two different viewpoints: South (left), and North (right). Cardinal directions are shown for reference. The color-coding is indicated below the plots. See companion video for an animated version of these plots.}
+    \caption[Uncertainty in normal estimation in function of sun visibility]{Uncertainty in normal estimation with $\sigma=1\%$ is indicated by 95\% confidence intervals (in degrees), as a function of ground-truth surface normal. Results are shown for three different days in our dataset (same days as in fig.~\ref{fig:database}). The plots show the full sphere of normals from two different viewpoints: South (left), and North (right). Cardinal directions are shown for reference. The color-coding is indicated below the plots. See companion video for an animated version of these plots.}
     \label{fig:confidence-intervals}
 \end{figure}
 
@@ -277,7 +278,7 @@ Now that we are equipped with a tool to characterize the stability of surface no
     \centering
     \includegraphics[width=.99\linewidth]{./figures/confidenceIntervals/sunVisibilityPlot-topHemisphere.pdf}
     \vspace{-2mm}
-    \caption{Median confidence interval of normal estimates (red line) as a function of mean sun visibility over the course of the day for various values of $\sigma$. Our analysis predicts that normal reconstruction errors will likely be high if the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Good results can thus be expected in partially cloudy conditions, as shown in fig.~\ref{fig:cloud-cover}. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
+    \caption[Confidence interval of normal estimates in function of sun visibility]{Median confidence interval of normal estimates (red line) as a function of mean sun visibility over the course of the day for various values of $\sigma$. Our analysis predicts that normal reconstruction errors will likely be high if the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Good results can thus be expected in partially cloudy conditions, as shown in fig.~\ref{fig:cloud-cover}. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
     \label{fig:cloud-cover-plot}
 \end{figure*}
 
@@ -318,7 +319,7 @@ We approximate cloud coverage by computing the fraction of time that the sun is 
     \end{minipage}
     \vspace{3mm}
     \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
-    \caption{Influence of cloud cover on the 95\% confidence intervals with $\sigma=1\%$. Each row shows a different type of sky, based on sun visibility. For example, the top row shows confidence intervals averaged over all days with direct sun visibility in the range 85\%-100\%. The averaged days presented similar sun elevations. As with fig.~\ref{fig:confidence-intervals}, the plots show the full sphere of normals from two different viewpoints: South (left), and North (right).}
+    \caption[Influence of cloud cover on confidence intervals]{Influence of cloud cover on the 95\% confidence intervals with $\sigma=1\%$. Each row shows a different type of sky, based on sun visibility. For example, the top row shows confidence intervals averaged over all days with direct sun visibility in the range 85\%-100\%. The averaged days presented similar sun elevations. As with fig.~\ref{fig:confidence-intervals}, the plots show the full sphere of normals from two different viewpoints: South (left), and North (right).}
     \label{fig:cloud-cover}
 \end{figure}
 
@@ -332,7 +333,7 @@ The improved conditioning in mixed skies is explained by the following key obser
 \begin{figure}
     \centering
     \includegraphics[width=0.5\linewidth]{./figures/mlvFig/mlvFig.pdf}
-    \caption{Cloud effect on the mean light direction over one day: while the sun path (orange) yields nearly co-planar directions of illumination, the mean light directions (red dots) provide a much more varied set (data from 11/06/2013, 2nd row of fig.~\ref{fig:database}).}
+    \caption[Cloud effect on mean light direction]{Cloud effect on the mean light direction over one day: while the sun path (orange) yields nearly co-planar directions of illumination, the mean light directions (red dots) provide a much more varied set (data from 11/06/2013, 2nd row of fig.~\ref{fig:database}).}
     \label{fig:mlv}
 \end{figure}
 
@@ -358,7 +359,7 @@ So far, our analysis has focused solely on one patch (one normal direction) at a
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{./figures/confidenceIntervals/sunElevationPlot-topHemisphere.pdf}
-    \caption{Median confidence interval of normal estimates (red line) as a function of maximum sun elevation over the course of the day for various values of $\sigma$. Although the effect is not as significant as with cloud cover, we anticipate a small decrease in performance at higher sun elevations. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
+    \caption[Confidence interval in function of sun elevation]{Median confidence interval of normal estimates (red line) as a function of maximum sun elevation over the course of the day for various values of $\sigma$. Although the effect is not as significant as with cloud cover, we anticipate a small decrease in performance at higher sun elevations. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
     \label{fig:sun-elevation-plot}
 \end{figure}
 
@@ -376,7 +377,7 @@ So far, our analysis has focused solely on one patch (one normal direction) at a
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{./figures/objectFig/objectFigNoise.pdf}
-    \caption{Predicting object reconstruction performance for the 08/24/2013 dataset. These curves show the mean surface reconstruction variance for two objects: a bottle (blue) and the bunny (red). Irrespective of the noise level, surface reconstruction performance is expected to be best when the objects face south.}
+    \caption[Example of object reconstruction performance]{Predicting object reconstruction performance for the 08/24/2013 dataset. These curves show the mean surface reconstruction variance for two objects: a bottle (blue) and the bunny (red). Irrespective of the noise level, surface reconstruction performance is expected to be best when the objects face south.}
     \label{fig:objects}
 \end{figure}
 
@@ -433,7 +434,7 @@ The analysis performed on our dataset indicates that surface patches may be bett
     \includegraphics[width=\customwidth]{./figures/reconstruction/object/160215.jpg}
 
     \end{tabular}
-    \caption{Real outdoor HDR images of owl statuette and corresponding HDR environment maps (top row) providing synchronized, high-fidelity estimates of illumination conditions. All images were acquired on 10/11/2014 and tone-mapped for display only (with $\gamma = 1.6$). The sun visibility was 43\% on this day. }
+    \caption[Real data]{Real outdoor HDR images of owl statuette and corresponding HDR environment maps (top row) providing synchronized, high-fidelity estimates of illumination conditions. All images were acquired on 10/11/2014 and tone-mapped for display only (with $\gamma = 1.6$). The sun visibility was 43\% on this day. }
     \label{fig:reconstruction:example_envmaps}
     \vspace{-1em}
 \end{figure*}
@@ -461,7 +462,7 @@ Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruct
     \end{tabular}
     \includegraphics[width=1.01\linewidth]{./figures/reconstruction/colorbar.png}
     \end{minipage}
-    \caption{Quantitative validation on images of a real object. Evenly distributed patches of the owl images were used to perform a simple calibrated outdoor PS algorithm. Error estimates of the surface normals are reported on the left using the reference surface orientation in the laser scan. The predicted 95\% confidence intervals $\mathcal{C}_\mathbf{n}$ from \eqref{eqn:confidence-degrees} are shown on the right. A few large estimation errors on the left image may be caused by imperfect alignment between the scanned model and the images. Insets in the lower right corner show the recovered normals mapped to the south hemisphere. Normals in dark blue means no data available.}
+    \caption[Qualitative validation on images of a real object]{Quantitative validation on images of a real object. Evenly distributed patches of the owl images were used to perform a simple calibrated outdoor PS algorithm. Error estimates of the surface normals are reported on the left using the reference surface orientation in the laser scan. The predicted 95\% confidence intervals $\mathcal{C}_\mathbf{n}$ from \eqref{eqn:confidence-degrees} are shown on the right. A few large estimation errors on the left image may be caused by imperfect alignment between the scanned model and the images. Insets in the lower right corner show the recovered normals mapped to the south hemisphere. Normals in dark blue means no data available.}
     \label{fig:reconstruction:results}
 \end{figure}
 
@@ -536,7 +537,7 @@ This section provides the first answers to the questions raised above by looking
 \begin{figure}[t]
 \centering
 \includegraphics[width=.33\columnwidth]{diagram_MLVshift3}
-\caption{Impact of cloud coverage on the numerical conditioning of outdoor PS: clear (a) and overcast (b) days present MLVs with stronger coplanarity; in partly cloudy days (c) the sun is often obscured by clouds, which may lead to out-of-plane shifts of MLVs.}
+\caption[Impact of cloud coverage on PS conditioning]{Impact of cloud coverage on the numerical conditioning of outdoor PS: clear (a) and overcast (b) days present MLVs with stronger coplanarity; in partly cloudy days (c) the sun is often obscured by clouds, which may lead to out-of-plane shifts of MLVs.}
 \label{fig:MLVshift}
 \end{figure}
 % -----------------------------------------------------------------------------
@@ -546,7 +547,7 @@ This section provides the first answers to the questions raised above by looking
 \includegraphics[width=.32\textwidth]{v123gainSurf} \ \ \ %\\[3mm]
 \includegraphics[width=.32\textwidth]{v123gain1Arc} \ \ \ %\\[3mm]
 \includegraphics[width=.32\textwidth]{v123gain2Shift}
-\caption{Simulated noise gain $\lambda_{\max}(\theta_a,\theta_e)$ as a function of solar arc $\theta_a$ and MLV shift (elevation) angle $\theta_e$. See discussion in the text.}
+\caption[Simulated noise gain as function of solar arc and mean light vector shift]{Simulated noise gain $\lambda_{\max}(\theta_a,\theta_e)$ as a function of solar arc $\theta_a$ and MLV shift (elevation) angle $\theta_e$. See discussion in the text.}
 \label{fig:v123gain}
 \end{figure*}
 % -----------------------------------------------------------------------------
@@ -628,8 +629,8 @@ Although these MLVs were computed from environment maps captured in the Northern
 \includegraphics[height=1.43in]{sphereShift20131106_n3} \ \ %\\[3mm]
 \includegraphics[height=1.43in]{sphereShift20141011_n3} \\[2mm]
 {\footnotesize {\verb| |} \hspace{0.5cm} (a) Mixed clouds (06-NOV-13) \hspace{0.25cm} (b) Mixed clouds (11-OCT-14) }\\
-\vspace{-2mm}
-\caption{Globes representing the coordinate system of sky probes. Each normal (blue arrow) defines a shaded hemisphere in the environmental map that does not contribute light to the computed MLVs (dots). All MLVs in two particular partly cloudy days (columns) were computed from real environment maps~\cite{holdgeoffroy-iccp-15} for 3 example normal vectors (rows). Relative MLV intensities are shown in the color bar on the left. See also video in~\cite{webpageXhourPS}.}
+%\vspace{-2mm}
+\caption[Examples of mean light vectors in function of the normal studied]{Globes representing the coordinate system of sky probes. Each normal (blue arrow) defines a shaded hemisphere in the environmental map that does not contribute light to the computed MLVs (dots). All MLVs in two particular partly cloudy days (columns) were computed from real environment maps~\cite{holdgeoffroy-iccp-15} for 3 example normal vectors (rows). Relative MLV intensities are shown in the color bar on the left. See also video in~\cite{webpageXhourPS}.}
 \label{fig:realShiftNormal}
 \vspace{-3mm}
 \end{figure}
@@ -640,8 +641,8 @@ Although these MLVs were computed from environment maps captured in the Northern
 \includegraphics[height=1.46in]{sphereGain20131106} \ \ \ %\\[3mm]
 \includegraphics[height=1.46in]{sphereGain20141011} \\[1mm]
 {\footnotesize {\verb| |} \hspace{.6cm} (a) 06-NOV-13 \hspace{1cm} (b) 11-OCT-14 }\\[3mm]
-\vspace{-2mm}
-\caption{Noise gain for each normal direction ${\bf n}$ visible to the camera; the colors indicate the shifting (coplanarity) of the associated MLVs. The camera is assumed to lie to the South of this hypothetical target object. For both days, normals that are nearly horizontal are associated with more coplanar MLVs (smaller shifts, higher gains). These normals define a {\em zero-crossing region} between positive and negative out-of-plane shifts (mid row in fig.~\ref{fig:realShiftNormal}), where occlusion of the sun results in shifts that are predominantly {\em along} the solar arc. See also video available in~\cite{webpageXhourPS}.}
+%\vspace{-2mm}
+\caption[Noise gain over the sphere]{Noise gain for each normal direction ${\bf n}$ visible to the camera; the colors indicate the shifting (coplanarity) of the associated MLVs. The camera is assumed to lie to the South of this hypothetical target object. For both days, normals that are nearly horizontal are associated with more coplanar MLVs (smaller shifts, higher gains). These normals define a {\em zero-crossing region} between positive and negative out-of-plane shifts (mid row in fig.~\ref{fig:realShiftNormal}), where occlusion of the sun results in shifts that are predominantly {\em along} the solar arc. See also video available in~\cite{webpageXhourPS}.}
 \label{fig:realShiftAll}
 \vspace{-3mm}
 \end{figure}
@@ -674,7 +675,7 @@ Of course, this could be due to a simple fact: the first interval is longer than
 (c) Clear sky and mixed clouds (24-AUG-13) & (d) Mixed clouds (06-NOV-13)
 \end{tabular}
 \vspace{.25em}
-\caption{Fine-grained analysis of the expected uncertainty of outdoor PS as a function of time over four selected days in the dataset. Colored plots show the maximum gain $\lambda_\text{max}$ as a function of start time (diagonal along the plot), and duration of the interval. The black lines identify particular time intervals discussed in the text. The blue curve to the left of each colored plot represents the log sun intensity over the course of that day. Photographs of the sky for each day are also shown on the left.}
+\caption[Fine-grained analysis of PS uncertainty]{Fine-grained analysis of the expected uncertainty of outdoor PS as a function of time over four selected days in the dataset. Colored plots show the maximum gain $\lambda_\text{max}$ as a function of start time (diagonal along the plot), and duration of the interval. The black lines identify particular time intervals discussed in the text. The blue curve to the left of each colored plot represents the log sun intensity over the course of that day. Photographs of the sky for each day are also shown on the left.}
 \label{fig:events}
 \end{figure*}
 
@@ -697,7 +698,7 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
     (a) 24-AUG-13 & (b) 06-NOV-13 & (c) Entire dataset
     \end{tabular}
     \vspace{.15em}
-    \caption[]{Distribution of noise gain ratio $r_\lambda(\tau)$ as a function of time interval duration: (a,b) two days in fig.~\ref{fig:events}; (c) across all the dataset. The~distributions of computed ratios are displayed vertically as ``box-percentile plots''~\cite{esty-jss-03}; the red horizontal bars indicate the median, while the bottom (top) blue bars are the 25th (75th) percentiles. }
+    \caption[Distribution of noise gain ratio in function of interval duration]{Distribution of noise gain ratio $r_\lambda(\tau)$ as a function of time interval duration: (a,b) two days in fig.~\ref{fig:events}; (c) across all the dataset. The~distributions of computed ratios are displayed vertically as ``box-percentile plots''~\cite{esty-jss-03}; the red horizontal bars indicate the median, while the bottom (top) blue bars are the 25th (75th) percentiles. }
     % THIS IS CONFUSING, DOESN'T HELP MUCH:
     %Note that durations include all intervals within $\pm 30\text{m}$ of the value indicated. For example, a duration of 4h includes all time intervals in the range $[3\text{h}30, 4\text{h}30]$.
     \label{fig:ratios}
@@ -729,7 +730,7 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
         (a) Intervals starting at 12:00 on 06-NOV-13 & (b) Intervals starting at 13:30 on 06-NOV-13
     \end{tabular}
     \vspace{1mm}
-    \caption{Normal recovery error as a function of time interval and start time: (a) 12h00 and (b) 13h30 on 06-NOV-13. Experiments are performed on a synthetic object rendered with real sky probes and additive Gaussian noise $\sigma=1\%$. The top row shows per-pixel angular error, color-coded as in the scale on the right. The bottom row shows box-percentile error plots (see fig.~\ref{fig:ratios}). As suggested in fig.~\ref{fig:events}(d), the performances of \{3,4,5,6\}-hour outdoor PS are very similar (a). Even 1-hour outdoor PS can be competitive if started at the right time (b).}
+    \caption[Normal recovery error as a function of time interval and start time]{Normal recovery error as a function of time interval and start time: (a) 12h00 and (b) 13h30 on 06-NOV-13. Experiments are performed on a synthetic object rendered with real sky probes and additive Gaussian noise $\sigma=1\%$. The top row shows per-pixel angular error, color-coded as in the scale on the right. The bottom row shows box-percentile error plots (see fig.~\ref{fig:ratios}). As suggested in fig.~\ref{fig:events}(d), the performances of \{3,4,5,6\}-hour outdoor PS are very similar (a). Even 1-hour outdoor PS can be competitive if started at the right time (b).}
     \label{fig:owl-results}
     \vspace{-3mm}
 \end{figure*}
@@ -737,7 +738,7 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
 \begin{figure}[!t]
     \centering
     \includegraphics[width=.52\linewidth]{./figures/realData/realData-setup.pdf} \\[1mm]
-    \caption{Real data capture setup. HDR photographs of the sky and of the object (owl statuette) are simultaneously captured by two cameras installed on the roof of a tall building.}
+    \caption[Real data capture setup]{Real data capture setup. HDR photographs of the sky and of the object (owl statuette) are simultaneously captured by two cameras installed on the roof of a tall building.}
     \label{fig:real-data-setup}
     \vspace{-2mm}
 \end{figure}
@@ -745,7 +746,7 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
 \begin{figure*}[t]
     \centering
     \includegraphics[width=0.92\linewidth]{./figures/realData/realData4.pdf}
-    \caption{Validation on real data, captured on 11-OCT-14 (partly cloudy). Four distinct time intervals are analyzed and, for each one, the following information is displayed, from left to right: ($i$) log sun intensity; ($ii$) noise gain $\lambda_\text{max}$ as a function of start time and duration of the interval, as in fig.~\ref{fig:events}; ($iii$) example input images; ($iv$) normals recovered by calibrated outdoor PS; ($v$) normal estimation error at each pixel; and ($vi$) the error distribution, in degrees. For reference, ground truth normals are given on the rightmost plots.}
+    \caption[Validation on real data]{Validation on real data, captured on 11-OCT-14 (partly cloudy). Four distinct time intervals are analyzed and, for each one, the following information is displayed, from left to right: ($i$) log sun intensity; ($ii$) noise gain $\lambda_\text{max}$ as a function of start time and duration of the interval, as in fig.~\ref{fig:events}; ($iii$) example input images; ($iv$) normals recovered by calibrated outdoor PS; ($v$) normal estimation error at each pixel; and ($vi$) the error distribution, in degrees. For reference, ground truth normals are given on the rightmost plots.}
     \label{fig:real-results}
     \vspace{-2mm}
 \end{figure*}
