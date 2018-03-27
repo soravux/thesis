@@ -1,0 +1,62 @@
+\chapter{Photometric Stereo proof of convexity}     % numérotée
+\label{annex2}
+
+
+Under the Lambertian assumption, the photometric stereo problem can be posed as
+\begin{equation}
+\arg\min_n \sum_{i \in \mathcal{I}} \left[\sum_j \max\left(0, \mathbf{l}_{ij}^T \mathbf{n} \right) - b_i \right]^2 \quad ,
+\label{eq:init} 
+\end{equation}
+for a set of images $\mathcal{I}$ having pixel intensities $b_{i}$ for a (albedo-scaled) normal $\mathbf{n}$ lit by $\mathbf{l}_{ij}^T$.
+
+This objective function is equivalently formulated in terms of the residual vector ${\bf r} = [\ldots {r_i} \ldots]^T$, where $r_i$ is the residual for the patch's $i$-th image,
+\begin{equation}
+\arg\min_n  \mathbf{r}^T\mathbf{r} = \sum_{i \in \mathcal{I}} (r_i)^2, 
+%\qquad \mathbf{r} = (\mathbf{L}\mathbf{n} - \mathbf{b}), \quad r_i = \mathbf{l}_i^T \mathbf{n} - b_i
+\end{equation}
+
+\begin{equation}
+\arg\min_n \sum_{i \in \mathcal{I}} f_i(\mathbf{n})
+ = (r_i(\mathbf{n}))^2 
+\end{equation}
+
+To prove convexity, we'll show that the second derivative of the objective function is positive for all ${\bf n}$. First, we find the derivatives of $f_i({\bf n})$:
+\begin{align}
+\frac{df_i}{d\mathbf{n}} &= 2r_i \left( \frac{\partial r_i}{\partial \mathbf{n}} \right) \quad, \label{eq:firstder}\\
+\frac{d^2f_i}{d^2\mathbf{n}} &= 2\left(\frac{\partial r_i}{\partial \mathbf{n}}\right)^2 + 2r_i \frac{\partial ^2 r_i}{\partial ^2 \mathbf{n}} \geq 0 \quad \label{eq:secder}.
+\end{align}
+We need $\frac{\partial r_i}{\partial \mathbf{n}}$ to continue. Remember that, from eq.~\eqref{eq:init},
+\begin{equation}
+r_i = \max( 0, \mathbf{l}_i^T \mathbf{n} ) - b_i\\
+\quad,
+\end{equation}
+from which two cases arise due to the $\max$: when the function is constant at 0, or when it equals to $\mathbf{l}_i^T \mathbf{n}$:
+\begin{equation}
+\frac{\partial r_i}{\partial \mathbf{n}} = \frac{\partial \left[ \max(0, \mathbf{l}_i^T \mathbf{n}) \right]}{\partial \mathbf{n}}  = 
+\begin{cases}
+\frac{\partial r_i}{\partial \mathbf{n}} = \partial \left[ \mathbf{l}_i^T \mathbf{n} \right]/\partial \mathbf{n} \Rightarrow  \frac{\partial r_i}{\partial \mathbf{n}} = \mathbf{l}_i^T \qquad \text{if} \quad \mathbf{l}_i^T \mathbf{n} > 0        . \\
+\frac{\partial [0]}{\partial \mathbf{n}} = 0, \hfill \text{if} \quad \mathbf{l}_i^T \mathbf{n} \leq 0,
+\end{cases}\\
+\end{equation}
+Since $\mathbf{l}_i$ and $\mathbf{n}$ are both vectors ($\in \mathbb{R}^3$ in this case),
+\begin{align}
+\partial r_i &= \partial(l_1 \cdot n_1 + l_2 \cdot n_2 + l_3 \cdot n_3) = \left[ \frac{\partial r_i}{\partial n_1}, \frac{\partial r_i}{\partial n_2}, \frac{\partial r_i}{\partial n_3} \right] = \mathbf{l}_i \\
+\partial r_i^2 &= \partial\left[ \frac{\partial r_i}{\partial n_1}, \frac{\partial r_i}{\partial n_2}, \frac{\partial r_i}{\partial n_3} \right] = \left[ \frac{\partial ^2 r_i}{\partial ^2 n_1}, \frac{\partial ^2 r_i}{\partial ^2 n_2}, \frac{\partial ^2 r_i}{\partial ^2 n_3} \right] = \mathbf{l}_i \\
+\end{align}
+Plugging it back in the first derivative eq.~\eqref{eq:firstder},
+\begin{equation}
+\frac{\partial f_i}{\partial {\bf n}} = \begin{cases}
+2 \cdot \left( \max(0, \mathbf{l}_i^T \mathbf{n}) - b_i \right) \cdot \mathbf{l}_i^T  \qquad\text{if} \quad \mathbf{l}_i^T \mathbf{n} > 0 \quad, \\
+0 \hfill  \qquad\text{if} \quad \mathbf{l}_i^T \mathbf{n} \leq 0 \quad.
+\end{cases} \\
+\end{equation}
+and in the second derivative eq.~\eqref{eq:secder},
+\begin{equation}
+{\partial ^2 f_i}{\partial {\bf n}} = \begin{cases}
+2 \left( \mathbf{l}_i^T \right) ^2 + 2 \cdot \left( \max(0, \mathbf{l}_i^T \mathbf{n}) - b_i \right) \cdot \mathbf{l}_i^T (?)  \qquad\text{if} \quad \mathbf{l}_i^T \mathbf{n} > 0 \quad. \\
+0 \hfill  \qquad\text{if} \quad \mathbf{l}_i^T \mathbf{n} \leq 0 \quad.
+\end{cases} \\
+\end{equation}
+
+\todo{TODO}
+{\bf TODO:} could be simpler to try to prove that $r_i({\bf n})$ is convex first. Then the overall objective function is a sum of squared convex functions -- so it is also convex (check book?)
