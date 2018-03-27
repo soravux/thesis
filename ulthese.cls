@@ -220,7 +220,7 @@
   \RequirePackage{babel}
   \RequirePackage[autolanguage]{numprint}
 \fi
-\RequirePackage{graphicx}
+%\RequirePackage{graphicx}
 \RequirePackage{xcolor}
 \RequirePackage{textcomp}
 \AtBeginDocument{%
