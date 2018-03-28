@@ -43,7 +43,7 @@ and normalized so that $\sum_j \mathbf{s}^*_j = 1$. The equation in (\ref{eqn:vm
     (b) Elevation error & (c) Azimuthal error
     \end{tabular}
     \vspace{.5em}
-    \caption{Quantitative evaluation of sun position estimation on all 8659 images in the SUN360 test set. (a) The cumulative distribution function of the angular error on the sun position. The estimation error as function of the sun elevation (b) and (c) azimuth relative to the camera (0\degree ~means the sun is in front of the camera). The last two figures are displayed as ``box-percentile plots''~\cite{esty-jss-03}, where the envelope of each bin represents the percentile and the median is shown as a red bar.% The performance decrease at high sun elevation may be attributable to a lack of such occurrences in the training dataset.
+    \caption[Quantitative evaluation of sun position estimation]{Quantitative evaluation of sun position estimation on all 8659 images in the SUN360 test set. (a) The cumulative distribution function of the angular error on the sun position. The estimation error as function of the sun elevation (b) and (c) azimuth relative to the camera (0\degree ~means the sun is in front of the camera). The last two figures are displayed as ``box-percentile plots''~\cite{esty-jss-03}, where the envelope of each bin represents the percentile and the median is shown as a red bar.% The performance decrease at high sun elevation may be attributable to a lack of such occurrences in the training dataset.
     }
     \label{fig:evaluation_performance_sun_position}
 \end{figure} 
@@ -59,7 +59,7 @@ and normalized so that $\sum_j \mathbf{s}^*_j = 1$. The equation in (\ref{eqn:vm
     (b) Subset of SUN360 test set
     \end{tabular}
     \vspace{.5em} 
-    \caption{Comparison with the method of Lalonde et al.~\cite{lalonde-ijcv-12} showing the cumulative sun azimuth estimation error on (a) their original dataset, and (b) a 176-image subset from the SUN360 test set. (a) While our method has similar error in an octant (less than $22.5^\circ)$, the precision in a quadrant (less than $45^\circ$) significantly improves by approximately 10\%. (b) The 176-images SUN360 test subset contains much more challenging images where methods based on the detection of explicit cues (as in~\cite{lalonde-ijcv-12}) fail. Our deep learning based approach remains robust and achieves high performance on both datasets.}
+    \caption[Performance comparison on an urban dataset]{Comparison with the method of Lalonde et al.~\cite{lalonde-ijcv-12} showing the cumulative sun azimuth estimation error on (a) their original dataset, and (b) a 176-image subset from the SUN360 test set. (a) While our method has similar error in an octant (less than $22.5^\circ)$, the precision in a quadrant (less than $45^\circ$) significantly improves by approximately 10\%. (b) The 176-images SUN360 test subset contains much more challenging images where methods based on the detection of explicit cues (as in~\cite{lalonde-ijcv-12}) fail. Our deep learning based approach remains robust and achieves high performance on both datasets.}
     \label{fig:comparison-lalonde12}
 \end{figure}
 

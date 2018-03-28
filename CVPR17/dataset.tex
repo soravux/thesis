@@ -17,7 +17,7 @@
 \includegraphics[width=.24\linewidth]{figures/hwmodel/t_10.png} \\
 $t = 1$ & $t = 3$ & $t = 7$ & $t = 10$ 
 \end{tabular}
-\caption{Impact of sky turbidity $t$ on rendered objects. The top row shows environment maps (in latitude-longitude format), and the bottom row shows corresponding renders of a bunny model on a ground plane for varying values for the turbidity $t$, ranging from low (left) to high (right). Images have been tonemapped with $\gamma = 2.2$ for display.}
+\caption[Impact of sky turbidity $t$ on rendered objects]{Impact of sky turbidity $t$ on rendered objects. The top row shows environment maps (in latitude-longitude format), and the bottom row shows corresponding renders of a bunny model on a ground plane for varying values for the turbidity $t$, ranging from low (left) to high (right). Images have been tonemapped with $\gamma = 2.2$ for display.}
 \label{fig:turbidity-comparison}
 \end{figure}
 
@@ -104,7 +104,7 @@ Output: sun position distribution $\mathbf{s}$ &
 Output: sky and camera parameters $\mathbf{q}$ \\
 \end{tabu}
 \vspace{.5em}
-\caption[]{The proposed CNN architecture. After a series of 7 convolutional layers, a fully-connected layer segues to two heads: one for regressing the sun position, and another one for the sky and camera parameters. The ELU activation function~\cite{clevert-iclr-16} is used on all layers except the outputs. }
+\caption[Neural network architecture]{The proposed CNN architecture. After a series of 7 convolutional layers, a fully-connected layer segues to two heads: one for regressing the sun position, and another one for the sky and camera parameters. The ELU activation function~\cite{clevert-iclr-16} is used on all layers except the outputs. }
 \label{fig:cnn-architecture}
 \end{figure}
 %%

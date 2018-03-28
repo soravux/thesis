@@ -54,7 +54,7 @@ Together, these assumptions constrain the sun position to lie within an ``8-figu
         \hspace{3pt}\includegraphics[width=0.22\linewidth]{figures/sun_pos/colorbar_sunpos_prob_horizontal.pdf}} \\
         \hspace{-11pt}(a) & \hspace{-11pt}(b) & \hspace{3pt}(c)
     \end{tabular} \\
-    \caption{Solar analemma: position of the sun in the sky at a specific time of the day and throughout a year over (a) Paris and (b) the Tropic of Cancer. Note how the analemmas spread over a wide range of zenith and azimuth angles over the course of a year. (c)~Probability of the sun location in the sky for our training set.}
+    \caption[Solar analemma: position of the sun in the sky]{Solar analemma: position of the sun in the sky at a specific time of the day and throughout a year over (a) Paris and (b) the Tropic of Cancer. Note how the analemmas spread over a wide range of zenith and azimuth angles over the course of a year. (c)~Probability of the sun location in the sky for our training set.}
     \label{fig:solar-analemma}
 \end{figure}
 
@@ -73,7 +73,7 @@ We now turn to the design of the function ${\bf N} = f({\bf B}_{t_1}, \ldots, {\
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.8\linewidth]{figures/architecture.pdf}
-	\caption[]{Our novel CNN architecture for deep single-day outdoor PS on sunny days. The network operates on $16 \times 16$ patches $\mathbf{B}_t$ of the input image, captured at 8 time intervals $t$ regularly spaced throughout a single day. The network uses convolutional (blue) and residual (red) layers before estimating the normals using fully-connected layers (green). Two losses are used to train our method, one based on the cosine distance with the ground truth $\mathbf{\hat{n}}$ and another to constrain the norm of the output vector.}
+	\caption[Method overview and model architecture]{Our novel CNN architecture for deep single-day outdoor PS on sunny days. The network operates on $16 \times 16$ patches $\mathbf{B}_t$ of the input image, captured at 8 time intervals $t$ regularly spaced throughout a single day. The network uses convolutional (blue) and residual (red) layers before estimating the normals using fully-connected layers (green). Two losses are used to train our method, one based on the cosine distance with the ground truth $\mathbf{\hat{n}}$ and another to constrain the norm of the output vector.}
 	\label{fig:architecture}
 \end{figure}
 

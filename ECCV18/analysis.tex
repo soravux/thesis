@@ -12,7 +12,7 @@ To constrain the set of possible lighting directions (sec.~\ref{sec:analemma}), 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.7\linewidth]{figures/analysis/performance_calibration_error.pdf}
-\caption{Median normal estimation error as box-percentile plots (see fig.~\ref{fig:results-quantitative}) in function of the camera deviation from north in degrees on our real lighting dataset. Positive means camera going toward west, negative means camera going toward east. }
+\caption[Surface reconstruction performance in function of camera calibration error]{Median normal estimation error as box-percentile plots (see fig.~\ref{fig:results-quantitative}) in function of the camera deviation from north in degrees on our real lighting dataset. Positive means camera going toward west, negative means camera going toward east. }
 \label{fig:calibration_error_performance}
 \end{figure}
 
@@ -28,7 +28,7 @@ We now study the normal estimation performance in function of the number of inpu
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.75\linewidth]{figures/analysis/input_ablation.pdf}
-\caption{Median normal estimation error as box-percentile plots~\cite{esty-jss-03} (see fig.~\ref{fig:results-quantitative}) on our evaluation dataset as a function of $T$, the number of input images.}
+\caption[Ablation study: surface reconstruction performance in function of the number of input images]{Median normal estimation error as box-percentile plots~\cite{esty-jss-03} (see fig.~\ref{fig:results-quantitative}) on our evaluation dataset as a function of $T$, the number of input images.}
 \label{fig:number_of_inputs}
 \end{figure}
 
@@ -50,7 +50,7 @@ We use SmoothGrad~\cite{smilkov-arxiv-17} to visualize the regions of the image 
 \hspace*{0.4cm}\begin{tabular*}{0.53\linewidth}{c@{\extracolsep{\fill}}c}
 (a) & (b)
 \end{tabular*} \\
-\caption{Back-propagating the gradient through our network using SmoothGrad~\cite{smilkov-arxiv-17} on the input images shown in (a) generates a map of the pixels that affects the most the normal estimation (b). Notice how the regions in shadow have generally less influence (blue) than regions in direct sunlight (yellow).}
+\caption[CNN focus analysis]{Back-propagating the gradient through our network using SmoothGrad~\cite{smilkov-arxiv-17} on the input images shown in (a) generates a map of the pixels that affects the most the normal estimation (b). Notice how the regions in shadow have generally less influence (blue) than regions in direct sunlight (yellow).}
 \label{fig:smoothgrad}
 \end{figure}
 

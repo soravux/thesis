@@ -16,15 +16,15 @@ set, which the neural network has never seen during training nor
 validation.
 
 \hypertarget{table-of-contents}{%
-\subsection{Table of Contents}\label{table-of-contents}}
+\paragraph{Table of Contents}\label{table-of-contents}}
 
 \begin{enumerate}
 \tightlist
 \item
-  \protect\hyperlink{sunpos}{Sun Position (extends fig. 6)}
+  \protect\hyperlink{sunpos}{Sun Position (extends fig.~\ref{fig:evaluation_example_sun_position})}
 \item
   \protect\hyperlink{virtualobjectinsert}{Virtual Object Insertion
-  (extends fig. 9)}
+  (extends fig.~\ref{fig:evaluation_render_examples})}
 \item
   \protect\hyperlink{camparameval}{Camera Parameters Estimation}
 
@@ -35,13 +35,13 @@ validation.
     Performance}
   \item
     \protect\hyperlink{camparaminsertionex}{Object Insertion Examples
-    (extends fig. 10)}
+    (extends fig.~\ref{fig:evaluation-elevation})}
   \end{enumerate}
 \item
-  \protect\hyperlink{HDRcaptures}{HDR Captures (extends sec. 6.3)}
+  \protect\hyperlink{HDRcaptures}{HDR Captures (extends sec.~\ref{subsec:relighting_hdr})}
 \item
   \protect\hyperlink{virtualobjectinsertHDR}{HDR Virtual Object
-  Insertion (extends fig. 11)}
+  Insertion (extends fig.~\ref{fig:hdr-panoramas-validation})}
 \end{enumerate}
 
 \protect\hypertarget{sunpos}{}{}
@@ -50,7 +50,7 @@ validation.
 \section{Sun position estimation}\label{sun-position-estimation}}
 
 In this section, we present some additional sun position estimations,
-extending the results shown in fig. 6.
+extending the results shown in fig.~\ref{fig:evaluation_example_sun_position}.
 
 
 \def\mywidth{0.9\linewidth}
@@ -210,7 +210,7 @@ Angular distance: 2.3 degrees
 insertion}\label{virtual-object-insertion}}
 
 More virtual object insertion results on the SUN360 dataset are
-presented in this section, extending the results of fig. 9. For these
+presented in this section, extending the results of fig..~\ref{fig:evaluation_render_examples}. For these
 examples, the virtual camera parameters are kept at a fixed value
 (fov=60 degrees, elevation=0 degrees). Please see
 \protect\hyperlink{camparaminsertionex}{this section} for examples where
@@ -365,7 +365,7 @@ mandatory for cast shadows and proper shading to appear in renderings.
 \begin{figure}
 \centering
 \includegraphics[width=\mywidth]{db-sunny.jpg}
-\caption{}
+\caption[Outdoor dynamic range]{Capturing outdoor illumination without saturation requires an extreme High Dynamic Range.}
 \end{figure}
 
 \protect\hypertarget{virtualobjectinsertHDR}{}{}
@@ -377,7 +377,7 @@ captures}\label{virtual-object-insertion-validation-with-hdr-captures}}
 In this section we evaluate our CNN by comparing objects rendered under
 our estimated lighting (first column) against those rendered with
 captured HDR images (left mouse hover and second column), extending the
-results of fig. 11. To create these results we capture HDR panoramas
+results of fig.~\ref{fig:hdr-panoramas-validation}. To create these results we capture HDR panoramas
 (last column, see Sec 6.3 for details about our HDR capture
 methodology), converted them to 8-bit jpegs, sampled limited
 field-of-view images from them, and used these images as inputs to our

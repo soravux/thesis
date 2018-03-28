@@ -19,7 +19,7 @@
 %   \includegraphics[width=\CropWidth,height=\CropHght]{./figures/sunpos_estim/crop/pano_aakpbaojeqowkb_jpg-3.png}
 % \includegraphics[width=\PanoWidth,height=\RndrHght,trim={1.1cm 1.1cm 0.1cm 0,4cm},clip]{./figures/sunpos_estim/panorama/pano_aakpbaojeqowkb_jpg-3_png.pdf}
     % \end{tabular}
-    \caption{Examples of sun position estimation from a single outdoor image. For each example, the input image is shown on the left, and its corresponding location in the panorama is shown with a red outline. The color overlay displays the probability distribution of the sun position output by the neural network. A green star marks the most likely sun position estimated by the neural network, while a blue star marks the ground truth position. }
+    \caption[Examples of sun position estimation from a single outdoor image]{Examples of sun position estimation from a single outdoor image. For each example, the input image is shown on the left, and its corresponding location in the panorama is shown with a red outline. The color overlay displays the probability distribution of the sun position output by the neural network. A green star marks the most likely sun position estimated by the neural network, while a blue star marks the ground truth position. }
     \label{fig:evaluation_example_sun_position}
 \end{figure*}
 
@@ -50,7 +50,7 @@ We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the 
     (b) Exposure $\omega$ 
     \end{tabular}
     \vspace{.25em}
-    \caption{Quantitative evaluation for turbidity $t$ and exposure $\omega$. The distribution of errors are displayed as ``box-percentile'' plots (see fig.~\ref{fig:evaluation_performance_sun_position}). The CNN tends to favor clear skies (low turbidity), and has higher errors when the exposure is high.}
+    \caption[Quantitative evaluation for turbidity $t$ and exposure $\omega$]{Quantitative evaluation for turbidity $t$ and exposure $\omega$. The distribution of errors are displayed as ``box-percentile'' plots (see fig.~\ref{fig:evaluation_performance_sun_position}). The CNN tends to favor clear skies (low turbidity), and has higher errors when the exposure is high.}
     \label{fig:evaluation_sky_parameters}
 \end{figure}
 
@@ -64,7 +64,7 @@ We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the 
 \includegraphics[width=0.6\linewidth]{figures/validation-sun360/rmse-si-rgb-horiz.pdf} \\
 (c) Per-color scale-invariant RMSE \\
 \vspace{.25em}
-\caption{Quantitative relighting comparison with the ground truth lighting parameters on the SUN360 dataset. We compute three types of error metrics: (a) RMSE, (b) scale-invariant RMSE~\cite{grosse-iccv-09}, and (c) per-color scale-invariant RMSE. The plots on the left shows the distribution of errors with the median, 25th and 75th percentiles identified with blue bars. For each measure, examples corresponding to particular error levels are shown to give a qualitative sense of performance. Renders obtained with the ground truth (estimated) lighting parameters are shown in the top (bottom) row.}
+\caption[Quantitative relighting comparison with ground truth lighting on SUN360]{Quantitative relighting comparison with the ground truth lighting parameters on the SUN360 dataset. We compute three types of error metrics: (a) RMSE, (b) scale-invariant RMSE~\cite{grosse-iccv-09}, and (c) per-color scale-invariant RMSE. The plots on the left shows the distribution of errors with the median, 25th and 75th percentiles identified with blue bars. For each measure, examples corresponding to particular error levels are shown to give a qualitative sense of performance. Renders obtained with the ground truth (estimated) lighting parameters are shown in the top (bottom) row.}
 \label{fig:quantitative-relighting-sun360}
 \vspace{-1em}
 \end{figure}
@@ -122,7 +122,7 @@ A detailed performance analysis is available in the supplementary material. In a
     \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajmdcorvpbtdcb_jpg-3_png_out.png} &
     \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajwnburtukssxf_jpg-5_png_out.png}
     \end{tabular}
-    \caption{Virtual object insertion with automated lighting estimation. From a single image, the CNN predicted a full HDR sky map, which is used to render an object into the image. No additional steps are required. More results on automated object insertion are available in the supplementary materials.}
+    \caption[Virtual object insertion with authomated lighting estimation]{Virtual object insertion with automated lighting estimation. From a single image, the CNN predicted a full HDR sky map, which is used to render an object into the image. No additional steps are required. More results on automated object insertion are available in the supplementary materials.}
     \label{fig:evaluation_render_examples}
 \end{figure}
 
@@ -137,7 +137,7 @@ A detailed performance analysis is available in the supplementary material. In a
     Estimated elevation: 3.5\degree & 
     \end{tabular}
     \vspace{.25em}
-    \caption{Virtual object insertion with automated lighting and camera elevation estimation. The two images are taken at the same location with the camera pointing downwards (left) and upwards (right). The elevation of the virtual camera used to render the bunny model is set to the value predicted by the CNN, resulting in a bunny which realistically rests on the ground. }
+    \caption[Virtual object insertion with automated lighting and camera elevation estimation]{Virtual object insertion with automated lighting and camera elevation estimation. The two images are taken at the same location with the camera pointing downwards (left) and upwards (right). The elevation of the virtual camera used to render the bunny model is set to the value predicted by the CNN, resulting in a bunny which realistically rests on the ground.}
     \label{fig:evaluation-elevation}
     \vspace{-1em}
 \end{figure}
@@ -171,7 +171,7 @@ Fig.~\ref{fig:evaluation_render_examples} shows examples of virtual objects inse
     \includegraphics[width=\RndrWdth]{./figures/valid/panos/AG8A3169_Panorama_hdr-corrected_exr-5_png.pdf}} \\
     \multicolumn{2}{c}{(a)} & \multicolumn{2}{c}{(b)} & \multicolumn{2}{c}{(c)}
     \end{tabular}
-    \caption{Object relighting comparison with ground truth illumination conditions on captured HDR panoramas. For each example, the top row shows (left) a bunny model relit by the ground truth HDR illumination conditions captured in situ; (right) the same bunny model, relit by the illumination conditions estimated by the CNN solely from the background image, completely automatically. No further adjustment (e.g. overall brightness, saturation, etc.) was performed. The bottom row shows the original environment map, field of view of the camera (in red), and the distribution on sun position estimation (as in fig.~\ref{fig:evaluation_example_sun_position}). Please see additional results on our project page.}
+    \caption[Object relighting comparison with ground truth illumination conditions on HDR panoramas]{Object relighting comparison with ground truth illumination conditions on captured HDR panoramas. For each example, the top row shows (left) a bunny model relit by the ground truth HDR illumination conditions captured in situ; (right) the same bunny model, relit by the illumination conditions estimated by the CNN solely from the background image, completely automatically. No further adjustment (e.g. overall brightness, saturation, etc.) was performed. The bottom row shows the original environment map, field of view of the camera (in red), and the distribution on sun position estimation (as in fig.~\ref{fig:evaluation_example_sun_position}). Please see additional results on our project page.}
     \label{fig:hdr-panoramas-validation}
     \vspace{-1em}
 \end{figure*}
@@ -195,7 +195,7 @@ To validate the approach, we extract limited field of view photos from the HDR p
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/sunpos_estim_failure/sunpos_failure_cases.pdf}
-    \caption{Typical failure cases of sun position estimation from a single outdoor image. See fig.~\ref{fig:evaluation_example_sun_position} for an explanation of the annotations. Failure cases occur when illumination cues are mixed with complex geometry (top), absent from the image (middle), or in the presence of mirror-like surfaces (bottom).}
+    \caption[Typical failure cases of sun position estimation]{Typical failure cases of sun position estimation from a single outdoor image. See fig.~\ref{fig:evaluation_example_sun_position} for an explanation of the annotations. Failure cases occur when illumination cues are mixed with complex geometry (top), absent from the image (middle), or in the presence of mirror-like surfaces (bottom).}
     \label{fig:evaluation_example_sun_position_failure_cases}
     %\vspace{-2em}
 \end{figure}

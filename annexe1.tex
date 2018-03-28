@@ -3,7 +3,7 @@
 \label{annex1}
 
 \DeclareGraphicsExtensions{.pdf,.jpeg,.png,.jpg}
-\graphicspath{{annex3_figures/}}
+\graphicspath{{annex1_figures/}}
 
 
 In this annex, we first provide in table~\ref{tab:sun-visibility} the mean sun visibility (in \%) for all day in the database. We also provide results for all days in the database for: 
@@ -15,7 +15,7 @@ In this annex, we first provide in table~\ref{tab:sun-visibility} the mean sun v
 
 \vspace{1em}
 
-We also provide reconstruction results for an owl statuette and a bunny model on November 6th, 2013. Reconstruction is performed on images such as the one shown in fig.~\ref{fig:luxrender-input}. These images were obtained using the physically-based renderer LuxRender. For each image, one environment map from the database capturing the whole sky in HDR was used as the sole light source. In each environment map was added an infinite plane on the ground, obtained by simulating asphalt with an albedo $\rho = 0.15$ from which the whole sky is visible. The number of input images for each interval is shown in table~\ref{tab:luxrender-qty-input}. Reconstruction results are shown in fig.~\ref{fig:luxrender-results}. For information on the reconstruction algorithm or more results on synthetic and real data, please refer to the paper.
+We also provide reconstruction results for an owl statuette and a bunny model on November 6th, 2013. Reconstruction is performed on images such as the one shown in fig.~\ref{fig:luxrender-input}. These images were obtained using the physically-based renderer LuxRender. For each image, one environment map from the database capturing the whole sky in HDR was used as the sole light source. In each environment map was added an infinite plane on the ground, obtained by simulating asphalt with an albedo $\rho = 0.15$ from which the whole sky is visible. The number of input images for each interval is shown in table~\ref{tab:luxrender-qty-input}. Reconstruction results are shown in fig.~\ref{fig:luxrender-results}. For information on the reconstruction algorithm or more results on synthetic and real data, please refer to chapter~\ref{ch1}.
 
 
 \begin{table}[!h]
@@ -48,7 +48,7 @@ Day & Sun visibility (\%) \\
 14-NOV-14 & 55
 \end{tabular}
 \vspace{.5em}
-\caption{Mean sun visibility (in \%) for all days in the database. Sun visibility denotes the fraction of the time the sun is shining, as computed from its intensity in the light probe.}
+\caption[Mean sun visibility available in our database]{Mean sun visibility (in \%) for all days in the database. Sun visibility denotes the fraction of the time the sun is shining, as computed from its intensity in the light probe.}
 \label{tab:sun-visibility}
 \end{table}
 
@@ -141,7 +141,7 @@ Day & Sun visibility (\%) \\
 \includegraphics[valign=t,trim=2pt -8pt 0 5pt,width=\colorbarwidth,totalheight=\eventheight]{events/colorbar-40.pdf}
 \end{minipage}
 \vspace{.5em}
-\caption{Fine-grained analysis of the expected uncertainty of outdoor PS (additional results for fig. 5 in the paper). Blank spaces above the diagonal indicate time intervals with missing data. Continued on fig.~\ref{fig:fig-5-2}.}
+\caption[Fine-grained analysis of the expected uncertainty of outdoor PS]{Fine-grained analysis of the expected uncertainty of outdoor PS (additional results for fig.~\ref{fig:events} in chapter~\ref{ch1}). Blank spaces above the diagonal indicate time intervals with missing data. Continued on fig.~\ref{fig:fig-5-2}.}
 \label{fig:fig-5-1}
 \end{figure*}
 
@@ -208,7 +208,7 @@ Day & Sun visibility (\%) \\
 \includegraphics[valign=t,trim=2pt -8pt 0 5pt,width=\colorbarwidth,totalheight=\eventheight]{events/colorbar-40.pdf}
 \end{minipage}
 \vspace{1em}
-\caption{Fine-grained analysis of the expected uncertainty of outdoor PS (additional results for fig. 5 in the paper). Blank spaces above the diagonal indicate time intervals with missing data. Continued from fig.~\ref{fig:fig-5-1}.}
+\caption[Fine-grained analysis of the expected uncertainty of outdoor PS (cont.)]{Fine-grained analysis of the expected uncertainty of outdoor PS (additional results for fig.~\ref{fig:events} in chapter~\ref{ch1}). Blank spaces above the diagonal indicate time intervals with missing data. Continued from fig.~\ref{fig:fig-5-1}.}
 \label{fig:fig-5-2}
 \end{figure*}
 
@@ -238,7 +238,7 @@ Day & Sun visibility (\%) \\
 \parbox{\mylength}{\centering 06-OCT-14}
 \parbox{\mylength}{\centering 11-OCT-14}
 \parbox{\mylength}{\centering 20-OCT-14} \\*[1em]
-\caption{Distribution of noise gain ratio $r_t$ as a function of time interval duration (additional results for fig. 6 in the paper). Continued on fig.~\ref{fig:fig-6-2}.}
+\caption[Distribution of noise gain ratio $r_t$]{Distribution of noise gain ratio $r_t$ as a function of time interval duration (additional results for fig.~\ref{fig:ratios} in chapter~\ref{ch1}). Continued on fig.~\ref{fig:fig-6-2}.}
 \label{fig:fig-6-1}
 \end{figure*}
 
@@ -264,7 +264,7 @@ Day & Sun visibility (\%) \\
 \parbox{\mylength}{\centering 13-NOV-14} \\*[1em]
 \includegraphics[width=\mylength]{dist/20141114-maxGain-local-relativePerf} \\
 \parbox{\mylength}{\centering 14-NOV-14}
-\caption{Distribution of noise gain ratio $r_t$ as a function of time interval duration (additional results for fig. 6 in the paper). Continued from fig.~\ref{fig:fig-6-1}.}
+\caption[Distribution of noise gain ratio $r_t$ (cont.)]{Distribution of noise gain ratio $r_t$ as a function of time interval duration (additional results for fig.~\ref{fig:ratios} in chapter~\ref{ch1}). Continued from fig.~\ref{fig:fig-6-1}.}
 \label{fig:fig-6-2}
 \end{figure*}
 
@@ -283,7 +283,7 @@ Interval & 12h & 13h30 \\ \hline \hline
 6h & 39 &  \\ \hline
 \end{tabular}
 \vspace{.5em}
-\caption{Quantity of input images used for each interval in fig.~\ref{fig:luxrender-results}.}
+\caption[Quantity of input images used for the fined-grained analysis]{Quantity of input images used for each interval in fig.~\ref{fig:luxrender-results}.}
 \label{tab:luxrender-qty-input}
 \end{table}
 
@@ -291,21 +291,21 @@ Interval & 12h & 13h30 \\ \hline \hline
 \definecolor{Gray}{gray}{0.8}
 \begin{figure*}
 \centering
-\begin{tabular}{ccccc}
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/bunny-input-01.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/bunny-input-02.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/bunny-input-03.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/bunny-input-04.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/bunny-input-05.png} }\\
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/owl-input-01.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/owl-input-02.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/owl-input-03.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/owl-input-04.png}} &
-\colorbox{Gray}{\includegraphics[height=3cm]{recons/owl-input-05.png}} \\
+\begin{tabular}{@{}c@{}c@{}c@{}c@{}c@{}}
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/bunny-input-01.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/bunny-input-02.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/bunny-input-03.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/bunny-input-04.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/bunny-input-05.png}}\\
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/owl-input-01.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/owl-input-02.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/owl-input-03.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/owl-input-04.png}} &
+\colorbox{Gray}{\includegraphics[height=2.8cm]{recons/owl-input-05.png}} \\
 12:00 & 13:30 & 14:30 & 15:30 & 16:30
 \end{tabular}
 \vspace{.5em}
-\caption{\small Example of input images used for reconstruction. These images are obtained using the physically-based rendering engine LuxRender. For each image, one environment map from the database was used as the sole light source. The ground was modeled with a constant albedo approximating the asphalt, $\rho = 0.15$. The rendering engine realistically simulates complex lighting effects such as cast shadows and inter-reflections (such as the neck of the bunny or below the eyebrows of the owl). }
+\caption[Example of input images used for reconstruction]{\small Example of input images used for reconstruction. These images are obtained using the physically-based rendering engine LuxRender. For each image, one environment map from the database was used as the sole light source. The ground was modeled with a constant albedo approximating the asphalt, $\rho = 0.15$. The rendering engine realistically simulates complex lighting effects such as cast shadows and inter-reflections (such as the neck of the bunny or below the eyebrows of the owl). }
 \label{fig:luxrender-input}
 \end{figure*}
 
@@ -314,14 +314,14 @@ Interval & 12h & 13h30 \\ \hline \hline
 \centering
 \footnotesize
 \begin{tabular}{cc}
-\hspace{0.1cm}\includegraphics[height=5.35cm,width=0.58\textwidth]{recons/owl-left.pdf} & 
-\includegraphics[height=5.35cm,width=0.38\textwidth]{recons/owl-right.pdf} \\
-\includegraphics[height=5.35cm,width=0.58\textwidth]{recons/bunny-left.pdf} & 
-\includegraphics[height=5.35cm,width=0.38\textwidth]{recons/bunny-right.pdf} \\
+\hspace{0.1cm}\includegraphics[height=5.32cm,width=0.55\textwidth]{recons/owl-left.pdf} & 
+\includegraphics[height=5.32cm,width=0.35\textwidth]{recons/owl-right.pdf} \\
+\includegraphics[height=5.32cm,width=0.55\textwidth]{recons/bunny-left.pdf} & 
+\includegraphics[height=5.32cm,width=0.35\textwidth]{recons/bunny-right.pdf} \\
 (a) Intervals starting at 12:00 on 06-NOV-13 & (b) Intervals starting at 13:30 on 06-NOV-13
 \end{tabular}
 \vspace{.5em}
-\caption{\small Surface reconstruction errors as a function of interval duration and start times: (a) 12h00 and (b) 13h30 on 06-NOV-13 (see fig. 5-(d) and 7 of the paper). Experiments are performed on the images described in fig.~\ref{fig:luxrender-input}. The top row shows per-pixel angular error, color-coded according to the scale on the right. The bottom row shows a box-percentile plot of the errors, as explained in the paper. The red horizontal bars indicate the median, while the bottom (top) blue bars are the 25th (75th) percentiles. Note how, as captured in fig. 5 and 7 of the paper, normal estimation can yield very similar results in 3h over that day using only 3 hours of data (a), and even from just one hour (b). The discrepancies between these results and fig. 5 of the paper are explained by cast shadows and inter-reflections (mainly present on bunny's neck and between its legs and on the corners of the eyes of the owl) which are not modeled by the reconstruction algorithm.}
+\caption[Surface reconstruction errors as a function of capture interval duration]{\small Surface reconstruction errors as a function of interval duration and start times: (a) 12h00 and (b) 13h30 on 06-NOV-13 (see fig.~\ref{fig:events}-(d) and~\ref{fig:owl-results} of chapter~\ref{ch1}). Experiments are performed on the images described in fig.~\ref{fig:luxrender-input}. The top row shows per-pixel angular error, color-coded according to the scale on the right. The bottom row shows a box-percentile plot of the errors, as explained in chapter~\ref{ch1}. The red horizontal bars indicate the median, while the bottom (top) blue bars are the 25th (75th) percentiles. Note how, as captured in fig.~\ref{fig:events} and~\ref{fig:owl-results} of chapter~\ref{ch1}, normal estimation can yield very similar results in 3h over that day using only 3 hours of data (a), and even from just one hour (b). The discrepancies between these results and fig.~\ref{fig:events} of chapter~\ref{ch1} are explained by cast shadows and inter-reflections (mainly present on bunny's neck and between its legs and on the corners of the eyes of the owl) which are not modeled by the reconstruction algorithm.}
 \label{fig:luxrender-results}
 \end{figure*}
 
