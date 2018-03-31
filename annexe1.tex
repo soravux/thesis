@@ -18,7 +18,7 @@ In this annex, we first provide in table~\ref{tab:sun-visibility} the mean sun v
 We also provide reconstruction results for an owl statuette and a bunny model on November 6th, 2013. Reconstruction is performed on images such as the one shown in fig.~\ref{fig:luxrender-input}. These images were obtained using the physically-based renderer LuxRender. For each image, one environment map from the database capturing the whole sky in HDR was used as the sole light source. In each environment map was added an infinite plane on the ground, obtained by simulating asphalt with an albedo $\rho = 0.15$ from which the whole sky is visible. The number of input images for each interval is shown in table~\ref{tab:luxrender-qty-input}. Reconstruction results are shown in fig.~\ref{fig:luxrender-results}. For information on the reconstruction algorithm or more results on synthetic and real data, please refer to chapter~\ref{ch1}.
 
 
-\begin{table}[!h]
+\begin{table}[!ht]
 \centering
 \begin{tabular}{c|c}
 Day & Sun visibility (\%) \\
@@ -51,6 +51,8 @@ Day & Sun visibility (\%) \\
 \caption[Mean sun visibility available in our database]{Mean sun visibility (in \%) for all days in the database. Sun visibility denotes the fraction of the time the sun is shining, as computed from its intensity in the light probe.}
 \label{tab:sun-visibility}
 \end{table}
+
+\FloatBarrier
 
 
 \newlength{\mylength}
