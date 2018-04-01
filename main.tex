@@ -12,7 +12,8 @@
 %% défaut du document. L'option 'bibsection' permet de créer des
 %% bibliographies par chapitre présentées sous forme de section
 %% numérotée.
-\documentclass[PhD,bibsection,english,french,oldfontcommands]{ulthese}
+%\documentclass[PhD,bibsection,english,french,oldfontcommands]{ulthese}
+\documentclass[PhD,english,french,oldfontcommands]{ulthese}
   %% Encodage utilisé pour les caractères accentués dans les fichiers
   %% source du document. Les gabarits sont encodés en UTF-8. Inutile
   %% avec XeLaTeX, qui gère Unicode nativement.
@@ -93,7 +94,7 @@
 \newcommand\degr[0]{^{\circ}}
 
 
-\let\cite\citep
+%\let\cite\citep
 
 
 \graphicspath{{figures/}, {ECCV18/}, {CVPR17/}, {CVPR18/}}
@@ -173,5 +174,11 @@
 \include{annexe3}
 \include{annexe4}
 \include{annexe5}
+
+  
+\bibliographystyle{ieee}
+\bibliography{library}
+%\bibliography{CVPR17/main}
+%\bibliography{CVPR18/refs}
 
 \end{document}
