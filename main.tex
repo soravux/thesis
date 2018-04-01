@@ -53,6 +53,7 @@
 \usepackage{placeins}
 \usepackage{multicol}
 \usepackage{etoolbox}
+\usepackage{microtype} % Otherwise \cite spills in margin
 \usepackage[export]{adjustbox}
 
 %\usepackage[usenames,dvipsnames]{xcolor}
@@ -67,7 +68,7 @@
   %% Gestion des hyperliens dans le document. S'assurer que hyperref
   %% est le dernier paquetage chargé.
   \usepackage{hyperref}
-  \hypersetup{colorlinks,allcolors=ULlinkcolor}
+  \hypersetup{breaklinks,colorlinks,allcolors=ULlinkcolor}
 
 \ExplSyntaxOn
 \newcommand\latinabbrev[1]{
@@ -139,8 +140,8 @@
 
 \pagestitre                     % production des pages de titre
 
-\include{resume}                % résumé français
-\include{abstract}              % résumé anglais
+%\include{resume}                % résumé français
+%\include{abstract}              % résumé anglais
 \cleardoublepage
 
 \tableofcontents                % production de la TdM
@@ -152,11 +153,11 @@
 \listoffigures                  % production de la liste des figures
 \cleardoublepage
 
-\dedicace{Dédicace si désiré}
-\cleardoublepage
+%\dedicace{Dédicace si désiré}
+%\cleardoublepage
 
-\epigraphe{Texte de l'épigraphe}{Source ou auteur}
-\cleardoublepage
+%\epigraphe{Texte de l'épigraphe}{Source ou auteur}
+%\cleardoublepage
 
 %\include{remerciements}         % remerciements
 \include{avantpropos}           % avant-propos
