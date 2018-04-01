@@ -206,7 +206,7 @@
   \ifUL@sectionbib
     \PassOptionsToPackage{sectionbib}{natbib}
   \fi
-  \RequirePackage[round,semicolon,numbers]{natbib}
+  \RequirePackage[numbers]{natbib}
 \fi
 \ifUL@chapterbib
   \ifUL@sectionbib

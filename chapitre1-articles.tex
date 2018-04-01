@@ -3,7 +3,7 @@
 
 \label{ch1}
 
-Photometric stereo has been studied extensively in the past decades, especially on how to deal with various lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12,ackermann-cvpr-12,abrams-eccv-12}. Most of the work has been done either in the laboratory, where illumination is controlled, or for extended amount of time, in order to have enough lighting diversity to constrain enough the problem. Many questions remains on the topic of . What is the minimum time interval required to obtain good results in outdoor PS? Is a full day of observations enough and/or necessary to obtain good results in outdoor PS? Or could similar results be obtained over a shorter time interval (say, 1 hour)? If so, what should be happening in the sky over that time interval? Besides easing the requirements on data capture, these questions are also important in that, in future work, they could extend the applicability of outdoor PS to new scenarios (\eg, to more quickly capture non-static outdoor objects that show gradual changes in shape or appearance over time).
+Photometric stereo has been studied extensively in the past decades, especially on how to deal with various lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12,ackermann-cvpr-12,abrams-eccv-12}. Most of the work in the literature has been done either in the laboratory, where illumination is controlled, or for extended amount of time, in order to have enough lighting diversity to constrain enough the problem. Many questions remains on the topic of . What is the minimum time interval required to obtain good results in outdoor PS? Is a full day of observations enough and/or necessary to obtain good results in outdoor PS? Or could similar results be obtained over a shorter time interval (say, 1 hour)? If so, what should be happening in the sky over that time interval? Besides easing the requirements on data capture, these questions are also important in that, in future work, they could extend the applicability of outdoor PS to new scenarios (\eg, to more quickly capture non-static outdoor objects that show gradual changes in shape or appearance over time).
 
 % TODO: maybe move the sentence above to discussion only? We want to show the importance/impact of asking these questions, but we don't want to disappoint the reviewers by not showing dynamic PS results. Maybe this is ok as it is?
 
@@ -425,7 +425,6 @@ The analysis performed on our dataset indicates that surface patches may be bett
     \end{tabular}
     \caption[Real data]{Real outdoor HDR images of owl statuette and corresponding HDR environment maps (top row) providing synchronized, high-fidelity estimates of illumination conditions. All images were acquired on 10/11/2014 and tone-mapped for display only (with $\gamma = 1.6$). The sun visibility was 43\% on this day. }
     \label{fig:reconstruction:example_envmaps}
-    \vspace{-1em}
 \end{figure*}
 
 We oriented this owl statuette towards south and took 66 HDR captures using a Canon EOS Rebel SL1 between 10h30 and 16h30, local time, in Quebec City. These captures were synchronized with the HDR environment maps described in sec.~\ref{sec:hdrdb}, providing high fidelity estimates of the illumination conditions for each image, as shown in fig.~\ref{fig:reconstruction:example_envmaps}. The laser scan was then manually aligned to these images.
@@ -619,7 +618,6 @@ Although these MLVs were computed from environment maps captured in the Northern
 %\vspace{-2mm}
 \caption[Examples of mean light vectors in function of the normal studied]{Globes representing the coordinate system of sky probes. Each normal (blue arrow) defines a shaded hemisphere in the environmental map that does not contribute light to the computed MLVs (dots). All MLVs in two particular partly cloudy days (columns) were computed from real environment maps~\cite{holdgeoffroy-iccp-15} for 3 example normal vectors (rows). Relative MLV intensities are shown in the color bar on the left. See also video in~\cite{webpageXhourPS}.}
 \label{fig:realShiftNormal}
-\vspace{-3mm}
 \end{figure}
 % -----------------------------------------------------------------------------
 % -----------------------------------------------------------------------------
@@ -631,7 +629,6 @@ Although these MLVs were computed from environment maps captured in the Northern
 %\vspace{-2mm}
 \caption[Noise gain over the sphere]{Noise gain for each normal direction ${\bf n}$ visible to the camera; the colors indicate the shifting (coplanarity) of the associated MLVs. The camera is assumed to lie to the South of this hypothetical target object. For both days, normals that are nearly horizontal are associated with more coplanar MLVs (smaller shifts, higher gains). These normals define a {\em zero-crossing region} between positive and negative out-of-plane shifts (mid row in fig.~\ref{fig:realShiftNormal}), where occlusion of the sun results in shifts that are predominantly {\em along} the solar arc. See also video available in~\cite{webpageXhourPS}.}
 \label{fig:realShiftAll}
-\vspace{-3mm}
 \end{figure}
 % -----------------------------------------------------------------------------
 
@@ -719,7 +716,6 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
     \vspace{1mm}
     \caption[Normal recovery error as a function of time interval and start time]{Normal recovery error as a function of time interval and start time: (a) 12h00 and (b) 13h30 on 06-NOV-13. Experiments are performed on a synthetic object rendered with real sky probes and additive Gaussian noise $\sigma=1\%$. The top row shows per-pixel angular error, color-coded as in the scale on the right. The bottom row shows box-percentile error plots (see fig.~\ref{fig:ratios}). As suggested in fig.~\ref{fig:events}(d), the performances of \{3,4,5,6\}-hour outdoor PS are very similar (a). Even 1-hour outdoor PS can be competitive if started at the right time (b).}
     \label{fig:owl-results}
-    \vspace{-3mm}
 \end{figure*}
 
 \begin{figure}[!t]
@@ -727,7 +723,6 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
     \includegraphics[width=.52\linewidth]{./figures/realData/realData-setup.pdf} \\[1mm]
     \caption[Real data capture setup]{Real data capture setup. HDR photographs of the sky and of the object (owl statuette) are simultaneously captured by two cameras installed on the roof of a tall building.}
     \label{fig:real-data-setup}
-    \vspace{-2mm}
 \end{figure}
 
 \begin{figure*}[t]
@@ -735,7 +730,6 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
     \includegraphics[width=0.92\linewidth]{./figures/realData/realData4.pdf}
     \caption[Validation on real data]{Validation on real data, captured on 11-OCT-14 (partly cloudy). Four distinct time intervals are analyzed and, for each one, the following information is displayed, from left to right: ($i$) log sun intensity; ($ii$) noise gain $\lambda_\text{max}$ as a function of start time and duration of the interval, as in fig.~\ref{fig:events}; ($iii$) example input images; ($iv$) normals recovered by calibrated outdoor PS; ($v$) normal estimation error at each pixel; and ($vi$) the error distribution, in degrees. For reference, ground truth normals are given on the rightmost plots.}
     \label{fig:real-results}
-    \vspace{-2mm}
 \end{figure*}
 
 \subsection{Experimental validation}
@@ -743,7 +737,6 @@ The ratios $r_\lambda$ were then computed for all normals, over all days in the 
 We validate the analyses in sec.~\ref{sec:modeling_uncertainty} and \ref{sec:ch1_analysis} via calibrated outdoor PS on synthetic and real object images with known ground truth normals. These normals are used as an optimal initialization for computing ground-truth MLVs, thus avoiding convergence issues of nonlinear optimization and allowing us to focus on assessing errors due to illumination effects in the real sky probes. We then perform calibrated outdoor PS on these images using the algorithm in \cite{yu-iccp-13}, with the following two differences: (\emph{i}) we use all possible pairs of images to compute ratios, instead of selecting a single denominator image; and (\emph{ii}) we apply anisotropic regularization~\cite{hernandez-pami-11} to mitigate the impact of badly-conditioned pixels on the surface reconstruction.
 
 %
-\vspace{-3mm}
 \paragraph{Synthetic data}%
 %
 We first consider synthetic images of an owl model rendered with real sky probes. The rendered images were perturbed with additive Gaussian noise at 1\% the median pixel intensity. For each image, one real-world environment map from the database was used as the sole light source. Cast shadows were not simulated to isolate the analysis to the photometric cue alone (see~\cite{webpageXhourPS} for more realistic results with a physically-based rendering engine). 
@@ -760,7 +753,7 @@ We first consider synthetic images of an owl model rendered with real sky probes
 
 We ran calibrated outdoor PS on all time intervals starting at 12:00 or 13:30 for the day 06-NOV-13 (see fig.~\ref{fig:events}(d)), in increments of one hour. The main results of this experiment are shown in fig.~\ref{fig:owl-results}. Fig.~\ref{fig:owl-results}(a) follows ``start time 1'' in fig.~\ref{fig:events}(d); the reconstruction error improves significantly until an interval of 3 hours is reached, at which point the error improves only slightly through the rest of the day. Thus, the additional data provides little new information. In fig.~\ref{fig:owl-results}(b), we now follow the path of ``start time 2'' in fig.~\ref{fig:events}(d); in this case, the error is already quite low after just one hour.
 %
-\vspace{-3mm}
+
 \paragraph{Real data}%
 %
 Another similar experiment considered real photos of a real owl statuette. To capture this data, we set up two cameras on the roof of a tall building as shown in fig.~\ref{fig:real-data-setup}. The first camera, dubbed ``sky camera'', captures omnidirectional photos of the sky using the approach proposed by Stumpfel \etal~\cite{stumpfel-afrigraph-04}. The second, ``object'' camera is equipped with a telephoto zoom lens and captures photos of the statuette. Both cameras capture exposure-bracketed HDR photos simultaneously, once every two minutes\footnote{Data and source code are available on our project webpage~\cite{webpageXhourPS}.}. Ground truth surface normals were obtained by aligning a 3D model of the object (obtained with a 3D scanner) to the image using POSIT~\cite{dementhon-ijcv-95}. 

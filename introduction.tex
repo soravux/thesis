@@ -12,7 +12,7 @@ This is the main topic of this dissertation: developing data-driven approaches t
 %``There is no model; there is only color.'' (Paul Cézanne)
 
 % First chapter
-Recovering the 3D surface of an object can be done by photometric stereo (PS), which is a popular dense shape reconstruction technique that has matured extensively over nearly 40 years~\cite{woodham-opteng-80}.% to work with complex materials and lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12}.
+Recovering the 3D surface of an object can be done by photometric stereo (PS), which is a popular dense shape reconstruction technique that has matured extensively over nearly 40 years~\cite{woodham-opteng-80}. % to work with complex materials and lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12}.
 %Given the excellent PS results obtained in carefully designed laboratory setups,
 Simply put, this technique proposes to recover the 3D surface normals of an object observed under varying illumination from a single viewpoint.
 PS is reputed to give exceptional accuracy on surface normal estimation in fully calibrated environments, where lighting is controlled.
@@ -45,9 +45,6 @@ This thesis is grouped into two main axes: 1) surface reconstruction through pho
 First, chapter~\ref{ch1} provides an in-depth analysis of the information contained in photometric cues throughout a single day and gives performance bounds on Photometric Stereo when performed on intervals down to a single hour. Upon investigation, we found that partially cloudy days brought enough constraints to solve the PS problem using an adapted PS algorithm. However, we show that sunny days in general are lacking the constraints to provide a stable surface reconstruction. In chapter~\ref{ch2}, we go one step further than what is possible using exclusively photometric cues. Since there are not enough information in a single sunny day to do a stable surface reconstruction solely from photometric cues, we employ a deep learning model to learn priors on local surface geometry and sun trajectory patterns. This additional information brings enough supplemental constrains to the PS problem to allow stable surface reconstructions.
 
 Chapters~\ref{ch3} and~\ref{ch4} propose to extract priors from large datasets and utilize them to improve single-image outdoor lighting and camera calibration, respectively. Most current outdoor lighting estimation techniques rely exclusively on handcrafted features, limiting their application to a determined environment, for example urban scenes~\cite{lalonde-ijcv-12}. By learning features on scenes devoid of specific content, we propose a lighting estimation approach that is robust to generic scenes. Finally, the last chapter covers the problem of camera calibration from a single image. An emphasis is put on extrinsics calibration with respect to the earth, with a focus on finding the horizon within the image, even when hidden within the image. We further analyze human tolerance to errors on those calibration parameters.
-
-
-\todo{remove bib section number}
 
 
 
