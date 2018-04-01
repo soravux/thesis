@@ -1,0 +1,69 @@
+%!TEX root = main.tex
+\chapter{Related Work}
+
+\section{Photometric Stereo}
+
+
+As shown in Woodham's seminal work~\cite{woodham-opteng-80}, for Lambertian surfaces, calibrated PS computes a (scaled) normal vector in closed form as a simple linear function of the input image pixels; this linear mapping is only well-defined for images obtained under three or more (known) non-coplanar lighting directions.
+% intro on PS
+Since its inception in the early 80s, it has been explored under many an angle. Whether it has been to improve its ability to deal with complex materials~\cite{alldrin-cvpr-08}, lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12} or enhance other techniques like multiview stereo~\cite{snavely-ijcv-08}, the myriad of papers published on the topic are testament to the interest this technique has garnered in the community. A more detailed overview of PS can be found in the recent, excellent review in~\cite{shi-tpami-18}. While most of the papers on this topic have focused on images captured in the lab, recent progress has allowed the application of PS on images captured outdoors, lit by the more challenging case of uncontrollable, natural illumination. 
+
+% ask the question: how many images do we need?
+A central question to any PS practitioner is that of the quality and amount of data required to achieve good performance. What should the lighting conditions be during data capture? How many images (illumination conditions) are needed? What is the shortest time interval required to collect these samples?
+
+In the lab, theoretical analyses for Lambertian surfaces, lit by point light sources, reveal that the minimum number of images is three~\cite{woodham-opteng-80} and that the optimal light configuration yields an orthogonal triplet of light directions~\cite{drbohlav-iccv-05}. While such theoretical guarantees are reassuring, they are however much harder to obtain for the case of more complex, non-Lambertian reflectance, or with more general lighting models. Thus, practitioners are left without guidance in the task of determining when to stop capturing data, an inherently tedious trial-and-error process. As a result, it is not rare for PS datasets to include hundreds of images~\cite{alldrin-cvpr-08} in an uncertain attempt to obtain accurate reconstruction.
+
+While capturing more data in the lab can be done relatively easily, the same cannot be said for outdoor imagery. Indeed, one does not control the sun and the other atmospheric elements in the sky; so one must wait for lighting conditions to change on their own. A creative solution to this problem was proposed in~\cite{hung-wacv-15}, but it is limited to objects that can be placed on a small moving platform. Therefore, capturing more data for fixed, large objects still means waiting days, or even months, potentially~\cite{ackermann-cvpr-12,abrams-eccv-12}. 
+
+Luckily, techniques that reduce the requirement to a single day's worth of data have also been proposed~\cite{yu-iccp-13,shen-pg-14,jung-cvpr-15}. However, this is still much longer than what can be done in the lab, where light sources can be waved around rapidly and data be captured in minutes. And although recent work has investigated which days provide more favorable atmospheric conditions for outdoor PS~\cite{shen-pg-14}, so far, no study has systematically demonstrated the performance of outdoor PS with less than a full day's worth of data.
+
+
+
+
+
+% solar plane, nearly singular (ill-conditioned) light matrix, 2-image PS
+% regularization breaks at (sharp) surface discontinuities
+
+% webcams, solar plane
+Subsequent work on outdoor PS has struggled to meet this requirement since, over the course of a day, the sun shines from directions that nearly lie on a plane. These co-planar sun directions then yield an ill-posed problem known as two-source PS; despite extensive research using integrability and smoothness constraints~\cite{onn-ijcv-90,hernandez-pami-11}, results still present strong regularization artifacts on surfaces that are not smooth everywhere. To avoid this problem in outdoor PS, authors initially proposed gathering months of data, watching the sun elevation change over the seasons~\cite{abrams-eccv-12,ackermann-cvpr-12}. More recently, Shen~{\em et al.}~\cite{shen-pg-14} noted that the coplanarity of the daily sun directions actually varies throughout the year, with single-day outdoor PS becoming more ill-posed at high latitudes near the winter solstice, and worldwide near the equinoxes.
+
+% single day, ditch the even with a point light source model
+
+% richer lighting models
+To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. This is done by employing (hemi-)spherical environment maps~\cite{debevec-siggraph-98} that are either real sky images~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15} or synthesized by parametric sky models~\cite{inose-tcva-13,jung-cvpr-15}. Using a large database of real sky images, Hold-Geoffroy~{\em et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour.
+
+Despite these developments, state-of-the-art approaches in calibrated~\cite{yu-iccp-13} and semi-calibrated~\cite{jung-cvpr-15} (based on precise geolocation) outdoor PS are still prone to potentially long waits for ideal conditions to arise in the sky; and verifying the occurrence of such events is still a trial-and-error process. These facts have motivated our goal of developing a smarter approach that uses deep learning techniques to resolve ambiguities in outdoor PS by aggregating prior knowledge on object geometry, material and their interaction with natural outdoor illumination. The approach we propose is the first of its kind; so far, deep PS had only been applied in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
+
+%\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18} Deep learning methods applied to photometric stereo (not one-day)
+
+% Talk about DiLiGent~\cite{shi-tpami-18}? (Their objects have homogeneous material, with piecewise constant albedo, our method would work with any albedo pattern using the division trick. Also, only normal maps, no 3D models. Their sampling of 96 lighting directions does not approximate well the path of the sun through a day.)
+
+% single image (nishino, deep learning)
+Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\cite{oxholm-eccv-12,johnson-cvpr-11,barron-pami-15} attempt to recover 3D normals from a single input image, in which case the shading cue alone is obviously insufficient to uniquely define a solution. Thus, SfS relies strongly on priors of different complexities and deep learning is quickly bringing advances to the field~\cite{eigen-iccv-15,shu-cvpr-17,wu-nips-17}. While this is encouraging, here we seek to improve the accuracy of 3D normal estimation by relying less heavily on priors and more strongly on the photometric cues obtained from multiple images. In addition, we also avoid restricting the approach to a specific type of object and reflectance model ({\em e.g.}, human faces, Lambertian~\cite{shu-cvpr-17}).
+
+\section{Lighting calibration}
+
+\paragraph{Outdoor illumination models} Perez et al.~\cite{perez1993allweather} proposed an all-weather sky luminance distribution model. This model was a generalization of the CIE standard sky model and is parameterized by five coefficients that can be varied to generate a wide range of skies. Preetham~\cite{preetham-siggraph-99} proposed a simplified version of the Perez model that explains the five coefficients using a single unified atmospheric turbidity parameter. Lalonde and Matthews~\cite{lalonde-3dv-14} combined the Preetham sky model with a novel empirical sun model. Ho\v{s}ek and Wilkie proposed a sky luminance model~\cite{hosek-siggraph-12} and solar radiance function~\cite{hosek-cga-13}.
+%is parameterized by a single turbidity. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13}. 
+
+\paragraph{Outdoor lighting estimation} Lalonde et al.~\cite{lalonde-ijcv-12} combine multiple cues, including shadows, shading of vertical surfaces, and sky appearance to predict the direction and visibility of the sun. This is combined with an estimation of sky illumination (represented by the Perez model~\cite{perez1993allweather}) from sky pixels~\cite{lalonde-ijcv-10}. Similar to this work, we use a physically-based model for outdoor illumination. However, instead of designing hand-crafted features to estimate illumination, we train a CNN to directly learn the highly complex mapping between image pixels and illumination parameters. 
+
+Other techniques for single image illumination estimation rely on known geometry and/or strong priors on scene reflectance, geometry and illumination~\cite{barron-pami-15,barron2013rgbd,lombardi2016reflectance}. These priors typically do not generalize to large-scale outdoor scenes. Karsch et al.~\cite{karsch2014automatic} retrieve panoramas (from the SUN360 panorama dataset~\cite{xiao-cvpr-12}) with features similar to the input image, and refine the retrieved panoramas to compute the illumination. However, the matching metric is based on image content which may not be directly linked with illumination. 
+
+Another class of techniques simplify the problem by estimating illumination from image collections. Multi-view image collections have been used to reconstruct geometry, which is used to recover outdoor illumination~\cite{haber2009relighting,lalonde-3dv-14,shan2015visual,duchene2015multiview}, sun direction~\cite{wehrwein2015shadows}, or place and time of capture~\cite{hauagge2014outdoor}. Appearance changes have also been used to recover colorimetric variations of outdoor sun-sky illumination~\cite{sunkavalli2008color}. 
+
+\paragraph{Inverse graphics/vision problems in deep learning} Following the remarkable success of deep learning-based methods on high-level recognition problems, these approaches are now being increasingly used to solve inverse graphics problems~\cite{kulkarni15dcign}. In the context of understanding scene appearance, previous work has leveraged deep learning to estimate depth and surface normals~\cite{eigen2015depth,bansal2016marr}, recognize materials~\cite{bell2015minc}, decompose intrinsic images~\cite{zhou2015intrinsic}, recover reflectance maps~\cite{rematas-cvpr-16}, and estimate, in a setup similar to physics-based techniques~\cite{lombardi2016reflectance}, lighting from objects of specular materials~\cite{georgoulis2016delight}. We believe ours is the first attempt at using deep learning for full HDR outdoor lighting estimation from a single image.
+
+
+\section{Camera calibration}
+
+Geometric camera calibration is a widely studied topic that has a significant impact on a variety of applications including metrology~\cite{Criminisi2000}, 3D inference~\cite{Criminisi00,Fouhey2013} and augmented reality, both indoor~\cite{hedau-iccv-09,izadinia-cvpr-17} and outdoor~\cite{hoiem-cvpr-06}. As such, many techniques were developed to perform precise geometric calibration using a calibration target inserted beforehand in the image~\cite{Sturm1999,Zhang2002,Heikkila1997,Chen2004}. For after-the-fact calibration, most work on camera calibration aim to detect specific geometric objects in the image typically present in human-made environments~\cite{Rother2000,Melo2013}. Similarly, PoseNet~\cite{kendall-iccv-15} performs camera relocalization by jointly learning location and orientation. More recently, methods for straighting up photographs like Upright~\cite{Lee2014} recover calibration by finding vanishing points. Other work proposed to take advantage of lighting cues to calibrate~\cite{Lalonde2010,Workman2014}, circumventing the need for human-made environments. However, these techniques often fail on complex scenes where semantic reasoning is required to discard misleading textures and visual cues. To solve the need for high-level reasoning, deep convolutional neural networks were recently used to estimate field of view~\cite{Workman2015a} and horizon lines~\cite{Workman2016}, bringing camera calibration on single images to a wider variety of scenes.
+
+Understanding the limits of the human visual system has also received significant attention, with studies quantifying color sensitivity~\cite{fairchild2013color}, how reliably we can detect photo manipulations artifacts~\cite{Farid2010} and how people perceive distortion in street-level image-based rendering~\cite{Vangorp2013}. More recently, perceptual studies were performed to assess human appreciation on tasks like super-resolution~\cite{ledig-cvpr-17}, image caption generation~\cite{vinyals-cvpr-15} and video temporal alignment~\cite{papazoglou-accv-16}.
+
+
+
+\bibliographystyle{abbrvnat}
+\bibliography{library}
+%\bibliography{CVPR17/main}
+%\bibliography{CVPR18/refs}
