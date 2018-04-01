@@ -19,7 +19,12 @@ Our CNN design seeks a balance between fully-calibrated PS (too restrictive) and
 
 % analemma (Wikipedia): position of the Sun in the sky over the course of a year, as viewed at a fixed time of day and from a fixed location on the Earth
 
-Therefore, our outdoor PS network is required to learn priors not only on object materials and local geometry (diffuse, specular, smooth, ...), but also priors on lighting (variability in sun intensity and elevation with respect to geolocation and time of year). This knowledge is encoded in the network, which learns to output 3D normals as a non-linear function of input image patches taken throughout a day. This rich prior knowledge allows us to obtain a reconstruction performance that outperforms the current state-of-the-art on real lighting data with only 3 images, which is much lower than the 6-18 typically used by previous work~\cite{yu-iccp-13,jung-cvpr-15}. Our fully trained method will be made publicly available.
+Therefore, our outdoor PS network is required to learn priors not only on object materials and local geometry (diffuse, specular, smooth, ...), but also priors on lighting (variability in sun intensity and elevation with respect to geolocation and time of year). This knowledge is encoded in the network, which learns to output 3D normals as a non-linear function of input image patches taken throughout a day. This rich prior knowledge allows us to resolve ambiguities and obtain a reconstruction performance that outperforms the current state-of-the-art on real lighting data with only 3 images, which is much lower than the 6-18 typically used by previous work~\cite{yu-iccp-13,jung-cvpr-15}. The approach we propose is the first of its kind, coupling photometric cues with deep learning priors to tackle the outdoor PS problem.
+
+While deep learning has successfully been applied to shape-from-shading~\cite{eigen-iccv-15,shu-cvpr-17,wu-nips-17}, here we seek to improve the accuracy of 3D normal estimation by relying less heavily on priors and more strongly on the photometric cues obtained from multiple images. In addition, we also avoid restricting the approach to a specific type of object and reflectance model ({\em e.g.}, human faces, Lambertian~\cite{shu-cvpr-17}).
+
+
+%These facts have motivated our goal of developing a smarter approach that uses deep learning techniques to resolve ambiguities in outdoor PS by aggregating prior knowledge on object geometry, material and their interaction with natural outdoor illumination. 
 
 %To train our CNN, we realistically render synthetic datasets with a large variety of image patches with different geometry, materials and lighting.
 
