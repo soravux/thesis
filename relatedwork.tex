@@ -44,26 +44,37 @@ Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\
 
 \section{Lighting calibration}
 
-Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``There is no model; there is only color.'' Understanding the lighting of a scene allows for a deeper 
+Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials.
 
-In this section, we will focus on outdoor illumination models and algorithms to estimate it. Finally, some 
+In this section, we will focus on outdoor illumination models and algorithms to estimate them and related inverse rendering approaches.
 
-\paragraph{Analytical outdoor illumination models}
+\subsection{Analytical outdoor illumination models}
 
-Analytical sky models are composed of a single empirically-derived closed-form equation to obtain the sky.
+Analytical sky models are composed of a single empirically-derived closed-form equation to obtain the luminance of the sky. While they are typically used for rendering and real-time applications because of their high evaluation speed.
 
-Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model is parameterized by five coefficients that can be varied to generate a wide range of skies. Preetham~\cite{preetham-siggraph-99} proposed a simplified version of the Perez model that derives the five coefficients from a single unified atmospheric turbidity parameter. Ho\v{s}ek and Wilkie proposed a sky luminance model~\cite{hosek-siggraph-12}, which is parameterized by this same turbidity parameter. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13}. Lalonde and Matthews~\cite{lalonde-3dv-14} combined the Preetham sky model with a novel empirical sun model.
+The first weather condition that was modeled is the overcast sky. Kimball and Hand~\cite{kimball1921sky} were the firsts to report in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky in 1942. This work has been revisited and adopted as the CIE overcast sky model in 1996~\cite{cie1996s}. In this model, the luminance of the sky $Y_z$ in function of the zenith angle $\theta$ is defined as
+\begin{equation}
+Y_z = \frac{1 + 2 \; \cos\left( \theta \right)}{3} \quad.
+\end{equation}
+To summarize, the sky luminance of overcast days is proportional to the $\cos$ of the zenith angle. While this model predicts quite accurately overcast days, it does not tell the whole story about daylight in general.
 
-\paragraph{Physically-based outdoor illumination models}
+For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model is parameterized by five coefficients that can be varied to generate a wide range of skies. Preetham~\cite{preetham-siggraph-99} proposed a simplified version of the Perez model that derives the five coefficients from a single unified atmospheric turbidity parameter, which they fit on physical simulations. Eight years later, a critic of this Preetham model is published~\cite{zotti2007critical}, relating the relatively small valid turbidity range, the systematically too bright antisolar region and the too smooth intensity peak toward the sun. Most of those issues were solved by Ho\v{s}ek and Wilkie, which proposed a sky luminance model~\cite{hosek-siggraph-12}, still parameterized by this same turbidity parameter. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}. Lalonde and Matthews~\cite{lalonde-3dv-14} also contributed to solving those issues by combining the Preetham sky model with a novel empirical sun model.
 
-Contrarily to analytical models, physically-based models 
+\subsection{Physically-based outdoor illumination models}
 
-Kimball and Hand~\cite{kimball1921sky} were the first to notice in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky in 1942. This work has been revisited and adopted as the CIE\todo{finish}
+Contrarily to analytical models, physically-based models are based on physical simulations to provide a luminance distribution. They are usually slower but typically closer to real sky luminance measurements than analytical models.
 
+The first model to explain the principal physical phenomenons coming into play to form daylight was published by Nishita et al. in their seminal work of 1993~\cite{nishita1993display}. They explain that two types of interactions with the electromagnetic field dominate the sky appearance. The first one concerns clear skies, modeling interactions with small aerosols. Specifically, it encompasses particles with a radius $r$ significantly smaller than the light wavelength $\lambda$ ($\frac{2\pi r}{\lambda} \ll 1$). This case of interactions is called the Rayleigh scattering and predicts the interactions with nitrogen and hydrogen, the major constituents of air. This is the reason why the sky is perceived blue. The second type of interactions solves Maxwell's equations for the case of particles with a radius $r$ roughly the same size as the light wavelength $\lambda$ ($\frac{2\pi r}{\lambda} \approx 1$). It represents interactions of light with heavier molecules like water particles in suspension in the atmosphere, in clouds or during fog. This class of interactions is called the Mie scattering. Summing both Rayleigh and Mie scattering together gives luminance estimations very close to the measurements performed during daylight, confirming the dominance of those two phenomenons for the appearance of the sky.
 
-Interestingly, a night sky model has also been developed~\cite{jensen2001nightskymodel}.
+This sum of both Rayleigh and Mie scattering is also used as reference when developing the Preetham~\cite{preetham-siggraph-99} and Ho\v{s}ek-Wilkie~\cite{hosek-siggraph-12} analytical models. The parameters of those analytic models were fit to the physical simulations of both Rayleigh and Mie scattering using either a least square quadratic optimization or a spline, respectively.
 
-\paragraph{Outdoor lighting estimation}
+In subsequent work, Nishita et al.~\cite{nishita1996display} enhanced their model by adding two elements: 1) the influence of ground albedo on the sky and 2) multiple scattering, meaning considering more than a single interaction before observation like their previous publication.
+
+Most published physically-based models are variants of the Rayleigh and Mie scattering proposed in~\cite{nishita1993display}, usually focusing on speeding up the simulation~\cite{oneal2005accurate}, increasing agreement with measures~\cite{haber2005physically,bruneton2008precomputed} or extending it to arbitrary atmospheres like oceans~\cite{elek2010real}.
+
+Daylight is not the only phenomenon that received attention in the literature. A night sky model has also been developed~\cite{jensen2001nightskymodel}, taking into consideration the sun's reflection on the moon as well as the light emitted from the stars.
+
+\subsection{Outdoor lighting estimation}
 
 Lalonde et al.~\cite{lalonde-ijcv-12} combine multiple cues, including shadows, shading of vertical surfaces, and sky appearance to predict the direction and visibility of the sun. This is combined with an estimation of sky illumination (represented by the Perez model~\cite{perez1993allweather}) from sky pixels~\cite{lalonde-ijcv-10}. Similar to this work, we use a physically-based model for outdoor illumination. However, instead of designing hand-crafted features to estimate illumination, we train a CNN to directly learn the highly complex mapping between image pixels and illumination parameters. 
 
@@ -71,7 +82,7 @@ Other techniques for single image illumination estimation rely on known geometry
 
 Another class of techniques simplify the problem by estimating illumination from image collections. Multi-view image collections have been used to reconstruct geometry, which is used to recover outdoor illumination~\cite{haber2009relighting,lalonde-3dv-14,shan2015visual,duchene2015multiview}, sun direction~\cite{wehrwein2015shadows}, or place and time of capture~\cite{hauagge2014outdoor}. Appearance changes have also been used to recover colorimetric variations of outdoor sun-sky illumination~\cite{sunkavalli2008color}. 
 
-\paragraph{Inverse graphics/vision problems in deep learning}
+\subsection{Inverse graphics/vision problems in deep learning}
 
 Following the remarkable success of deep learning-based methods on high-level recognition problems, these approaches are now being increasingly used to solve inverse graphics problems~\cite{kulkarni15dcign}. In the context of understanding scene appearance, previous work has leveraged deep learning to estimate depth and surface normals~\cite{eigen-iccv-15,bansal2016marr}, recognize materials~\cite{bell2015minc}, decompose intrinsic images~\cite{zhou2015intrinsic}, recover reflectance maps~\cite{rematas-cvpr-16}, and estimate, in a setup similar to physics-based techniques~\cite{lombardi2016reflectance}, lighting from objects of specular materials~\cite{georgoulis2016delight}. We believe ours is the first attempt at using deep learning for full HDR outdoor lighting estimation from a single image.
 
