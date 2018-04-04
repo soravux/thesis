@@ -7,19 +7,19 @@ In this chapter, we will cover the literature of the two main axes of research p
 \section{Photometric Stereo}
 
 
-As shown in Woodham's seminal work~\cite{woodham-opteng-80}, for Lambertian surfaces, calibrated PS computes a (scaled) normal vector in closed form as a simple linear function of the input image pixels; this linear mapping is only well-defined for images obtained under three or more (known) non-coplanar lighting directions.
+As shown in Woodham's seminal work~\cite{woodham-opteng-80}, for Lambertian surfaces, calibrated PS computes a (scaled) normal vector in closed form as a simple linear function of the input image pixels; this linear mapping is only well-defined for images obtained under three or more (known) non-coplanar lighting directions. 
 % intro on PS
 Since its inception in the early 80s, it has been explored under many an angle. Whether it has been to improve its ability to deal with complex materials~\cite{alldrin-cvpr-08}, lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12} or enhance other techniques like multiview stereo~\cite{snavely-ijcv-08}, the myriad of papers published on the topic are testament to the interest this technique has garnered in the community. A more detailed overview of general PS can be found in the recent, excellent review in~\cite{shi-tpami-18}. While most of the papers on this topic have focused on images captured in the lab, recent progress has allowed the application of PS on images captured outdoors, lit by the more challenging case of uncontrollable, natural illumination. 
 
 % ask the question: how many images do we need?
-A central question to any PS practitioner is that of the quality and amount of data required to achieve good performance. What should the lighting conditions be during data capture? How many images (illumination conditions) are needed? What is the shortest time interval required to collect these samples?
+A central question to any PS practitioner is that of the quality and amount of data required to achieve good performance. What should the lighting conditions be during data capture? How many images (illumination conditions) are needed? What is the shortest time interval required to collect these samples? 
 
-In the lab, theoretical analyses for Lambertian surfaces, lit by point light sources, reveal that the minimum number of images is three~\cite{woodham-opteng-80} and that the optimal light configuration yields an orthogonal triplet of light directions~\cite{drbohlav-iccv-05}. While such theoretical guarantees are reassuring, they are however much harder to obtain for the case of more complex, non-Lambertian reflectance, or with more general lighting models. Thus, practitioners are left without guidance in the task of determining when to stop capturing data, an inherently tedious trial-and-error process. As a result, it is not rare for PS datasets to include hundreds of images~\cite{alldrin-cvpr-08} in an uncertain attempt to obtain accurate reconstruction.
+In the lab, theoretical analyses for Lambertian surfaces, lit by point light sources, reveal that the minimum number of images is three~\cite{woodham-opteng-80} and that the optimal light configuration yields an orthogonal triplet of light directions~\cite{drbohlav-iccv-05}. While such theoretical guarantees are reassuring, they are however much harder to obtain for the case of more complex, non-Lambertian reflectance, or with more general lighting models. Thus, practitioners are left without guidance in the task of determining when to stop capturing data, an inherently tedious trial-and-error process. As a result, it is not rare for PS datasets to include hundreds of images~\cite{alldrin-cvpr-08} in an uncertain attempt to obtain accurate reconstruction. 
 
 Subsequent work on outdoor PS has struggled to meet the light non-coplanarity requirement since, over the course of a day, the sun shines from directions that nearly lie on a plane. These co-planar sun directions then yield an ill-posed problem known as two-source PS; despite extensive research using integrability and smoothness constraints~\cite{onn-ijcv-90,hernandez-pami-11}, results still present strong regularization artifacts on surfaces that are not smooth everywhere. To avoid this problem in outdoor PS, authors initially proposed gathering months of data, watching the sun elevation change over the seasons~\cite{abrams-eccv-12,ackermann-cvpr-12}. More recently, Shen~{\em et al.}~\cite{shen-pg-14} noted that the coplanarity of the daily sun directions actually varies throughout the year, with single-day outdoor PS becoming more ill-posed at high latitudes near the winter solstice, and worldwide near the equinoxes. A creative solution to this problem was proposed in~\cite{hung-wacv-15}, but it is limited to objects that can be placed on a small moving platform. Therefore, capturing more data for fixed, large objects meant until recently waiting days, or even months, potentially~\cite{ackermann-cvpr-12,abrams-eccv-12}. 
 
 % richer lighting models
-To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. This is done by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} that are either real sky images~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15} or synthesized by parametric sky models~\cite{inose-tcva-13,jung-cvpr-15}. Using a large database of real sky images, Hold-Geoffroy~{et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour.
+To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. This is done by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} that are either real sky images~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15} or synthesized by parametric sky models~\cite{inose-tcva-13,jung-cvpr-15}. Using a large database of real sky images, Hold-Geoffroy~{et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour. 
 
 %While capturing more data in the lab can be done relatively easily, the same cannot be said for outdoor imagery. Indeed, one does not control the sun and the other atmospheric elements in the sky; so one must wait for lighting conditions to change on their own. 
 
@@ -41,24 +41,20 @@ Despite these developments, state-of-the-art approaches in calibrated~\cite{yu-i
 Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\cite{Horn1989,Zhang1999,Langer1994,oxholm-eccv-12,johnson-cvpr-11,barron-pami-15} attempt to recover 3D normals from a single input image, in which case the shading cue alone is obviously insufficient to uniquely define a solution. Thus, SfS relies strongly on priors of different complexities and deep learning is quickly bringing advances to the field~\cite{eigen-iccv-15,shu-cvpr-17,wu-nips-17,shu-cvpr-17}.
 
 
+\todo{Add about Jung + Yu, take their figures}
 
-\section{Lighting calibration}
+
+\section{Models for approximating outdoor lighting}
 
 Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials.
 
-In this section, we will focus on outdoor illumination models. First, the most notable analytical and physically-based sky models are described, followed by algorithms to estimate their calibration. Finally, we cover related inverse rendering approaches.
+In this section, we will present the most notable analytical and physically-based outdoor illumination models as well as the methods to estimate their parameters from images.
 
-\subsection{Analytical outdoor illumination models}
+Finally, we cover related inverse rendering approaches.
 
-Analytical sky models are composed of a single empirically-derived closed-form equation to obtain the luminance of the sky. While they are typically used for rendering and for real-time applications because of their high evaluation speed, their accuracy is somewhat worse than physically-based models, giving skies that agrees less with real skies measurements.
+\todo{talk more about turbidity \& hosek-wilkie}
 
-The first weather condition that was modeled in the literature is the overcast sky. Kimball and Hand~\cite{kimball1921sky} were the firsts to report in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Two decades later, Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky. This work has been revisited and adopted as the CIE overcast sky model in 1996~\cite{cie1996s}. In this model, the luminance of the sky $Y_z$ in function of the zenith angle $\theta$ is defined as
-\begin{equation}
-Y_z = \frac{1 + 2 \; \cos\left( \theta \right)}{3} \quad.
-\end{equation}
-To summarize, the sky luminance of overcast days is proportional to the $\cos$ of the zenith angle. While this model predicts quite accurately overcast days, it does not tell the whole story about daylight in general.
-
-For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model is parameterized by five coefficients that can be varied to generate a wide range of skies. Preetham~\cite{preetham-siggraph-99} proposed a simplified version of the Perez model that derives empirically the five coefficients from a single unified atmospheric turbidity parameter, which they fit to physical simulations. Eight years later, a critic of this Preetham model is published~\cite{zotti2007critical}, relating the relatively small valid turbidity range, the systematically too bright antisolar region and the too smooth intensity peak toward the sun. Most of those issues were solved by Ho\v{s}ek and Wilkie, which proposed a sky luminance model~\cite{hosek-siggraph-12}, still parameterized by this same turbidity parameter. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}. Lalonde and Matthews~\cite{lalonde-3dv-14} also contributed to solving the issues of the Preetham model by combining it with a novel empirical sun model.
+\todo{section: model fitting and use}
 
 \subsection{Physically-based outdoor illumination models}
 
@@ -95,7 +91,23 @@ Most published physically-based models are variants of the Rayleigh and Mie scat
 
 Daylight is not the only phenomenon that received attention in the literature. A night sky model has also been developed~\cite{jensen2001nightskymodel}, taking into consideration the sun's reflection on the moon as well as the light emitted from the stars.
 
-\subsection{Outdoor lighting estimation}
+\subsection{Analytical outdoor illumination models}
+
+\todo{take figures from Preetham or HW}
+
+Analytical sky models are composed of a single empirically-derived closed-form equation to obtain the luminance of the sky. While they are typically used for rendering and for real-time applications because of their high evaluation speed, their accuracy is somewhat worse than physically-based models, giving skies that agrees less with real skies measurements.
+
+The first weather condition that was modeled in the literature is the overcast sky. Kimball and Hand~\cite{kimball1921sky} were the firsts to report in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Two decades later, Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky. This work has been revisited and adopted as the CIE overcast sky model in 1996~\cite{cie1996s}. In this model, the luminance of the sky $Y_z$ in function of the zenith angle $\theta$ is defined as
+\begin{equation}
+Y_z = \frac{1 + 2 \; \cos\left( \theta \right)}{3} \quad.
+\end{equation}
+To summarize, the sky luminance of overcast days is proportional to the $\cos$ of the zenith angle. While this model predicts quite accurately overcast days, it does not tell the whole story about daylight in general.
+
+For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model is parameterized by five coefficients that can be varied to generate a wide range of skies. Preetham~\cite{preetham-siggraph-99} proposed a simplified version of the Perez model that derives empirically the five coefficients from a single unified atmospheric turbidity parameter, which they fit to physical simulations. Eight years later, a critic of this Preetham model is published~\cite{zotti2007critical}, relating the relatively small valid turbidity range, the systematically too bright antisolar region and the too smooth intensity peak toward the sun. Most of those issues were solved by Ho\v{s}ek and Wilkie, which proposed a sky luminance model~\cite{hosek-siggraph-12}, still parameterized by this same turbidity parameter. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}. Lalonde and Matthews~\cite{lalonde-3dv-14} also contributed to solving the issues of the Preetham model by combining it with a novel empirical sun model.
+
+\section{Parameters estimation for outdoor illumination models}
+
+\todo{add Jung}
 
 Lalonde et al.~\cite{lalonde-ijcv-12} combine multiple cues, including shadows, shading of vertical surfaces, and sky appearance to predict the direction and visibility of the sun. This is combined with an estimation of sky illumination (represented by the Perez model~\cite{perez1993allweather}) from sky pixels~\cite{lalonde-ijcv-10}. Similar to this work, we use a physically-based model for outdoor illumination. However, instead of designing hand-crafted features to estimate illumination, we train a CNN to directly learn the highly complex mapping between image pixels and illumination parameters. 
 
@@ -103,12 +115,16 @@ Other techniques for single image illumination estimation rely on known geometry
 
 Another class of techniques simplify the problem by estimating illumination from image collections. Multi-view image collections have been used to reconstruct geometry, which is used to recover outdoor illumination~\cite{haber2009relighting,lalonde-3dv-14,shan2015visual,duchene2015multiview}, sun direction~\cite{wehrwein2015shadows}, or place and time of capture~\cite{hauagge2014outdoor}. Appearance changes have also been used to recover colorimetric variations of outdoor sun-sky illumination~\cite{sunkavalli2008color}. 
 
-\subsection{Inverse graphics/vision problems in deep learning}
+% \subsection{Inverse graphics/vision problems in deep learning}
 
-Following the remarkable success of deep learning-based methods on high-level recognition problems, these approaches are now being increasingly used to solve inverse graphics problems~\cite{kulkarni15dcign}. In the context of understanding scene appearance, previous work has leveraged deep learning to estimate depth and surface normals~\cite{eigen-iccv-15,bansal2016marr}, recognize materials~\cite{bell2015minc}, decompose intrinsic images~\cite{zhou2015intrinsic}, recover reflectance maps~\cite{rematas-cvpr-16}, and estimate, in a setup similar to physics-based techniques~\cite{lombardi2016reflectance}, lighting from objects of specular materials~\cite{georgoulis2016delight}. We believe ours is the first attempt at using deep learning for full HDR outdoor lighting estimation from a single image.
+% \todo{enlever?}
+
+% Following the remarkable success of deep learning-based methods on high-level recognition problems, these approaches are now being increasingly used to solve inverse graphics problems~\cite{kulkarni15dcign}. In the context of understanding scene appearance, previous work has leveraged deep learning to estimate depth and surface normals~\cite{eigen-iccv-15,bansal2016marr}, recognize materials~\cite{bell2015minc}, decompose intrinsic images~\cite{zhou2015intrinsic}, recover reflectance maps~\cite{rematas-cvpr-16}, and estimate, in a setup similar to physics-based techniques~\cite{lombardi2016reflectance}, lighting from objects of specular materials~\cite{georgoulis2016delight}. We believe ours is the first attempt at using deep learning for full HDR outdoor lighting estimation from a single image.
 
 
 \section{Camera calibration}
+
+\todo{faire comme PS}
 
 Geometric camera calibration is a widely studied topic that has a significant impact on a variety of applications including metrology~\cite{Criminisi2000}, 3D inference~\cite{Criminisi00,Fouhey2013} and augmented reality, both indoor~\cite{hedau-iccv-09,izadinia-cvpr-17} and outdoor~\cite{hoiem-cvpr-06}. As such, many techniques were developed to perform precise geometric calibration using a calibration target inserted beforehand in the image~\cite{Sturm1999,Zhang2002,Heikkila1997,Chen2004}. For after-the-fact calibration, most work on camera calibration aim to detect specific geometric objects in the image typically present in human-made environments~\cite{Rother2000,Melo2013}. Similarly, PoseNet~\cite{kendall-iccv-15} performs camera relocalization by jointly learning location and orientation. More recently, methods for straighting up photographs like Upright~\cite{Lee2014} recover calibration by finding vanishing points. Other work proposed to take advantage of lighting cues to calibrate~\cite{lalonde-ijcv-10,Workman2014}, circumventing the need for human-made environments. However, these techniques often fail on complex scenes where semantic reasoning is required to discard misleading textures and visual cues. To solve the need for high-level reasoning, deep convolutional neural networks were recently used to estimate field of view~\cite{Workman2015a} and horizon lines~\cite{Workman2016}, bringing camera calibration on single images to a wider variety of scenes.
 
