@@ -46,8 +46,9 @@ Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\
 
 \section{Models for approximating outdoor lighting}
 
-In this section, we will present the most notable physically-based and analytical outdoor illumination models as well as the methods used to estimate their parameters from images.
+Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials.
 
+In this section, we will present the most notable physically-based and analytical outdoor illumination models as well as the methods used to estimate their parameters from images.
 
 \subsection{Physically-based outdoor illumination models}
 
@@ -97,6 +98,7 @@ To summarize, the sky luminance of overcast days is proportional to the $\cos$ o
 For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model defines the luminance of the sky dome as a function of the zenith angle of the considered sky element $\theta$ and the angular distance between this sky element and the sun position $\gamma$:
 \begin{equation}
 Y_z = \left( 1 + A e^{\nicefrac{B}{\cos\theta}} \right)\left( 1 + C e^{D\gamma} + E \cos^2 \gamma \right) \;.
+\label{eq:perez}
 \end{equation}
 This equation is parameterized by five coefficients ($A$-$E$) that can be varied to generate a wide range of skies. The first term in parenthesis represents the luminance decrease as the zenith angle increase while the second term is called an \emph{indicatrix function} and approximates the weather.
 
@@ -104,10 +106,10 @@ Preetham et al.~\cite{preetham-siggraph-99} proposed to reduce the number of coe
 \begin{equation}
 T = \frac{t_m + t_h}{t_m} \;,
 \end{equation}
-where $t_m$ is the optical thickness of the molecular atmosphere (devoid of haze), and $t_h$ is the optical thickness of the haze atmosphere. In order to apply this turbidity parameter to the Perez model, they perform the physical simulation proposed in~\cite{nishita1996display} by varying the turbidity $T$ between 2 and 6. They then fit the 5 parameters ($A$-$E$) to the simulation results using a Levenberg-Marquardt non-linear least squares optimization. They also extend their model with chrominance, leading to the first analytical model with color. 
+where $t_m$ is the optical thickness of the molecular atmosphere (devoid of haze), and $t_h$ is the optical thickness of the haze atmosphere. In order to apply this turbidity parameter to the Perez model, they perform the physical simulation proposed in~\cite{nishita1996display} by varying the turbidity $T$ between 2 and 6. They then fit the 5 parameters ($A$-$E$) of Perez's model to the simulation results using a Levenberg-Marquardt non-linear least squares optimization. They also extend their model with chrominance, leading to the first analytical model with color. 
 Eight years after this Preetham model was proposed, a critic was published~\cite{zotti2007critical} relating the relatively small valid turbidity range, the antisolar region being systematically too bright and the too smooth intensity peak toward the sun.
 
-Lalonde and Matthews~\cite{lalonde-3dv-14} contributed to solving the lack of peakiness issue of the Preetham model by combining it with a novel empirical sun model. Ho\v{s}ek and Wilkie also proposed a sky luminance model~\cite{hosek-siggraph-12} that fixed the antisolar region mismatch, still parameterized by this same turbidity $T$ parameter. An example of the sky dome produced by this sky model is shown in fig.~\ref{fig:hw_sky_model}. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}.
+Lalonde and Matthews~\cite{lalonde-3dv-14} contributed to solving the lack of peakiness issue of the Preetham model by combining it with a novel empirical sun model. Ho\v{s}ek and Wilkie also proposed a sky luminance model~\cite{hosek-siggraph-12} that fixed most of the antisolar region mismatch while still parameterized by this same turbidity $T$ parameter. In order to do so, they performed more simulations, still based on~\cite{nishita1996display} and added 4 parameters to the indicatrix term of eq.~\eqref{eq:perez}. During their simulation, they sample wavelengths from 320nm to 720nm, leading to an hyperspectral model that can interpolate its prediction over the whole visible spectrum. Furthermore, to account for abrupt variations at low solar elevations, they use a quintic-order Bezier polynomial to perform the fit between turbidity, wavelength, ground albedo and the 9 parameters ($A$-$I$) of their proposed analytical equation. An example of the sky dome produced by this sky model is shown in fig.~\ref{fig:hw_sky_model}. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}.
 
 \todo{continue}
 
