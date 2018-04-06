@@ -7,6 +7,13 @@ In this chapter, we will cover the literature of the two main axes of research p
 \section{Photometric Stereo}
 
 
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth]{3rdparty/yu-summary.png}
+\caption[State-of-the-art calibrated photometric stereo]{When performing photometric stereo on images (top row), using a chrome sphere as light probe to capture the illumination (middle row) leads to a richer lighting model than the traditional point light source approach. Results are shown on the bottom row, showing the normal map $\mathbf{n}$ displayed as $\mathbf{n}\cdot\mathbf{l}$ with lighting $\mathbf{l}$ coming from $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (first image) and $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (second image). The third image shows the color-coded normal map. The fourth and fifth images show novel views of the reconstructed 3D surface. Figure taken from~\cite{yu-iccp-13}.}
+\label{fig:yu_summary}
+\end{figure}
+
 As shown in Woodham's seminal work~\cite{woodham-opteng-80}, for Lambertian surfaces, calibrated PS computes a (scaled) normal vector in closed form as a simple linear function of the input image pixels; this linear mapping is only well-defined for images obtained under three or more (known) non-coplanar lighting directions. 
 % intro on PS
 Since its inception in the early 80s, it has been explored under many an angle. Whether it has been to improve its ability to deal with complex materials~\cite{alldrin-cvpr-08}, lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12} or enhance other techniques like multiview stereo~\cite{snavely-ijcv-08}, the myriad of papers published on the topic are testament to the interest this technique has garnered in the community. A more detailed overview of general PS can be found in the recent, excellent review in~\cite{shi-tpami-18}. While most of the papers on this topic have focused on images captured in the lab, recent progress has allowed the application of PS on images captured outdoors, lit by the more challenging case of uncontrollable, natural illumination. 
@@ -17,13 +24,6 @@ A central question to any PS practitioner is that of the quality and amount of d
 In the lab, theoretical analyses for Lambertian surfaces, lit by point light sources, reveal that the minimum number of images is three~\cite{woodham-opteng-80} and that the optimal light configuration yields an orthogonal triplet of light directions~\cite{drbohlav-iccv-05}. While such theoretical guarantees are reassuring, they are however much harder to obtain for the case of more complex, non-Lambertian reflectance, or with more general lighting models. Thus, practitioners are left without guidance in the task of determining when to stop capturing data, an inherently tedious trial-and-error process. As a result, it is not rare for PS datasets to include hundreds of images~\cite{alldrin-cvpr-08} in an uncertain attempt to obtain accurate reconstruction. 
 
 Subsequent work on outdoor PS has struggled to meet the light non-coplanarity requirement since, over the course of a day, the sun shines from directions that nearly lie on a plane. These co-planar sun directions then yield an ill-posed problem known as two-source PS; despite extensive research using integrability and smoothness constraints~\cite{onn-ijcv-90,hernandez-pami-11}, results still present strong regularization artifacts on surfaces that are not smooth everywhere. To avoid this problem in outdoor PS, authors initially proposed gathering months of data, watching the sun elevation change over the seasons~\cite{abrams-eccv-12,ackermann-cvpr-12}. More recently, Shen~{\em et al.}~\cite{shen-pg-14} noted that the coplanarity of the daily sun directions actually varies throughout the year, with single-day outdoor PS becoming more ill-posed at high latitudes near the winter solstice, and worldwide near the equinoxes. A creative solution to this problem was proposed in~\cite{hung-wacv-15}, but it is limited to objects that can be placed on a small moving platform. Therefore, capturing more data for fixed, large objects meant until recently waiting days, or even months, potentially~\cite{ackermann-cvpr-12,abrams-eccv-12}. 
-
-\begin{figure}
-\centering
-\includegraphics[width=0.96\linewidth]{3rdparty/yu-summary.png}
-\caption[State-of-the-art calibrated photometric stereo]{When performing photometric stereo on images (top row), using a chrome sphere as light probe to capture the illumination (middle row) leads to a richer lighting model than the traditional point light source approach. Results are shown on the bottom row, showing the normal map $\mathbf{n}$ displayed as $\mathbf{n}\cdot\mathbf{l}$ with lighting $\mathbf{l}$ coming from $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (first image) and $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (second image). The third image shows the color-coded normal map. The fourth and fifth images show novel views of the reconstructed 3D surface. Figure taken from~\cite{yu-iccp-13}.}
-\label{fig:yu_summary}
-\end{figure}
 
 
 % richer lighting models
