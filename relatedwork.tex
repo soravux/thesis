@@ -18,8 +18,21 @@ In the lab, theoretical analyses for Lambertian surfaces, lit by point light sou
 
 Subsequent work on outdoor PS has struggled to meet the light non-coplanarity requirement since, over the course of a day, the sun shines from directions that nearly lie on a plane. These co-planar sun directions then yield an ill-posed problem known as two-source PS; despite extensive research using integrability and smoothness constraints~\cite{onn-ijcv-90,hernandez-pami-11}, results still present strong regularization artifacts on surfaces that are not smooth everywhere. To avoid this problem in outdoor PS, authors initially proposed gathering months of data, watching the sun elevation change over the seasons~\cite{abrams-eccv-12,ackermann-cvpr-12}. More recently, Shen~{\em et al.}~\cite{shen-pg-14} noted that the coplanarity of the daily sun directions actually varies throughout the year, with single-day outdoor PS becoming more ill-posed at high latitudes near the winter solstice, and worldwide near the equinoxes. A creative solution to this problem was proposed in~\cite{hung-wacv-15}, but it is limited to objects that can be placed on a small moving platform. Therefore, capturing more data for fixed, large objects meant until recently waiting days, or even months, potentially~\cite{ackermann-cvpr-12,abrams-eccv-12}. 
 
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth]{3rdparty/yu-summary.png}
+\caption[State-of-the-art calibrated photometric stereo]{When performing photometric stereo on images (top row), using a chrome sphere as light probe to capture the illumination (middle row) leads to a richer lighting model than the traditional point light source approach. Results are shown on the bottom row, showing the normal map $\mathbf{n}$ displayed as $\mathbf{n}\cdot\mathbf{l}$ with lighting $\mathbf{l}$ coming from $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (first image) and $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (second image). The third image shows the color-coded normal map. The fourth and fifth images show novel views of the reconstructed 3D surface. Figure taken from~\cite{yu-iccp-13}.}
+\label{fig:yu_summary}
+\end{figure}
+
+
 % richer lighting models
-To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. This is done by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} that are either real sky images~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15} or synthesized by parametric sky models~\cite{inose-tcva-13,jung-cvpr-15}. Using a large database of real sky images, Hold-Geoffroy~{et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour. 
+To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. One way to achieve this is by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} of real sky captures~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15}. By inserting light probes into the scene, one is able to capture both the object appearance and its illumination at the same time. An example of one of those methods proposed by Yu et al.~\cite{yu-iccp-13} performing single-day photometric stereo is shown in fig.\ref{fig:yu_summary}. In their work, they propose an iterative method that performs two steps in alternation. First, they estimate the normal using standard photometric stereo. Then, this estimated normal defines a new visibility hemisphere, which in turn leads to a slightly different lighting. These two steps can be repeated until convergence, usually in 3-5 iterations. 
+
+A second way to use richer illumination for photometric stereo is to synthesize the sky using a parametric sky model~\cite{inose-tcva-13,jung-cvpr-15}. This leads to a more constrained formulation of photometric stereo, enabling the relaxation of the calibration requirements. As such, semi-calibrated methods like the one proposed by Jung et al.\cite{jung-cvpr-15} began to appear. In their work, they don't need the capture of the full environment map through a light probe, removing the full calibration requirement. They propose to estimate the albedo of the surface using the first eigenvector of the observed pixels in RGB space. However, their technique is not fully uncalibrated, as they rely on the precise geolocation of the camera in order to constrain the sun path in the sky on a single axis. An example of the results obtained by this algorithm is shown in fig.~\ref{fig:jung_summary}.
+
+
+% Using a large database of real sky images, Hold-Geoffroy~{et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour. 
 
 %While capturing more data in the lab can be done relatively easily, the same cannot be said for outdoor imagery. Indeed, one does not control the sun and the other atmospheric elements in the sky; so one must wait for lighting conditions to change on their own. 
 
@@ -31,7 +44,17 @@ To compensate for limited sun motion, other approaches use richer illumination m
 
 % webcams, solar plane
 
-Despite these developments, state-of-the-art approaches in calibrated~\cite{yu-iccp-13} and semi-calibrated~\cite{jung-cvpr-15} (based on precise geolocation) outdoor PS are still prone to potentially long waits for ideal conditions to arise in the sky; and verifying the occurrence of such events is still a trial-and-error process. So far, deep PS had only been applied in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.50\linewidth]{3rdparty/jung-summary.png}
+\caption[State-of-the-art semi-calibrated photometric stereo]{Example of single day outdoor photometric stereo without light probe inserted. Figure taken from~\cite{jung-cvpr-15}.}
+\label{fig:jung_summary}
+\end{figure}
+
+Despite these developments, calibrated~\cite{yu-iccp-13} and semi-calibrated~\cite{jung-cvpr-15} (based on precise geolocation) outdoor PS are still prone to potentially long waits for ideal conditions to arise in the sky; and verifying the occurrence of such events is still a trial-and-error process.
+
+So far, deep learning had only been applied for photometric stereo in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
 
 %\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18} Deep learning methods applied to photometric stereo (not one-day)
 
@@ -97,23 +120,6 @@ To summarize, the sky luminance of overcast days is proportional to the $\cos$ o
 
 % The physical simulation of both Rayleigh and Mie scattering was also used as reference when developing the Preetham~\cite{preetham-siggraph-99} and Ho\v{s}ek-Wilkie~\cite{hosek-siggraph-12} analytical models. The parameters of those two analytic models were fit to the physical simulations using either a least square quadratic optimization or a spline, respectively.
 
-For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model defines the luminance of the sky dome as a function of the zenith angle of the considered sky element $\theta$ and the angular distance between this sky element and the sun position $\gamma$:
-\begin{equation}
-Y_z = \underbrace{\left( 1 + A e^{\nicefrac{B}{\cos\theta}} \right)}_{\text{geometry factor}} \cdot \underbrace{\left( 1 + C e^{D\gamma} + E \cos^2 \gamma \right)}_{\text{indicatrix function}} \;.
-\label{eq:perez}
-\end{equation}
-This equation is parameterized by five coefficients ($A$-$E$) that can be varied to generate a wide range of skies. The first term in parenthesis represents the luminance decrease as the zenith angle increase while the second term is called an \emph{indicatrix function} and approximates the weather.
-
-Preetham et al.~\cite{preetham-siggraph-99} proposed to reduce the number of coefficients from five down to a single physically meaningful value: Linke's turbidity~\cite{mccartney1976optics}. This parameter is defined as
-\begin{equation}
-T = \frac{t_m + t_h}{t_m} \;,
-\end{equation}
-where $t_m$ is the optical thickness of the molecular atmosphere (devoid of haze), and $t_h$ is the optical thickness of the haze atmosphere. In order to apply this turbidity parameter to the Perez model, they perform the physical simulation proposed in~\cite{nishita1996display} by varying the turbidity $T$ between 2 and 6. They then fit the 5 parameters ($A$-$E$) of Perez's model to the simulation results using a Levenberg-Marquardt non-linear least squares optimization. They then obtain a linear function that maps the parameters optimization to the turbidity $T$. They also extend their model with chrominance, leading to the first analytical model with color. 
-Eight years after this Preetham model was proposed, a critic was published~\cite{zotti2007critical} relating the relatively small valid turbidity range, the antisolar region being systematically too bright and the too smooth intensity peak toward the sun.
-
-Lalonde and Matthews~\cite{lalonde-3dv-14} contributed to solving the lack of peakiness issue of the Preetham model by combining it with a novel empirical sun model. Ho\v{s}ek and Wilkie also proposed a sky luminance model~\cite{hosek-siggraph-12} that fixed most of the antisolar region mismatch while keeping the same turbidity $T$ parameter. In order to do so, they performed more simulations, still based on~\cite{nishita1996display}, and added 4 parameters to the indicatrix term of eq.~\eqref{eq:perez}. During their simulation, they sample the wavelength over eleven spectral channels from 320nm to 720nm, leading to an hyperspectral model that can be interpolated over the whole visible spectrum and slightly into the ultraviolet spectrum. Furthermore, they noted that the linear interpolation used by the Preetham model cannot account for abrupt variations at low solar elevations. To remedy this, they use a quintic-order Bezier polynomial to perform the fit between turbidity, wavelength, ground albedo and the 9 parameters ($A$-$I$) of their proposed analytical equation. An example of the sky dome produced by this sky model is shown in fig.~\ref{fig:hw_sky_model}. In subsequent work, they extended it to include a solar radiance function~\cite{hosek-cga-13} and earth-like extrasolar skies~\cite{wilkie2013predicting}.
-
-\todo{Add sun + lighting results}
 
 \begin{figure}
 \centering
@@ -128,9 +134,41 @@ $T$ = 2 & $T$ = 4 & $T$ = 6 & $T$ = 8 \\
 \label{fig:hw_sky_model}
 \end{figure}
 
-\section{Parameters estimation for outdoor illumination models}
 
-\todo{add Jung?}
+For more general, non-overcast skies, Kittler~\cite{kittler1985luminance} was the first to propose a luminance distribution measurement strategy and predictive model, which eventually became the CIE standard sky model~\cite{darula-cie-sky}. Based on this model, Perez et al.~\cite{perez1993allweather} proposed a generalization called the all-weather sky luminance distribution model. This model defines the luminance of the sky dome as a function of the zenith angle of the considered sky element $\theta$ and the angular distance between this sky element and the sun position $\gamma$:
+\begin{equation}
+Y_z = \underbrace{\left( 1 + A e^{\nicefrac{B}{\cos\theta}} \right)}_{\text{geometric factor}} \cdot \underbrace{\left( 1 + C e^{D\gamma} + E \cos^2 \gamma \right)}_{\text{indicatrix function}} \;.
+\label{eq:perez}
+\end{equation}
+This equation is parameterized by five coefficients ($A$-$E$) that can be varied to generate a wide range of skies. The first term in parenthesis represents the luminance decrease as the zenith angle increase while the second term is called an \emph{indicatrix function} and approximates the weather.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth]{3rdparty/hwsun-suns.png}
+\caption[Examples of suns produced by the Ho\v{s}ek-Wilkie solar model]{Examples of suns produced by the Ho\v{s}ek-Wilkie solar model for various sun elevations and turbidity $T$ values. Figure from~\cite{hosek-siggraph-12}.}
+\label{fig:hw_sun_model}
+\end{figure}
+
+Preetham et al.~\cite{preetham-siggraph-99} proposed to reduce the number of coefficients from five down to a single physically meaningful value: Linke's turbidity~\cite{mccartney1976optics}. This parameter is defined as
+\begin{equation}
+T = \frac{t_m + t_h}{t_m} \;,
+\end{equation}
+where $t_m$ is the optical thickness of the molecular atmosphere (devoid of haze), and $t_h$ is the optical thickness of the haze atmosphere. In order to apply this turbidity parameter to the Perez model, they perform the physical simulation proposed in~\cite{nishita1996display} by varying the turbidity $T$ between 2 and 6. They then fit the 5 parameters ($A$-$E$) of Perez's model to the simulation results using a Levenberg-Marquardt non-linear least squares optimization. They then obtain a linear function that maps the parameters optimization to the turbidity $T$. They also extend their model with chrominance, leading to the first analytical model with color. 
+Eight years after this Preetham model was proposed, a critic was published~\cite{zotti2007critical} relating the relatively small valid turbidity range, the antisolar region being systematically too bright and the too smooth intensity peak toward the sun.
+
+Lalonde and Matthews~\cite{lalonde-3dv-14} contributed to solving the lack of peakiness issue of the Preetham model by combining it with a novel empirical sun model. Ho\v{s}ek and Wilkie also proposed a sky luminance model~\cite{hosek-siggraph-12} that fixed most of the antisolar region mismatch while keeping the same turbidity $T$ parameter. In order to do so, they performed more simulations, still based on~\cite{nishita1996display}, and added 4 parameters to the indicatrix term of eq.~\eqref{eq:perez}. During their simulation, they sample the wavelength over eleven spectral channels from 320nm to 720nm, leading to an hyperspectral model that can be interpolated over the whole visible spectrum and slightly into the ultraviolet spectrum. Furthermore, they noted that the linear interpolation used by the Preetham model cannot account for abrupt variations at low solar elevations. To remedy this, they use a quintic-order Bezier polynomial to perform the fit between turbidity, wavelength, ground albedo and the 9 parameters ($A$-$I$) of their proposed analytical equation. An example of the sky dome produced by this sky model is shown in fig.~\ref{fig:hw_sky_model}. In subsequent work, they extended their model to include a solar radiance function~\cite{hosek-cga-13}, as shown in fig.~\ref{fig:hw_sun_model}. Some of the rendering capabilities of this model is shown in fig.~\ref{fig:hw_renders_model}. Finally, they added earth-like extrasolar skies capabilities to their model~\cite{wilkie2013predicting}.
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth]{3rdparty/hwsun-renders.png}
+\caption[Examples renders lit by the Ho\v{s}ek-Wilkie solar and sky models]{Examples of renders lit by the Ho\v{s}ek-Wilkie solar and sky models. A sun elevation of $8\degr$ was used to produce these renders, with turbidities of (a) 1, (b) 2, (c) 3, (d) 4, (e) 5, (f) 6, (g) 7, (h) 8, (i) 9, and (j) 10. Images are tone-mapped to appear roughly equally bright. Figure from~\cite{hosek-siggraph-12}.}
+\label{fig:hw_renders_model}
+\end{figure}
+
+\section{Parameters estimation for outdoor illumination models}
 
 Aside from the fully overcast sky model, all sky models require some parameters to be estimated in order to reproduce a given sky. A fundamental parameter common to all non-overcast daylight sky models is the position of the sun in the sky. Most models then add some atmospheric parameters like turbidity to increase agreement between prediction and real sky measurements. The calibration of sky models consists into finding the sun position and some atmospheric properties. 
 
