@@ -1,7 +1,8 @@
 %!TEX root = main.tex
 \chapter{Related Work}
 
-In this chapter, we will cover the literature of the two main axes of research presented. First, an overview of the recent literature on photometric stereo is discussed. An emphasis is put on dealing with various illumination conditions, from controlled laboratory conditions to the harder case of outdoor lighting. Then, a review of prior art in lighting and camera calibration is presented. For the latter, we will mainly focus on horizon line estimation, which provides the main extrinsic parameters with respect to the earth.
+In this chapter, we will cover the literature of the two main axes of research presented. First, an overview of the recent literature on photometric stereo is discussed. An emphasis is put on dealing with various illumination conditions, from controlled laboratory conditions to the harder case of outdoor lighting. Then, a review of prior and current art in lighting modeling and estimation is presented. 
+%, followed by a review of camera calibration approaches. For the latter, we will mainly focus on field of view and horizon line estimation, which provides the main extrinsic parameters with respect to the earth.
 
 
 \section{Photometric Stereo}
@@ -10,7 +11,7 @@ In this chapter, we will cover the literature of the two main axes of research p
 \begin{figure}
 \centering
 \includegraphics[width=0.96\linewidth]{3rdparty/yu-summary.png}
-\caption[State-of-the-art calibrated photometric stereo]{When performing photometric stereo on images (top row), using a chrome sphere as light probe to capture the illumination (middle row) leads to a richer lighting model than the traditional point light source approach. Results are shown on the bottom row, showing the normal map $\mathbf{n}$ displayed as $\mathbf{n}\cdot\mathbf{l}$ with lighting $\mathbf{l}$ coming from $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (first image) and $\left[-\nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}, \nicefrac{1}{\sqrt{3}}\right]^T$ (second image). The third image shows the color-coded normal map. The fourth and fifth images show novel views of the reconstructed 3D surface. Figure taken from~\cite{yu-iccp-13}.}
+\caption[State-of-the-art calibrated photometric stereo]{When performing photometric stereo on images (top row), using a chrome sphere as light probe to capture the illumination (middle row) leads to a richer lighting model than the point light source approach typically used. Results are shown on the bottom row, showing the normal map $\mathbf{n}$ displayed as $\mathbf{n}\cdot\mathbf{l}$ with lighting $\mathbf{l}$ coming from $\left(\nicefrac{1}{\sqrt{3}}\right) \cdot \left[\text{-}1, 1, 1\right]^T$ (first image) and $\left( \nicefrac{1}{\sqrt{3}} \right) \cdot \left[1, 1, 1\right]^T$ (second image). The third image shows the color-coded normal map. The fourth and fifth images show novel views of the reconstructed 3D surface. Figure from~\cite{yu-iccp-13}.}
 \label{fig:yu_summary}
 \end{figure}
 
@@ -27,9 +28,9 @@ Subsequent work on outdoor PS has struggled to meet the light non-coplanarity re
 
 
 % richer lighting models
-To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. One way to achieve this is by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} of real sky captures~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15}. By inserting light probes into the scene, one is able to capture both the object appearance and its illumination at the same time. An example of one of those methods proposed by Yu et al.~\cite{yu-iccp-13} performing single-day photometric stereo is shown in fig.\ref{fig:yu_summary}. In their work, they propose an iterative method that performs two steps in alternation. First, they estimate the normal using standard photometric stereo. Then, this estimated normal defines a new visibility hemisphere, which in turn leads to a slightly different lighting. These two steps can be repeated until convergence, usually in 3-5 iterations. 
+To compensate for limited sun motion, other approaches use richer illumination models that account for additional atmospheric factors in the sky. One way to achieve this is by employing \mbox{(hemi-)spherical} environment maps~\cite{debevec-siggraph-98} of real sky captures~\cite{yu-iccp-13,shi-3dv-14,hung-wacv-15}. By inserting light probes into the scene, one is able to capture both the object appearance and its illumination at the same time. An example of one of those methods proposed by Yu et al.~\cite{yu-iccp-13} performing single-day photometric stereo is shown in fig.~\ref{fig:yu_summary}. In their work, they propose an iterative method that performs two steps in alternation. First, they initialize the surface normal that minimizes the pixel relighting error by testing normals uniformly sampled across the sphere. This initial normal defines a visibility hemisphere in the environment map, which leads to a finer lighting estimation. This new lighting estimation can be used to obtain a new refined normal. These two steps can be repeated until convergence, which usually happens in 3-5 iterations. 
 
-A second way to use richer illumination for photometric stereo is to synthesize the sky using a parametric sky model~\cite{inose-tcva-13,jung-cvpr-15}. This leads to a more constrained formulation of photometric stereo, enabling the relaxation of the calibration requirements. As such, semi-calibrated methods like the one proposed by Jung et al.\cite{jung-cvpr-15} began to appear. In their work, they don't need the capture of the full environment map through a light probe, removing the full calibration requirement. They propose to estimate the albedo of the surface using the first eigenvector of the observed pixels in RGB space. However, their technique is not fully uncalibrated, as they rely on the precise geolocation of the camera in order to constrain the sun path in the sky on a single axis. An example of the results obtained by this algorithm is shown in fig.~\ref{fig:jung_summary}.
+A second way to use richer illumination for photometric stereo is to synthesize the sky using a parametric sky model~\cite{inose-tcva-13,jung-cvpr-15}. This leads to a more constrained formulation of photometric stereo, enabling the relaxation of the calibration requirements. As such, semi-calibrated methods like the one proposed by Jung et al.~\cite{jung-cvpr-15} began to appear. In their work, they don't need a light probe, removing the full calibration requirement. They propose to estimate the albedo of the surface using the first eigenvector of the observed pixels in RGB space. However, their technique is not fully uncalibrated, as they rely on the precise geolocation of the camera in order to constrain the sun path in the sky on a single axis. An example of the results obtained by this algorithm is shown in fig.~\ref{fig:jung_summary}.
 
 
 % Using a large database of real sky images, Hold-Geoffroy~{et al.}~\cite{holdgeoffroy-iccp-15} showed that partly cloudy days are in fact better for single-day outdoor PS since clouds obscure and further scatter sun light, causing an out-of-plane shift in the effective direction of illumination. Subsequently~\cite{holdgeoffroy-3dv-15}, they also showed that good cloud coverage conditions for stable solutions may be observed in the sky within very short time intervals of just above one hour. 
@@ -54,7 +55,7 @@ A second way to use richer illumination for photometric stereo is to synthesize 
 
 Despite these developments, calibrated~\cite{yu-iccp-13} and semi-calibrated~\cite{jung-cvpr-15} (based on precise geolocation) outdoor PS are still prone to potentially long waits for ideal conditions to arise in the sky; and verifying the occurrence of such events is still a trial-and-error process.
 
-So far, deep learning had only been applied for photometric stereo in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
+A subsequent way that was explored to improve photometric stereo is to use machine learning to constrain the surface reconstruction problem with learned priors on images. So far, deep learning had only been applied for photometric stereo in indoor scenarios with rich and controlled illumination~\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18,shi-tpami-18}, focusing on learning inverse functions for non-Lambertian reflectances.
 
 %\cite{yu-iccv-17,santo-iccv-17,taniai-arxiv-18} Deep learning methods applied to photometric stereo (not one-day)
 
@@ -66,23 +67,24 @@ Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\
 
 \section{Models for approximating outdoor lighting}
 
-Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials, and enables a myriad of applications like automatic virtual object insertion.
+Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials, and enables a myriad of applications like automatic virtual object insertion and relighting.
 
-In this section, we will present the most notable physically-based and analytical outdoor illumination models as well as the methods used to estimate their parameters from images.
+In this section, we present the most notable physically-based and analytical outdoor illumination models as well as the methods used to estimate their parameters from images.
 
 \subsection{Physically-based outdoor illumination models}
 
 Physically-based models seek to generate accurate representations of the sky. They are based on physical simulations to provide the luminance distribution of the sky in function of the sun position and some atmospheric characteristics. They are usually slow to evaluate, but typically closer to real sky luminance measurements than analytical models.
 
-The first model to explain the main physical phenomenons coming into play to form daylight was published by Nishita et al. in their seminal work of 1993~\cite{nishita1993display}. The most important physical phenomenon models interactions of the electromagnetic field (visible light, in this case) with small aerosols. Specifically, it encompasses interactions with particles having a radius $r$ significantly smaller than the light wavelength $\lambda$. This domain of interactions, characterized by $\frac{2\pi r}{\lambda} \ll 1$, is called the Rayleigh scattering and predicts the behavior of light when it interacts with nitrogen and oxygen, the major constituents of air. According to this theory, the amount of scattering happening in the atmosphere decreases proportionally to $\lambda^4$. In the visible spectrum, this translates in small wavelengths (blues) being much more scattered than large wavelengths (reds), explaining why the sky is perceived blue by the human eye.
+The first model to explain the main physical phenomenons coming into play to form daylight was published by Nishita et al. in their seminal work of 1993~\cite{nishita1993display}. They explain that the most important physical phenomenon affecting the appearance of the sky is the Rayleigh scattering. It models interactions of the electromagnetic field (visible light, in this case) with small aerosols. Specifically, it encompasses interactions with particles having a radius $r$ significantly smaller than the light wavelength $\lambda$. This domain of interactions, characterized by $\frac{2\pi r}{\lambda} \ll 1$, predicts the behavior of light when it interacts with nitrogen and oxygen, the major constituents of air. According to this theory, the amount of scattering happening in the atmosphere decreases proportionally to the fourth power of the wavelength $\left(\lambda^4\right)$. In the visible spectrum, this translates in small wavelengths (blues) being much more scattered than large wavelengths (reds), explaining why the sky is perceived blue by the human eye.
 
-The second most important type of interactions solves Maxwell's equations for the case of particles with a radius $r$ roughly the same size as the light wavelength $\lambda$. This regime ($\frac{2\pi r}{\lambda} \approx 1$) represents interactions of light with heavier molecules like water particles in suspension in the atmosphere, in clouds or during fog. This domain of interactions is called Mie scattering and is responsible for the white appearance of the clouds.
+The second most important type of interactions solves Maxwell's equations for the case of particles with a radius $r$ roughly the same size as the light wavelength $\lambda$. This regime $\left( \frac{2\pi r}{\lambda} \approx 1 \right)$ represents interactions of light with heavier molecules like water particles in suspension in the atmosphere due to humidity, in clouds or during fog. This domain of interactions is called Mie scattering and is responsible for the white appearance of the clouds.
 
-Summing both Rayleigh and Mie scattering together gives luminance estimations very close to measurements performed during daylight, confirming the dominance of those two phenomenons for the appearance of the sky. Example of those simulations of those phenomenons are shown in fig.~\ref{fig:physics_simulations}.
+Summing both Rayleigh and Mie scattering together gives luminance estimations of the sky dome very close to measurements performed during daylight, confirming the dominance of those two phenomenons for the appearance of the sky. Example of those simulations of those phenomenons are shown in fig.~\ref{fig:physics_simulations}.
 
 \begin{figure}
 \centering
 \newcommand\Tstrut{\rule{0pt}{1\normalbaselineskip}}         % = `top' strut
+\newcommand\TTstrut{\rule{0pt}{8.4\normalbaselineskip}}         % = `top' strut
 \newcommand\Bstrut{\rule[-1.5em]{0pt}{0pt}}   % = `bottom' strut
 \begin{tabular}{|c|c|}
 \hline
@@ -90,16 +92,16 @@ Summing both Rayleigh and Mie scattering together gives luminance estimations ve
 \rule{0pt}{5\normalbaselineskip}\includegraphics[width=0.25\linewidth]{simulation/small_particle.pdf} &
 \includegraphics[width=0.25\linewidth]{simulation/medium_particle.pdf}\\
 \rule{0pt}{1.5\normalbaselineskip}\Bstrut $\frac{2\pi r}{\lambda} \ll 1$ & $\frac{2\pi r}{\lambda} \approx 1$\\ \hline
-\includegraphics[width=0.25\linewidth]{simulation/skydome_rayleigh.png} &
+\TTstrut\includegraphics[width=0.25\linewidth]{simulation/skydome_rayleigh.png} &
 \includegraphics[width=0.25\linewidth]{simulation/skydome_mie.png} \\ \hline
 \multicolumn{2}{|c|}{
-\includegraphics[width=0.25\linewidth]{simulation/skydome.png}} \\ \hline
+\TTstrut\includegraphics[width=0.25\linewidth]{simulation/skydome.png}} \\ \hline
 \end{tabular}
 \caption[Visualisations of the Rayleigh and Mie scattering]{Rayleigh (left) and Mie (right) scattering when the sun is at zenith. The images of the sky use the skyangular representation, where the zenith is at the center of the image and the horizon lies on the largest circle of the image. This representation is equivalent to a picture taken with a $180\degr$ fisheye lens pointed up at the sky.}
 \label{fig:physics_simulations}
 \end{figure}
 
-In subsequent work, Nishita et al.~\cite{nishita1996display} enhanced their model by adding two elements: 1) the influence of ground albedo on the sky and 2) multiple scattering. A single scattering event per observed light ray was considered in the first formulation of their work. In this work, they consider multiple scattering interactions before observation.
+In subsequent work, Nishita et al.~\cite{nishita1996display} enhanced their model by adding two elements: 1) the influence of ground albedo on the sky and 2) multiple scattering. A single scattering event per observed light ray was considered in the first formulation of their work. In this more recent work, they consider multiple scattering interactions before observation.
 
 Most published physically-based models are variants of the Rayleigh and Mie scattering, either with single or multiple scattering, as proposed in~\cite{nishita1993display,nishita1996display}, usually focusing on speeding up the simulation~\cite{oneal2005accurate}, slightly increasing agreement with measures of the real sky~\cite{haber2005physically,bruneton2008precomputed} or extending it to arbitrary atmospheres like oceans~\cite{elek2010real}.
 
@@ -182,13 +184,4 @@ Another class of techniques simplify the problem by estimating illumination from
 % \todo{enlever?}
 
 % Following the remarkable success of deep learning-based methods on high-level recognition problems, these approaches are now being increasingly used to solve inverse graphics problems~\cite{kulkarni15dcign}. In the context of understanding scene appearance, previous work has leveraged deep learning to estimate depth and surface normals~\cite{eigen-iccv-15,bansal2016marr}, recognize materials~\cite{bell2015minc}, decompose intrinsic images~\cite{zhou2015intrinsic}, recover reflectance maps~\cite{rematas-cvpr-16}, and estimate, in a setup similar to physics-based techniques~\cite{lombardi2016reflectance}, lighting from objects of specular materials~\cite{georgoulis2016delight}. We believe ours is the first attempt at using deep learning for full HDR outdoor lighting estimation from a single image.
-
-
-% \section{Camera calibration}
-
-% \todo{faire comme PS}
-
-% Geometric camera calibration is a widely studied topic that has a significant impact on a variety of applications including metrology~\cite{Criminisi2000}, 3D inference~\cite{Criminisi00,Fouhey2013} and augmented reality, both indoor~\cite{hedau-iccv-09,izadinia-cvpr-17} and outdoor~\cite{hoiem-cvpr-06}. As such, many techniques were developed to perform precise geometric calibration using a calibration target inserted beforehand in the image~\cite{Sturm1999,Zhang2002,Heikkila1997,Chen2004}. For after-the-fact calibration, most work on camera calibration aim to detect specific geometric objects in the image typically present in human-made environments~\cite{Rother2000,Melo2013}. Similarly, PoseNet~\cite{kendall-iccv-15} performs camera relocalization by jointly learning location and orientation. More recently, methods for straighting up photographs like Upright~\cite{Lee2014} recover calibration by finding vanishing points. Other work proposed to take advantage of lighting cues to calibrate~\cite{lalonde-ijcv-10,Workman2014}, circumventing the need for human-made environments. However, these techniques often fail on complex scenes where semantic reasoning is required to discard misleading textures and visual cues. To solve the need for high-level reasoning, deep convolutional neural networks were recently used to estimate field of view~\cite{Workman2015a} and horizon lines~\cite{Workman2016}, bringing camera calibration on single images to a wider variety of scenes.
-
-% Understanding the limits of the human visual system has also received significant attention, with studies quantifying color sensitivity~\cite{fairchild2013color}, how reliably we can detect photo manipulations artifacts~\cite{Farid2010} and how people perceive distortion in street-level image-based rendering~\cite{Vangorp2013}. More recently, perceptual studies were performed to assess human appreciation on tasks like super-resolution~\cite{ledig-cvpr-17}, image caption generation~\cite{vinyals-cvpr-15} and video temporal alignment~\cite{papazoglou-accv-16}. 
 
