@@ -23,21 +23,6 @@
     \label{fig:evaluation_example_sun_position}
 \end{figure*}
 
-\section{Evaluation}
-\label{sec:evaluation}
-
-We evaluate the performance of the CNN at predicting the HDR sky environment map from a single image in a variety of ways. First, we present how well the network does at estimating the illumination parameters on the SUN360 dataset. We then show how virtual objects relit by the \emph{estimated} environment maps differ from their renders obtained with the ground truth parametric model, still on the SUN360. Finally, we acquired a small set of HDR outdoor panoramas, and compare our relighting results with those obtained with actual HDR environment maps. 
-
-\subsection{Illumination parameters on SUN360}
-
-\paragraph{Sun position}
-
-We begin by evaluating the performance of the CNN at predicting the sun position from a single input image. Fig.~\ref{fig:evaluation_performance_sun_position} shows the quantitative performance at this task using three plots: the cumulative distribution function of sun angular estimation error, and detailed error histograms for each of the elevation and azimuth independently. We observe that 80\% of the test images have error less than 45\degree. Fig.~\ref{fig:evaluation_performance_sun_position}-(b) indicates that the network tends to underestimate the sun elevation in high elevation cases. This may be attributable to a lack of such occurrences in the training dataset---high sun elevations only occur between the tropics, and at specific times of year because of the Earth's tilted rotation axis. Fig.~\ref{fig:evaluation_performance_sun_position}-(c) shows that the CNN is not biased towards an azimuth position, and is robust across the entire range. Fig.~\ref{fig:evaluation_example_sun_position} shows examples of our sun position predictions overlayed over the panoramas that the test images were cropped from. Note that our method is able to accurately predict the sun direction across a wide range of scenes, field of views, and layouts.
-
-We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the task of sun azimuth estimation from a single image. Results are reported in fig.~\ref{fig:comparison-lalonde12}. First, fig.~\ref{fig:comparison-lalonde12}-(a) shows a comparison of both approaches on the 239-image dataset of \cite{lalonde-ijcv-12}. While our method has similar error in an octant (less than 22.5\degree), the precision in a quadrant (less than 45\degree) is significantly improved (by approximately 10\%) by our CNN-based approach. Fig.~\ref{fig:comparison-lalonde12}-(b) shows the same comparison on a 176-image subset of the SUN360 test set used in this chapter. In this case, the approach of Lalonde et al.~\cite{lalonde-ijcv-12} fails while the CNN reports robust performance, comparable to fig.~\ref{fig:comparison-lalonde12}-(a). This is probably due to the fact that the SUN360 test set contains much more challenging images that are often devoid of strong, explicit illumination cues. These cues, which are expressly relied upon by \cite{lalonde-ijcv-12}, are critical to the success of such methods.
-%In contrast, our CNN is robust to their absence, yet is still able to extract useful illumination information from the images. 
-\vspace{-1.5em}
-\paragraph{Turbidity and exposure}
 
 \begin{figure}[!th]
     \centering
@@ -67,6 +52,39 @@ We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the 
 \caption[Quantitative relighting comparison with ground truth lighting on SUN360]{Quantitative relighting comparison with the ground truth lighting parameters on the SUN360 dataset. We compute three types of error metrics: (a) RMSE, (b) scale-invariant RMSE~\cite{grosse-iccv-09}, and (c) per-color scale-invariant RMSE. The plots on the left shows the distribution of errors with the median, 25th and 75th percentiles identified with blue bars. For each measure, examples corresponding to particular error levels are shown to give a qualitative sense of performance. Renders obtained with the ground truth (estimated) lighting parameters are shown in the top (bottom) row.}
 \label{fig:quantitative-relighting-sun360}
 \vspace{-1em}
+\end{figure}
+
+\section{Evaluation}
+\label{sec:evaluation}
+
+We evaluate the performance of the CNN at predicting the HDR sky environment map from a single image in a variety of ways. First, we present how well the network does at estimating the illumination parameters on the SUN360 dataset. We then show how virtual objects relit by the \emph{estimated} environment maps differ from their renders obtained with the ground truth parametric model, still on the SUN360. Finally, we acquired a small set of HDR outdoor panoramas, and compare our relighting results with those obtained with actual HDR environment maps. 
+
+\subsection{Illumination parameters on SUN360}
+
+\paragraph{Sun position}
+
+We begin by evaluating the performance of the CNN at predicting the sun position from a single input image. Fig.~\ref{fig:evaluation_performance_sun_position} shows the quantitative performance at this task using three plots: the cumulative distribution function of sun angular estimation error, and detailed error histograms for each of the elevation and azimuth independently. We observe that 80\% of the test images have error less than 45\degree. Fig.~\ref{fig:evaluation_performance_sun_position}-(b) indicates that the network tends to underestimate the sun elevation in high elevation cases. This may be attributable to a lack of such occurrences in the training dataset---high sun elevations only occur between the tropics, and at specific times of year because of the Earth's tilted rotation axis. Fig.~\ref{fig:evaluation_performance_sun_position}-(c) shows that the CNN is not biased towards an azimuth position, and is robust across the entire range. Fig.~\ref{fig:evaluation_example_sun_position} shows examples of our sun position predictions overlayed over the panoramas that the test images were cropped from. Note that our method is able to accurately predict the sun direction across a wide range of scenes, field of views, and layouts.
+
+We quantitatively compare our approach to that of \cite{lalonde-ijcv-12} at the task of sun azimuth estimation from a single image. Results are reported in fig.~\ref{fig:comparison-lalonde12}. First, fig.~\ref{fig:comparison-lalonde12}-(a) shows a comparison of both approaches on the 239-image dataset of \cite{lalonde-ijcv-12}. While our method has similar error in an octant (less than 22.5\degree), the precision in a quadrant (less than 45\degree) is significantly improved (by approximately 10\%) by our CNN-based approach. Fig.~\ref{fig:comparison-lalonde12}-(b) shows the same comparison on a 176-image subset of the SUN360 test set used in this chapter. In this case, the approach of Lalonde et al.~\cite{lalonde-ijcv-12} fails while the CNN reports robust performance, comparable to fig.~\ref{fig:comparison-lalonde12}-(a). This is probably due to the fact that the SUN360 test set contains much more challenging images that are often devoid of strong, explicit illumination cues. These cues, which are expressly relied upon by \cite{lalonde-ijcv-12}, are critical to the success of such methods.
+%In contrast, our CNN is robust to their absence, yet is still able to extract useful illumination information from the images. 
+%\vspace{-1.5em}
+\paragraph{Turbidity and exposure}
+
+
+\begin{figure}[!th]
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{1pt}
+    \begin{tabular}{cc}
+    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_aaafspbtffjzbn_jpg-1_png_out.png} &
+    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_abauwcbvavypmw_jpg-2_png_out.png} \\
+    % \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_aacuaoohjiliba_jpg-4_png_out.png} &
+    % \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_akvgrwlvpakobh_jpg-6_png_out.png} \\
+    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajmdcorvpbtdcb_jpg-3_png_out.png} &
+    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajwnburtukssxf_jpg-5_png_out.png}
+    \end{tabular}
+    \caption[Virtual object insertion with authomated lighting estimation]{Virtual object insertion with automated lighting estimation. From a single image, the CNN predicted a full HDR sky map, which is used to render an object into the image. No additional steps are required. More results on automated object insertion are available in the supplementary materials.}
+    \label{fig:evaluation_render_examples}
 \end{figure}
 
 % \begin{figure}[!th]
@@ -110,21 +128,6 @@ A detailed performance analysis is available in the supplementary material. In a
 
 % Show error in horizon estimation (camera elevation) and viewing field of view.
 
-\begin{figure}[!th]
-    \centering
-    \footnotesize
-    \setlength{\tabcolsep}{1pt}
-    \begin{tabular}{cc}
-    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_aaafspbtffjzbn_jpg-1_png_out.png} &
-    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_abauwcbvavypmw_jpg-2_png_out.png} \\
-    % \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_aacuaoohjiliba_jpg-4_png_out.png} &
-    % \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_akvgrwlvpakobh_jpg-6_png_out.png} \\
-    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajmdcorvpbtdcb_jpg-3_png_out.png} &
-    \includegraphics[width=.47\linewidth]{./figures/renders/netout/pano_ajwnburtukssxf_jpg-5_png_out.png}
-    \end{tabular}
-    \caption[Virtual object insertion with authomated lighting estimation]{Virtual object insertion with automated lighting estimation. From a single image, the CNN predicted a full HDR sky map, which is used to render an object into the image. No additional steps are required. More results on automated object insertion are available in the supplementary materials.}
-    \label{fig:evaluation_render_examples}
-\end{figure}
 
 \begin{figure}[!th]
     \centering

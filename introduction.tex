@@ -33,8 +33,7 @@ In this dissertation, we argue that machine learning can be used to learn priors
 \textbf{Single Image Outdoor Lighting Estimation} We present a single-image learning-based approach to perform outdoor lighting estimation on generic scenes under natural daylight. 
 \end{quotation}
 
-
-
+Estimating the sun position from shading cues and the sky (when present in the image) is a hard task that requires the estimation of the scene geometry and the segmentation of the sky. While we have no formal proof that our method performs geometry estimation and sky segmentation, our experiments and overall performance indicates that our method understands at least some basic photometric cues.
 
 
 The last research axis focuses on camera calibration from a single image of a generic scene. %This is a typically tedious process that typically requires the detection of specific image features in many images.
@@ -46,7 +45,7 @@ In this thesis, we claim that it is possible to constrain the camera calibration
 \textbf{Single Image Camera Calibration} We present a single-image learning-based approach to perform camera calibration. The proposed method works on generic scenes and illumination and do not require a specific object to be present in the image. 
 \end{quotation}
 
-Recent advances in machine learning allows learned models to encode the structure of large datasets, surpassing what would be possible with handcrafted feature extractors. However, the 
+Recent advances in machine learning allows learned models to encode the structure of data in large datasets, surpassing what would be possible with handcrafted feature extractors. However, this learned structure and priors are implicit to the model, meaning that what has been learned is not directly available once the model is trained. Throughout the contributions proposed by this thesis, we strive to understand through indirect analysis the behavior of the learned model. Concretely, we perform experiments like ablation studies to understand how the model perform when some information is missing, or display using an embedding representation to map the inner space learned by our method.
 
 %Recent advances in machine learning allow for robust detection and classification of objects in images. By recognizing the objects present in a scene and comparing with their typical size in the physical world, one could estimate the focal length of the image. A similar process can be done with the object orientation and position, giving camera pitch and roll. Calibration would then be a matter of capturing common objects of the world and extracting their characteristics from the encoding of a machine learning model. 
 
@@ -54,7 +53,7 @@ The three contributions can have a direct impact on various applications. For in
 
 \section*{Overview}
 
-This thesis is grouped into two main axes: 1) surface reconstruction through photometric cues, and 2) learning-based lighting and camera calibration estimation. All research axes are explored through a data-driven paradigm. 
+This thesis is grouped into three main axes: 1) surface reconstruction through photometric cues, 2) learning-based lighting estimation and 3) single image camera calibration. All research axes are explored through a data-driven paradigm and exploit both existing datasets and data that we acquired. 
 % Concretely, each project leverages between thousands and millions of images to train models by optimizing several millions of parameters, executing trillions of floating-point operations within seconds to process data yielding hundreds of thousands of dimensions. It would be a euphemism to say that the presented research could not have been performed without the recent advances in both computing and storage.
 
 First, chapter~\ref{ch1} provides an in-depth analysis of the information contained in photometric cues throughout a single day and gives performance bounds on Photometric Stereo when performed on intervals down to a single hour. Upon investigation, we found that partially cloudy days brought enough constraints to solve the PS problem using an adapted PS algorithm. However, we show that sunny days in general are lacking the constraints to provide a stable surface reconstruction. In chapter~\ref{ch2}, we go one step further than what is possible using exclusively photometric cues. Since there is not enough information in a single sunny day to do a stable surface reconstruction solely from photometric cues, we employ a deep learning model to learn priors on local surface geometry and sun trajectory patterns. This additional information brings enough supplemental constraints to the PS problem to allow stable surface reconstructions. 

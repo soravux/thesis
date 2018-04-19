@@ -3,11 +3,11 @@
 
 \label{ch1}
 
-Photometric stereo has been studied extensively in the past decades, especially on how to deal with various lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12,ackermann-cvpr-12,abrams-eccv-12}. Most of the work in the literature has been done either in the laboratory, where illumination is controlled, or for extended amount of time, in order to have enough lighting diversity to constrain enough the problem. Many questions remains on the topic of outdoor photometric stereo. What is the minimum time interval required to obtain good results in outdoor PS? Is a full day of observations enough and/or necessary to obtain good results in outdoor PS? Or could similar results be obtained over a shorter time interval (say, 1 hour)? If so, what should be happening in the sky over that time interval? Besides easing the requirements on data capture, these questions are also important in that, in future work, they could extend the applicability of outdoor PS to new scenarios (\eg, to more quickly capture non-static outdoor objects that show gradual changes in shape or appearance over time).
+Photometric stereo has been studied extensively in the past decades, especially on how to deal with various lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12,ackermann-cvpr-12,abrams-eccv-12}. Most of the work in the literature has been done either in the laboratory, where illumination is controlled, or for extended amount of time, in order to have enough lighting diversity to constrain enough the problem. However, many questions remain on the topic of outdoor photometric stereo. What is the minimum time interval required to obtain good results in outdoor PS? Is a full day of observations enough and/or necessary to obtain good results in outdoor PS? Or could similar results be obtained over a shorter time interval (say, 1 hour)? If so, what should be happening in the sky over that time interval? Besides easing the requirements on data capture, these questions are also important in that, in future work, they could extend the applicability of outdoor PS to new scenarios (\eg, to more quickly capture non-static outdoor objects that show gradual changes in shape or appearance over time).
 
 % TODO: maybe move the sentence above to discussion only? We want to show the importance/impact of asking these questions, but we don't want to disappoint the reviewers by not showing dynamic PS results. Maybe this is ok as it is?
 
-In this chapter\footnote{originally published in~\cite{holdgeoffroy-iccp-15,holdgeoffroy-3dv-15}}, we present the first answers to the questions above. Here, we seek to determine the relationship between expected surface reconstruction performance and photometric cues available outdoors over the course of the day. To achieve this goal, we use a large database of natural, outdoor illumination (sky probes), which we will discuss first. Then, a detailed look at the conditions under which normals can be reconstructed reliably will be presented, followed by an analysis of surface reconstruction stability. Finally, we explore the occurrence of these conditions over the course of a single day and whether PS can be applied over intervals less than one day.
+In this chapter\footnote{Originally published in~\cite{holdgeoffroy-iccp-15,holdgeoffroy-3dv-15}.}, we present the first answers to the questions above. Here, we seek to determine the relationship between expected surface reconstruction performance and photometric cues available outdoors over the course of the day. To achieve this goal, we use a large database of natural, outdoor illumination (sky probes), which we will discuss first. Then, a detailed look at the conditions under which normals can be reconstructed reliably will be presented, followed by an analysis of surface reconstruction stability. Finally, we explore the occurrence of these conditions over the course of a single day and whether PS can be applied over intervals that span less than one day.
 
 \section{HDR database}
 \label{sec:hdrdb}
@@ -110,7 +110,7 @@ In all, the dataset totals more than 5,000 illumination conditions, captured ove
     \label{fig:database}
 \end{figure}
 
-\section{Outdoor lighting conditions Analysis}
+\section{Outdoor lighting conditions analysis}
 
 To explore the richness of natural illumination in the context of Photometric Stereo (PS), we exploit the database of outdoor HDR environment maps detailed in the last section, which provides a rich sampling of the variability in outdoor illumination. To ensure the data is properly aligned temporally, only images that were captured during a continuous 6 hour time interval on each of these days, from 10{:}30 until 16{:}30, are considered\footnote{Companion video with sample images is available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/outdoorPS/}.}. Through a theoretical analysis (inspired by \cite{sun-ivc-07}) and supported by an extensive empirical evaluation as well as a preliminary quantitative validation, we derive confidence intervals that allow us to predict when surface normals can be reconstructed more accurately and solely from the photometric cue. Instead of focusing exclusively on sun position~\cite{shen-pg-14}, our analysis incorporates the influence of all components of natural lighting: sun, sky, clouds, etc., as well as noise and surface albedo.
 
@@ -217,7 +217,7 @@ The marginal distributions in~\eqref{eqn:normal-distrib} allow us to derive conf
 %
 where $\lambda_k$ is the square root of the $k$th element on the diagonal of $({\bf L}^T{\bf L})^{-1}$. As expected, the sensor-dependent noise level $\sigma$ is not the only factor that determines uncertainty. The noise gain factor $\lambda_k/\rho$ in \eqref{eqn:confidence-xyz} reveals how outdoor illumination (the conditioning of ${\bf L}$) and albedo can amplify the effect of noise on the solution ${\bf \hat n}$. The lower the albedo $\rho$ is, the larger is the variance in the obtained estimate $\bf \hat n$ (as less light is reflected towards the camera). Our goal is then to answer the remaining question: how do natural changes in outdoor illumination affect this noise gain factor ($\lambda_k$) and, therefore, uncertainty?
 
-\section{An intuitive measure of uncertainty}
+\subsection{An intuitive measure of uncertainty}
 \label{subsec:measure_uncertainty}
 
 To provide a measure of uncertainty that is more intuitive than~\eqref{eqn:confidence-xyz}, we consider angular distances in degrees,
@@ -239,118 +239,118 @@ which indicates the expected accuracy of the estimated surface orientation ${\bf
 
 Note that the condition number, determinant, and trace of matrix $(\mathbf{L}^T\mathbf{L})^{-1}$ can also be used as measures of total variance in the estimated solutions---as done in~\cite{sun-ivc-07}---to find the optimal location of point light sources in PS. These measures are closely related to the rank of matrix $\mathbf{L}$, which must be three for a solution to exist; that is, $\mathbf{L}^T\mathbf{L}$ must be nonsingular. In practice, this matrix is always full-rank, although it is often poorly conditioned~\cite{shen-pg-14}. In the following sections, we consider confidence intervals $\mathcal{C}_{\bf n}$ in degrees, as they provide a more intuitive measure of uncertainty in the obtained solutions. Finally, in~\eqref{eqn:angular-dist}, the normalization of ${\bf \hat n}^\pm$ to unit length reflects the fact that part of the estimation error is propagated to the estimated albedo $\rho$ (\ie, the length of the computed least-squares solution vector ${\bf x}$). In this chapter, we focus on analyzing our ability to recover geometry and will assume that the albedo is constant and known.
 
-\subsection{Analyzing the outdoor lighting dataset}
-\label{sec:iccp15-datasetanalysis}
+% \subsection{Analyzing the outdoor lighting dataset}
+% \label{sec:iccp15-datasetanalysis}
 
-% context, need, task, object, conclusions, perspective
-Now that we are equipped with a tool to characterize the stability of surface normal estimation in outdoor PS, we proceed to apply it to all 23 days from our dataset (sec.~\ref{sec:hdrdb}) in order to determine the conditions in which surface normals can accurately be reconstructed. We first describe how the confidence intervals $\mathcal{C}_{\bf n}$ are computed and visualized, then analyze the effect of two important characteristics of outdoor lighting: the degree of cloud coverage in sec.~\ref{sec:cloud-cover-results}, and the sun elevation in sec.~\ref{sec:sun-elevation-results}.
+% % context, need, task, object, conclusions, perspective
+% Now that we are equipped with a tool to characterize the stability of surface normal estimation in outdoor PS, we proceed to apply it to all 23 days from our dataset (sec.~\ref{sec:hdrdb}) in order to determine the conditions in which surface normals can accurately be reconstructed. We first describe how the confidence intervals $\mathcal{C}_{\bf n}$ are computed and visualized, then analyze the effect of two important characteristics of outdoor lighting: the degree of cloud coverage in sec.~\ref{sec:cloud-cover-results}, and the sun elevation in sec.~\ref{sec:sun-elevation-results}.
 
-\begin{figure}[t]
-    \centering
-    \begin{minipage}{.5\linewidth}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 08/24/2013 \\ 85\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20130824_10pm.png} \\
-    \vspace{-.8em} \noindent\rule{\linewidth}{0.1pt}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 11/06/2013 \\ 41\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20131106_10pm.png} \\
-    \vspace{-.8em} \noindent\rule{\linewidth}{0.1pt}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 11/08/2014 \\ 16\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20141108_10pm.png} \\
-    \end{minipage}
-    \vspace{3mm}
-    \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
-    \caption[Uncertainty in normal estimation in function of sun visibility]{Uncertainty in normal estimation with $\sigma=1\%$ is indicated by 95\% confidence intervals (in degrees), as a function of ground-truth surface normal. Results are shown for three different days in our dataset (same days as in fig.~\ref{fig:database}). The plots show the full sphere of normals from two different viewpoints: South (left), and North (right). Cardinal directions are shown for reference. The color-coding is indicated below the plots. See companion video for an animated version of these plots.}
-    \label{fig:confidence-intervals}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \begin{minipage}{.5\linewidth}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 08/24/2013 \\ 85\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20130824_10pm.png} \\
+%     \vspace{-.8em} \noindent\rule{\linewidth}{0.1pt}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 11/06/2013 \\ 41\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20131106_10pm.png} \\
+%     \vspace{-.8em} \noindent\rule{\linewidth}{0.1pt}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize 11/08/2014 \\ 16\% sun visibility \vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/20141108_10pm.png} \\
+%     \end{minipage}
+%     \vspace{3mm}
+%     \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
+%     \caption[Uncertainty in normal estimation in function of sun visibility]{Uncertainty in normal estimation with $\sigma=1\%$ is indicated by 95\% confidence intervals (in degrees), as a function of ground-truth surface normal. Results are shown for three different days in our dataset (same days as in fig.~\ref{fig:database}). The plots show the full sphere of normals from two different viewpoints: South (left), and North (right). Cardinal directions are shown for reference. The color-coding is indicated below the plots. See companion video for an animated version of these plots.}
+%     \label{fig:confidence-intervals}
+% \end{figure}
 
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=.99\linewidth]{./figures/confidenceIntervals/sunVisibilityPlot-topHemisphere.pdf}
-    \vspace{-2mm}
-    \caption[Confidence interval of normal estimates in function of sun visibility]{Median confidence interval of normal estimates (red line) as a function of mean sun visibility over the course of the day for various values of $\sigma$. Our analysis predicts that normal reconstruction errors will likely be high if the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Good results can thus be expected in partially cloudy conditions, as shown in fig.~\ref{fig:cloud-cover}. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
-    \label{fig:cloud-cover-plot}
-\end{figure*}
-
-
-\section{Computing the stability of outdoor PS}
-\label{iccp-computingstability}
-
-We aim to apply the stability analysis of sec.~\ref{sec:ch1_analysis} on all 23 days from our dataset, and on all possible normal directions. To do so, we consider each day independently, and first sample directions on the sphere by subdividing an icosahedron three times, yielding a set of 642 potential orientations $\mathcal{N} = \{\mathbf{n}_1, ..., \mathbf{n}_{642} \}$. Then, for each $\mathbf{n}_j \in \mathcal{N}$, we build the illumination matrix $\mathbf{L}$ in~\eqref{eqn:matrix-form}, given all 6 hours of data for that day. Finally, the 95\% confidence interval $\mathcal{C}_{\mathbf{n}_j}$ is computed using~\eqref{eqn:confidence-degrees}, indicating the uncertainty (possible reconstruction error) for that normal---the higher the interval, the less stable the solution.
-
-To compute $\mathcal{C}_{\mathbf{n}_j}$, values for the noise level $\sigma$ and the surface albedo $\rho$ from \eqref{eqn:confidence-xyz} must be chosen. For the albedo, we will consider the best case with $\rho=1$. To set $\sigma$, we first render noise-less pixel values $\mathbf{b}_j$ using the (ground-truth) normal ${\bf n}_j$ and~\eqref{eqn:matrix-form}, with ${\bf L}$ including our entire collection of environment maps. All figures have been generated with $\sigma$ set at $1\%$ of the 95th percentile value of the resulting $\mathbf{b}_j$, unless otherwise stated. This particular value is chosen to yield a small, yet non-negligible, level of noise that is similar to that in previous work~\cite{klaudiny-prl-14}. The values of $\rho$ and $\sigma$ are kept constant in order to focus solely on the influence of lighting conditions, but could be set to match particular experimental conditions if needed.
-
-Fig.~\ref{fig:confidence-intervals} shows the result of such an analysis on the three days of fig.~\ref{fig:database}. For each day, two sides of the sphere of normal directions are shown: seen from the South (left), and from the North (right). The spheres are color-coded according to the confidence interval $\mathcal{C}_\mathbf{n}$ for each normal direction. Note that vertex interpolation is used to display full spheres, but valid data is available only at vertices (thus the staircase effect in some plots).
-
-At first glance, we notice that normals pointing down (towards Nadir) consistently have high confidence intervals, irrespective of the illumination conditions. The stability of outdoor PS on these normals is thus expected to be low. This behavior concords with expectation: normals pointing down define integration domains $\Omega_{\mathbf{n}}$ (see fig.~\ref{fig:normal-diagram}) which mostly include the ground, whose intensity does not vary spatially throughout the day. Another interesting observation from fig.~\ref{fig:confidence-intervals} is that the same normal exhibits different confidence intervals depending on the day. This raises the question: what is the relation between outdoor illumination conditions and uncertainty in the recovered surface normal?
+% \begin{figure*}[t]
+%     \centering
+%     \includegraphics[width=.99\linewidth]{./figures/confidenceIntervals/sunVisibilityPlot-topHemisphere.pdf}
+%     \vspace{-2mm}
+%     \caption[Confidence interval of normal estimates in function of sun visibility]{Median confidence interval of normal estimates (red line) as a function of mean sun visibility over the course of the day for various values of $\sigma$. Our analysis predicts that normal reconstruction errors will likely be high if the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Good results can thus be expected in partially cloudy conditions, as shown in fig.~\ref{fig:cloud-cover}. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
+%     \label{fig:cloud-cover-plot}
+% \end{figure*}
 
 
-\section{Influence of cloud cover}
-\label{sec:cloud-cover-results}
+% \section{Computing the stability of outdoor PS}
+% \label{iccp-computingstability}
 
-It is already apparent from fig.~\ref{fig:confidence-intervals} that cloud coverage has an effect on the uncertainty of normal reconstruction, since an overcast day (last row) clearly does not behave the same way as a day with light clouds (top row). Here, we present a more systematic analysis of the influence of cloud coverage. To control for the effect of the sun elevation (which will be explored in sec.~\ref{sec:sun-elevation-results}), the analysis is performed on days with similar sun elevations by keeping only the skies captured in October and November.
+% We aim to apply the stability analysis of sec.~\ref{sec:ch1_analysis} on all 23 days from our dataset, and on all possible normal directions. To do so, we consider each day independently, and first sample directions on the sphere by subdividing an icosahedron three times, yielding a set of 642 potential orientations $\mathcal{N} = \{\mathbf{n}_1, ..., \mathbf{n}_{642} \}$. Then, for each $\mathbf{n}_j \in \mathcal{N}$, we build the illumination matrix $\mathbf{L}$ in~\eqref{eqn:matrix-form}, given all 6 hours of data for that day. Finally, the 95\% confidence interval $\mathcal{C}_{\mathbf{n}_j}$ is computed using~\eqref{eqn:confidence-degrees}, indicating the uncertainty (possible reconstruction error) for that normal---the higher the interval, the less stable the solution.
 
-We approximate cloud coverage by computing the fraction of time that the sun is visible, \ie, that it fully shines on the scene, for a given day. To do so, we simply find the brightest spot in a sky image, and determine that the sun shines on the scene if the intensity of the brightest pixel is greater than $20\%$ of the maximum sun intensity---we determined empirically that this is the point at which the sun is bright enough to start creating cast shadows. Cloud coverage is represented by computing the mean sun visibility for a given day. A value of less than 10--15\% would indicate a mostly overcast sky, while skies are mostly clear with values above 85--90\%.
+% To compute $\mathcal{C}_{\mathbf{n}_j}$, values for the noise level $\sigma$ and the surface albedo $\rho$ from \eqref{eqn:confidence-xyz} must be chosen. For the albedo, we will consider the best case with $\rho=1$. To set $\sigma$, we first render noise-less pixel values $\mathbf{b}_j$ using the (ground-truth) normal ${\bf n}_j$ and~\eqref{eqn:matrix-form}, with ${\bf L}$ including our entire collection of environment maps. All figures have been generated with $\sigma$ set at $1\%$ of the 95th percentile value of the resulting $\mathbf{b}_j$, unless otherwise stated. This particular value is chosen to yield a small, yet non-negligible, level of noise that is similar to that in previous work~\cite{klaudiny-prl-14}. The values of $\rho$ and $\sigma$ are kept constant in order to focus solely on the influence of lighting conditions, but could be set to match particular experimental conditions if needed.
 
-\begin{figure}[t]
-    \centering
-    \begin{minipage}{.5\linewidth}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Clear (85-100\%)\vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/clear-mean_10pm.png} \\
-    \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Mixed Clear (50-85\%)\vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/mixed-clear-mean_10pm.png} \\
-    \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Mixed Overcast (15-50\%)\vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/mixed-overcast-mean_10pm.png} \\
-    \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
-    \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Overcast (0-15\%)\vspace{5pt} \end{minipage}\end{sideways}
-    \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/overcast-mean_10pm.png} \\
-    \end{minipage}
-    \vspace{3mm}
-    \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
-    \caption[Influence of cloud cover on confidence intervals]{Influence of cloud cover on the 95\% confidence intervals with $\sigma=1\%$. Each row shows a different type of sky, based on sun visibility. For example, the top row shows confidence intervals averaged over all days with direct sun visibility in the range 85\%-100\%. The averaged days presented similar sun elevations. As with fig.~\ref{fig:confidence-intervals}, the plots show the full sphere of normals from two different viewpoints: South (left), and North (right).}
-    \label{fig:cloud-cover}
-\end{figure}
+% Fig.~\ref{fig:confidence-intervals} shows the result of such an analysis on the three days of fig.~\ref{fig:database}. For each day, two sides of the sphere of normal directions are shown: seen from the South (left), and from the North (right). The spheres are color-coded according to the confidence interval $\mathcal{C}_\mathbf{n}$ for each normal direction. Note that vertex interpolation is used to display full spheres, but valid data is available only at vertices (thus the staircase effect in some plots).
 
-The relation between sun visibility and the confidence interval $\mathcal{C}_\mathbf{n}$ is shown in fig.~\ref{fig:cloud-cover-plot}. Normal reconstruction errors will likely be quite high in two situations: when the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Interestingly, good reconstruction results are expected for a wide range of cloud coverage conditions, ranging from 10--90\% mean sun visibility.
+% At first glance, we notice that normals pointing down (towards Nadir) consistently have high confidence intervals, irrespective of the illumination conditions. The stability of outdoor PS on these normals is thus expected to be low. This behavior concords with expectation: normals pointing down define integration domains $\Omega_{\mathbf{n}}$ (see fig.~\ref{fig:normal-diagram}) which mostly include the ground, whose intensity does not vary spatially throughout the day. Another interesting observation from fig.~\ref{fig:confidence-intervals} is that the same normal exhibits different confidence intervals depending on the day. This raises the question: what is the relation between outdoor illumination conditions and uncertainty in the recovered surface normal?
 
-These results are corroborated by fig.~\ref{fig:cloud-cover}, which shows the confidence intervals themselves on a plot similar to fig.~\ref{fig:confidence-intervals}. Results there are presented by averaging the intervals of skies belonging to four groups: overcast (0--15\%), mixed overcast (15--50\%), mixed clear (50--85\%), and clear (85--100\%) days. Again, high uncertainty results are visible for the two extreme cases of fully overcast and fully clear days, while the remainder indicate more stable solutions.
 
-% TODO: add figure to illustrate this (maybe)?
-The improved conditioning in mixed skies is explained by the following key observation: cloud cover shifts the mean light vectors ${\bf \bar l}_t$ towards zenith and away from sun trajectory in the sky. Therefore, even when the sun moves along a trajectory that nearly lies on a 3D plane, as shown in fig.~\ref{fig:mlv}, cloud cover effectively causes an {\em out-of-plane} shift of the mean light vectors, making reconstruction possible.
+% \section{Influence of cloud cover}
+% \label{sec:cloud-cover-results}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{./figures/mlvFig/mlvFig.pdf}
-    \caption[Cloud effect on mean light direction]{Cloud effect on the mean light direction over one day: while the sun path (orange) yields nearly co-planar directions of illumination, the mean light directions (red dots) provide a much more varied set (data from 11/06/2013, 2nd row of fig.~\ref{fig:database}).}
-    \label{fig:mlv}
-\end{figure}
+% It is already apparent from fig.~\ref{fig:confidence-intervals} that cloud coverage has an effect on the uncertainty of normal reconstruction, since an overcast day (last row) clearly does not behave the same way as a day with light clouds (top row). Here, we present a more systematic analysis of the influence of cloud coverage. To control for the effect of the sun elevation (which will be explored in sec.~\ref{sec:sun-elevation-results}), the analysis is performed on days with similar sun elevations by keeping only the skies captured in October and November.
 
-This key observation also demonstrates the advantages of adopting more elaborate illumination models (\eg, \cite{yu-iccp-13}). For instance, the simpler point light model was used in \cite{shen-pg-14} to study the conditioning of outdoor PS. Because the atmospheric component is not modeled, the conclusion was that single-day reconstruction breaks down in two cases of nearly coplanar sun directions: closer to the poles near the winter solstice, and worldwide near an equinox. Our results suggest that more attention should be placed on the illumination model, without focusing exclusively on the sun.
+% We approximate cloud coverage by computing the fraction of time that the sun is visible, \ie, that it fully shines on the scene, for a given day. To do so, we simply find the brightest spot in a sky image, and determine that the sun shines on the scene if the intensity of the brightest pixel is greater than $20\%$ of the maximum sun intensity---we determined empirically that this is the point at which the sun is bright enough to start creating cast shadows. Cloud coverage is represented by computing the mean sun visibility for a given day. A value of less than 10--15\% would indicate a mostly overcast sky, while skies are mostly clear with values above 85--90\%.
 
-\section{Influence of sun elevation}
-\label{sec:sun-elevation-results}
+% \begin{figure}[t]
+%     \centering
+%     \begin{minipage}{.5\linewidth}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Clear (85-100\%)\vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/clear-mean_10pm.png} \\
+%     \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Mixed Clear (50-85\%)\vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/mixed-clear-mean_10pm.png} \\
+%     \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Mixed Overcast (15-50\%)\vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/mixed-overcast-mean_10pm.png} \\
+%     \vspace{.4em} \noindent\rule{\linewidth}{0.1pt} \vspace{-.8em}
+%     \begin{sideways}\begin{minipage}{.4\linewidth}\centering \scriptsize Overcast (0-15\%)\vspace{5pt} \end{minipage}\end{sideways}
+%     \includegraphics[width=.9\linewidth]{./figures/confidenceIntervals/overcast-mean_10pm.png} \\
+%     \end{minipage}
+%     \vspace{3mm}
+%     \includegraphics[width=.51\linewidth]{./figures/confidenceIntervals/colorbar.png}
+%     \caption[Influence of cloud cover on confidence intervals]{Influence of cloud cover on the 95\% confidence intervals with $\sigma=1\%$. Each row shows a different type of sky, based on sun visibility. For example, the top row shows confidence intervals averaged over all days with direct sun visibility in the range 85\%-100\%. The averaged days presented similar sun elevations. As with fig.~\ref{fig:confidence-intervals}, the plots show the full sphere of normals from two different viewpoints: South (left), and North (right).}
+%     \label{fig:cloud-cover}
+% \end{figure}
 
-We also hypothesized the position of the sun to have an important effect on the ability to recover surface normals outdoors. Since our dataset is already aligned in terms of sun azimuths (see sec.~\ref{sec:hdrdb}), we now analyze the influence of sun elevation. For this purpose, we retain only the days for which the sun visibility was between 15--85\% of the time. We then compute the relation between sun elevation and expected reconstruction confidence, as illustrated in fig.~\ref{fig:sun-elevation-plot}.
+% The relation between sun visibility and the confidence interval $\mathcal{C}_\mathbf{n}$ is shown in fig.~\ref{fig:cloud-cover-plot}. Normal reconstruction errors will likely be quite high in two situations: when the sky is completely overcast (low sun visibility), or completely clear (high sun visibility). Interestingly, good reconstruction results are expected for a wide range of cloud coverage conditions, ranging from 10--90\% mean sun visibility.
 
-Sun elevation does appear to have an influence, with higher sun elevations resulting in slightly increased uncertainty than when the sun is lower in the sky. However, the impact is less drastic than that of cloud cover from sec.~\ref{sec:cloud-cover-results}. These results can be explained, at least in part, by the smaller sun-zenith shift introduced by cloud cover when the sun is already high in the sky; therefore, smaller improvements in conditioning are obtained.
+% These results are corroborated by fig.~\ref{fig:cloud-cover}, which shows the confidence intervals themselves on a plot similar to fig.~\ref{fig:confidence-intervals}. Results there are presented by averaging the intervals of skies belonging to four groups: overcast (0--15\%), mixed overcast (15--50\%), mixed clear (50--85\%), and clear (85--100\%) days. Again, high uncertainty results are visible for the two extreme cases of fully overcast and fully clear days, while the remainder indicate more stable solutions.
 
-Our data-driven analysis shows that higher sun elevations---predicted as preferable by the analysis in~\cite{shen-pg-14}---are in fact not necessarily optimal when taking more elaborate illumination models into account.
+% % TODO: add figure to illustrate this (maybe)?
+% The improved conditioning in mixed skies is explained by the following key observation: cloud cover shifts the mean light vectors ${\bf \bar l}_t$ towards zenith and away from sun trajectory in the sky. Therefore, even when the sun moves along a trajectory that nearly lies on a 3D plane, as shown in fig.~\ref{fig:mlv}, cloud cover effectively causes an {\em out-of-plane} shift of the mean light vectors, making reconstruction possible.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{./figures/mlvFig/mlvFig.pdf}
+%     \caption[Cloud effect on mean light direction]{Cloud effect on the mean light direction over one day: while the sun path (orange) yields nearly co-planar directions of illumination, the mean light directions (red dots) provide a much more varied set (data from 11/06/2013, 2nd row of fig.~\ref{fig:database}).}
+%     \label{fig:mlv}
+% \end{figure}
+
+% This key observation also demonstrates the advantages of adopting more elaborate illumination models (\eg, \cite{yu-iccp-13}). For instance, the simpler point light model was used in \cite{shen-pg-14} to study the conditioning of outdoor PS. Because the atmospheric component is not modeled, the conclusion was that single-day reconstruction breaks down in two cases of nearly coplanar sun directions: closer to the poles near the winter solstice, and worldwide near an equinox. Our results suggest that more attention should be placed on the illumination model, without focusing exclusively on the sun.
+
+% \section{Influence of sun elevation}
+% \label{sec:sun-elevation-results}
+
+% We also hypothesized the position of the sun to have an important effect on the ability to recover surface normals outdoors. Since our dataset is already aligned in terms of sun azimuths (see sec.~\ref{sec:hdrdb}), we now analyze the influence of sun elevation. For this purpose, we retain only the days for which the sun visibility was between 15--85\% of the time. We then compute the relation between sun elevation and expected reconstruction confidence, as illustrated in fig.~\ref{fig:sun-elevation-plot}.
+
+% Sun elevation does appear to have an influence, with higher sun elevations resulting in slightly increased uncertainty than when the sun is lower in the sky. However, the impact is less drastic than that of cloud cover from sec.~\ref{sec:cloud-cover-results}. These results can be explained, at least in part, by the smaller sun-zenith shift introduced by cloud cover when the sun is already high in the sky; therefore, smaller improvements in conditioning are obtained.
+
+% Our data-driven analysis shows that higher sun elevations---predicted as preferable by the analysis in~\cite{shen-pg-14}---are in fact not necessarily optimal when taking more elaborate illumination models into account.
 
 
 % Section 3 has a note about non-coplanar sun directions  vs  non-coplanar mean light vectors (zenith, sun elevation),
 
 
-\section{Analyzing full objects}
+% \section{Analyzing full objects}
 
-So far, our analysis has focused solely on one patch (one normal direction) at a time. But can we also say something about an entire object? Clearly, a full answer to this question would require analyzing non-local effects such as occlusions, inter-reflections, cast shadows, etc. However, we hypothesize that a simpler analysis ignoring these effects can still provide useful results. We therefore predict the performance of an outdoor PS algorithm by computing the expected value of the confidence interval, $\mathbb{E}_{\bf n}[\mathcal{C}_{\bf n}]$, over an entire object; expectation over the normal vector is computed using a prior distribution taken from a simpler convex shape (\eg, a sphere). Fig.~\ref{fig:objects} shows the expected reconstruction performance for two objects: a bottle, and the bunny. Overall, surface reconstruction performance is expected to be best when objects face south (\ie, the sun).
+% So far, our analysis has focused solely on one patch (one normal direction) at a time. But can we also say something about an entire object? Clearly, a full answer to this question would require analyzing non-local effects such as occlusions, inter-reflections, cast shadows, etc. However, we hypothesize that a simpler analysis ignoring these effects can still provide useful results. We therefore predict the performance of an outdoor PS algorithm by computing the expected value of the confidence interval, $\mathbb{E}_{\bf n}[\mathcal{C}_{\bf n}]$, over an entire object; expectation over the normal vector is computed using a prior distribution taken from a simpler convex shape (\eg, a sphere). Fig.~\ref{fig:objects} shows the expected reconstruction performance for two objects: a bottle, and the bunny. Overall, surface reconstruction performance is expected to be best when objects face south (\ie, the sun).
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\linewidth]{./figures/confidenceIntervals/sunElevationPlot-topHemisphere.pdf}
-    \caption[Confidence interval in function of sun elevation]{Median confidence interval of normal estimates (red line) as a function of maximum sun elevation over the course of the day for various values of $\sigma$. Although the effect is not as significant as with cloud cover, we anticipate a small decrease in performance at higher sun elevations. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
-    \label{fig:sun-elevation-plot}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=\linewidth]{./figures/confidenceIntervals/sunElevationPlot-topHemisphere.pdf}
+%     \caption[Confidence interval in function of sun elevation]{Median confidence interval of normal estimates (red line) as a function of maximum sun elevation over the course of the day for various values of $\sigma$. Although the effect is not as significant as with cloud cover, we anticipate a small decrease in performance at higher sun elevations. The lower (upper) edge of each blue box indicates the 25th (75th) percentile. Statistics are computed only on normals pointing upwards to lessen ground effects.}
+%     \label{fig:sun-elevation-plot}
+% \end{figure}
 
 % \begin{figure}[t]
 %     \centering
@@ -363,96 +363,96 @@ So far, our analysis has focused solely on one patch (one normal direction) at a
 %   \label{fig:sun-elevation}
 % \end{figure}
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\linewidth]{./figures/objectFig/objectFigNoise.pdf}
-    \caption[Example of object reconstruction performance]{Predicting object reconstruction performance for the 08/24/2013 dataset. These curves show the mean surface reconstruction variance for two objects: a bottle (blue) and the bunny (red). Irrespective of the noise level, surface reconstruction performance is expected to be best when the objects face south.}
-    \label{fig:objects}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=\linewidth]{./figures/objectFig/objectFigNoise.pdf}
+%     \caption[Example of object reconstruction performance]{Predicting object reconstruction performance for the 08/24/2013 dataset. These curves show the mean surface reconstruction variance for two objects: a bottle (blue) and the bunny (red). Irrespective of the noise level, surface reconstruction performance is expected to be best when the objects face south.}
+%     \label{fig:objects}
+% \end{figure}
 
-\subsection{Validation on real object images}
-\label{sec:validation}
+% \subsection{Validation on real object images}
+% \label{sec:validation}
 
-The analysis performed on our dataset indicates that surface patches may be better reconstructed in certain conditions, dependent upon cloud coverage, sun elevation, and the orientation of the patch itself. At the time of this writing, a thorough validation on real outdoor images of different objects is currently under development. This section reports preliminary results on real outdoor images of an owl statuette (fig.~\ref{fig:reconstruction:example_envmaps}), which was scanned with a Creaform MetraSCAN at a resolution of 0.05mm to provide a reference of true surface orientation.
+% The analysis performed on our dataset indicates that surface patches may be better reconstructed in certain conditions, dependent upon cloud coverage, sun elevation, and the orientation of the patch itself. At the time of this writing, a thorough validation on real outdoor images of different objects is currently under development. This section reports preliminary results on real outdoor images of an owl statuette (fig.~\ref{fig:reconstruction:example_envmaps}), which was scanned with a Creaform MetraSCAN at a resolution of 0.05mm to provide a reference of true surface orientation.
 
-\begin{figure*}[!ht]
-    \centering
-    \setlength{\tabcolsep}{0pt}
-    \newcommand{\customwidth}{.077\linewidth}
-    \begin{tabular}{@{}rcccccccccccc@{}}
-    &
-    \begin{minipage}{\customwidth}\centering\scriptsize 10:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 11:00 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 11:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 12:00 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 12:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 13:00 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 13:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 14:00 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 14:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 15:00 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 15:30 \end{minipage} &
-    \begin{minipage}{\customwidth}\centering\scriptsize 16:00 \end{minipage}
-    \\
-    \begin{sideways}\begin{minipage}{\customwidth}\centering \scriptsize illumination \\ 43\% sun vis. \\ \vspace{5pt} \end{minipage}\end{sideways} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_102928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_110128.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_112928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_120128.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_122929.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_130128.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_132928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_135928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_142928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_145928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_152928.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_155928.jpg}
-    \\
-    \begin{sideways}\begin{minipage}{.106\linewidth}\centering \scriptsize object capture \\ \vspace{1em} \vspace{5pt} \end{minipage}\end{sideways} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/103307.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/110346.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/113346.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/120346.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/123346.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/130215.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/133215.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/135615.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/143215.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/150215.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/153215.jpg} &
-    \includegraphics[width=\customwidth]{./figures/reconstruction/object/160215.jpg}
+% \begin{figure*}[!ht]
+%     \centering
+%     \setlength{\tabcolsep}{0pt}
+%     \newcommand{\customwidth}{.077\linewidth}
+%     \begin{tabular}{@{}rcccccccccccc@{}}
+%     &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 10:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 11:00 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 11:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 12:00 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 12:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 13:00 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 13:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 14:00 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 14:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 15:00 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 15:30 \end{minipage} &
+%     \begin{minipage}{\customwidth}\centering\scriptsize 16:00 \end{minipage}
+%     \\
+%     \begin{sideways}\begin{minipage}{\customwidth}\centering \scriptsize illumination \\ 43\% sun vis. \\ \vspace{5pt} \end{minipage}\end{sideways} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_102928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_110128.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_112928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_120128.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_122929.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_130128.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_132928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_135928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_142928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_145928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_152928.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/envmaps/20141011_155928.jpg}
+%     \\
+%     \begin{sideways}\begin{minipage}{.106\linewidth}\centering \scriptsize object capture \\ \vspace{1em} \vspace{5pt} \end{minipage}\end{sideways} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/103307.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/110346.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/113346.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/120346.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/123346.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/130215.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/133215.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/135615.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/143215.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/150215.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/153215.jpg} &
+%     \includegraphics[width=\customwidth]{./figures/reconstruction/object/160215.jpg}
 
-    \end{tabular}
-    \caption[Real data]{Real outdoor HDR images of owl statuette and corresponding HDR environment maps (top row) providing synchronized, high-fidelity estimates of illumination conditions. All images were acquired on 10/11/2014 and tone-mapped for display only (with $\gamma = 1.6$). The sun visibility was 43\% on this day. }
-    \label{fig:reconstruction:example_envmaps}
-\end{figure*}
+%     \end{tabular}
+%     \caption[Real data]{Real outdoor HDR images of owl statuette and corresponding HDR environment maps (top row) providing synchronized, high-fidelity estimates of illumination conditions. All images were acquired on 10/11/2014 and tone-mapped for display only (with $\gamma = 1.6$). The sun visibility was 43\% on this day. }
+%     \label{fig:reconstruction:example_envmaps}
+% \end{figure*}
 
-We oriented this owl statuette towards south and took 66 HDR captures using a Canon EOS Rebel SL1 between 10h30 and 16h30, local time, in Quebec City. These captures were synchronized with the HDR environment maps described in sec.~\ref{sec:hdrdb}, providing high fidelity estimates of the illumination conditions for each image, as shown in fig.~\ref{fig:reconstruction:example_envmaps}. The laser scan was then manually aligned to these images.
+% We oriented this owl statuette towards south and took 66 HDR captures using a Canon EOS Rebel SL1 between 10h30 and 16h30, local time, in Quebec City. These captures were synchronized with the HDR environment maps described in sec.~\ref{sec:hdrdb}, providing high fidelity estimates of the illumination conditions for each image, as shown in fig.~\ref{fig:reconstruction:example_envmaps}. The laser scan was then manually aligned to these images.
 
-A simple outdoor PS algorithm was run on evenly distributed patches on the owl images. For each patch, the surface normal is obtained as to minimize the rendering error given by the model in~\eqref{eqn:matrix-form}, in a least-squares sense. Since this estimation problem is nonlinear on the normal ${\bf n}$, a solution is computed via exhaustive search on a set of 271 candidate orientations for the light hemisphere $\Omega_{\bf n}$. Given $\Omega_{\bf n}$, a candidate solution ${\bf x}$ is obtained via linear least squares. For the best solution, an estimation error, in degrees, is computed using the reference normal from the laser scan. The uncertainty measure (confidence interval $\mathcal{C}_{\bf n}$) derived in sec.~\ref{subsec:measure_uncertainty} is also computed for each patch.
+% A simple outdoor PS algorithm was run on evenly distributed patches on the owl images. For each patch, the surface normal is obtained as to minimize the rendering error given by the model in~\eqref{eqn:matrix-form}, in a least-squares sense. Since this estimation problem is nonlinear on the normal ${\bf n}$, a solution is computed via exhaustive search on a set of 271 candidate orientations for the light hemisphere $\Omega_{\bf n}$. Given $\Omega_{\bf n}$, a candidate solution ${\bf x}$ is obtained via linear least squares. For the best solution, an estimation error, in degrees, is computed using the reference normal from the laser scan. The uncertainty measure (confidence interval $\mathcal{C}_{\bf n}$) derived in sec.~\ref{subsec:measure_uncertainty} is also computed for each patch.
 
-Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruction:results}. As shown on the left, normals pointing upwards are generally recovered more accurately than normals pointing downwards. This is in concordance with the predicted confidence intervals shown on the right in fig.~\ref{fig:reconstruction:results}. The behavior of the reconstruction error is, in general, well predicted by the confidence intervals.
-% Note however that the ground truth normals were aligned with the images manually, therefore slight misalignments could explain discrepancies.
+% Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruction:results}. As shown on the left, normals pointing upwards are generally recovered more accurately than normals pointing downwards. This is in concordance with the predicted confidence intervals shown on the right in fig.~\ref{fig:reconstruction:results}. The behavior of the reconstruction error is, in general, well predicted by the confidence intervals.
+% % Note however that the ground truth normals were aligned with the images manually, therefore slight misalignments could explain discrepancies.
 
 
-\begin{figure}[t]
-    \centering
-    \begin{minipage}{0.5\linewidth}
-    \newcommand{\customwidthres}{0.45\linewidth}
-    \begin{tabular}{cc}
-        \scriptsize Angular differences to ground truth & \scriptsize Predicted 95\% confidence intervals \\
-        \includegraphics[width=\customwidthres]{./figures/reconstruction/owl_delta_gt.png} &
-        \includegraphics[width=\customwidthres]{./figures/reconstruction/owl_confint.png}
-        \begin{picture}(0,0)
-            \put(-155,-2){\includegraphics[height=1.5cm]{./figures/reconstruction/owl_sphere_dgt.png}}
-            \put(-35,-2){\includegraphics[height=1.5cm]{./figures/reconstruction/owl_sphere_ci.png}}
-        \end{picture}
-    \end{tabular}
-    \includegraphics[width=1.01\linewidth]{./figures/reconstruction/colorbar.png}
-    \end{minipage}
-    \caption[Qualitative validation on images of a real object]{Quantitative validation on images of a real object. Evenly distributed patches of the owl images were used to perform a simple calibrated outdoor PS algorithm. Error estimates of the surface normals are reported on the left using the reference surface orientation in the laser scan. The predicted 95\% confidence intervals $\mathcal{C}_\mathbf{n}$ from \eqref{eqn:confidence-degrees} are shown on the right. A few large estimation errors on the left image may be caused by imperfect alignment between the scanned model and the images. Insets in the lower right corner show the recovered normals mapped to the south hemisphere. Normals in dark blue means no data available.}
-    \label{fig:reconstruction:results}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \begin{minipage}{0.5\linewidth}
+%     \newcommand{\customwidthres}{0.45\linewidth}
+%     \begin{tabular}{cc}
+%         \scriptsize Angular differences to ground truth & \scriptsize Predicted 95\% confidence intervals \\
+%         \includegraphics[width=\customwidthres]{./figures/reconstruction/owl_delta_gt.png} &
+%         \includegraphics[width=\customwidthres]{./figures/reconstruction/owl_confint.png}
+%         \begin{picture}(0,0)
+%             \put(-155,-2){\includegraphics[height=1.5cm]{./figures/reconstruction/owl_sphere_dgt.png}}
+%             \put(-35,-2){\includegraphics[height=1.5cm]{./figures/reconstruction/owl_sphere_ci.png}}
+%         \end{picture}
+%     \end{tabular}
+%     \includegraphics[width=1.01\linewidth]{./figures/reconstruction/colorbar.png}
+%     \end{minipage}
+%     \caption[Qualitative validation on images of a real object]{Quantitative validation on images of a real object. Evenly distributed patches of the owl images were used to perform a simple calibrated outdoor PS algorithm. Error estimates of the surface normals are reported on the left using the reference surface orientation in the laser scan. The predicted 95\% confidence intervals $\mathcal{C}_\mathbf{n}$ from \eqref{eqn:confidence-degrees} are shown on the right. A few large estimation errors on the left image may be caused by imperfect alignment between the scanned model and the images. Insets in the lower right corner show the recovered normals mapped to the south hemisphere. Normals in dark blue means no data available.}
+%     \label{fig:reconstruction:results}
+% \end{figure}
 
 
 % !TEX root = main.tex
@@ -509,7 +509,7 @@ Results from this quantitative evaluation are given in fig.~\ref{fig:reconstruct
 %\subsection{Time interval analysis}
 \label{sec:ch1_analysis}
 
-Until now, our analysis focused on lighting throughout a full day. In the rest of this chapter, we push the analysis of the previous sections to the limit to see what is the minimum capture interval required by PS to work. We do so by tying what is happening in the sky to reconstruction performance. The analysis is done, as before, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30.\footnote{Companion video showing data samples available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/xHourPS/}.}
+In the rest of this chapter, we seek what is the minimum capture interval required by PS to work. We do so by tying what is happening in the sky to reconstruction performance. The analysis is done, as before, only images that were captured during a continuous 6 hour time interval on each of these days, from 10:30 until 16:30.\footnote{Companion video showing data samples available at \url{http://vision.gel.ulaval.ca/~jflalonde/projects/xHourPS/}.} 
 
 From the 95\% confidence interval defined in eq.~\eqref{eqn:confidence-xyz}, we can deduce that the only light-dependent stability factor in the confidence interval $\bolddelta$ is $\lambda_k$; the other two factors are related to the camera ($\sigma$), and surface reflectance~($\rho$). In the remaining of this chapter, we analyze the maximum uncertainty \mbox{$\lambda_\text{max} = \max_k(\lambda_k)$}, as a conservative performance measure that is independent of albedo and sensor noise; $\lambda_\text{max}$ is a {\em maximum noise gain} factor, \ie, the intensity of noise amplification in the solution. Here, we are interested in 1) investigating how the noise gain $\lambda_\text{max}$ is influenced by the duration of outdoor data capture, and in 2) identifying specific changes, or {\em events}, in outdoor lighting that are associated with more stable PS solutions (smaller $\lambda_\text{max}$).
 
@@ -538,7 +538,7 @@ This section provides the first answers to the questions raised above by looking
 \end{figure*}
 % -----------------------------------------------------------------------------
 
-\section{Cloud coverage and MLV shifting}
+\subsection{Cloud coverage and MLV shifting}
 \label{subsec:mlv-clouds}
 
 As shown in section~\ref{sec:cloud-cover-results}, with data captured under clear skies, the MLVs of the model above will point nearly towards the sun, from which arrives most of the incoming light. Thus, near an equinox (worldwide), the resulting set of MLVs are nearly coplanar~\cite{shen-pg-14}, resulting in poor performance, fig.~\ref{fig:MLVshift}(a). For a day with an overcast sky, performance is also poor because the set of MLVs are nearly colinear and shifted towards the patch normal ${\bf n}$, fig.~\ref{fig:MLVshift}(b). Finally, in partly cloudy days (mixed skies), the sun is often obscured by clouds and such occlusion shifts some MLVs away from the solar plane, improving numerical stability, fig.~\ref{fig:MLVshift}(c). 
@@ -547,12 +547,12 @@ As shown in section~\ref{sec:cloud-cover-results}, with data captured under clea
 % This improvement in conditioning is more significant with lower sun elevations, as the MLVs are shifted towards zenith.
 
 
-\section{Solar arcs and MLV elevation}
+\subsection{Solar arcs and MLV elevation}
 \label{subsec:solararcs-mlvelevation}
 
 %If we assume equinox, then the sun actually moves on a plane worldwide (i.e. independent of latitude) and is also visible 12 hours worldwide (although terrain and atmosphere play a small role and change that). Thus, this simulation requires the equinox assumption. What does vary with latitude (at equinox) is: (1) the inclination of the solar plane, and (2) the frequency of cloud coverage (if the sun is lower in the sky most of the day). Anything else?
 
-Here, we seek to provide a sense of the minimal length of solar arc and amount of out-of-plane MLV shift required in single-day outdoor PS.
+Here, we seek to provide a sense of the minimal length of solar arc and amount of out-of-plane MLV shift required in single-day outdoor PS. 
 
 Assuming a day near an equinox, the apparent sun trajectory worldwide describes an arc $\theta_a$ within the solar plane of about $15^\circ$ per hour. We now use this observation to evaluate the numerical stability of outdoor PS for data capture intervals (solar arcs) of different lengths. Considering a partly cloudy sky, we also investigate the interaction of solar arc and cloud coverage; we quantify performance as a function of both acquisition time (solar arc $\theta_a$) and amount of out-of-plane MLV shift (elevation angle $\theta_e$) introduced by clouds.
 
@@ -571,7 +571,7 @@ Fig.~\ref{fig:v123gain}(a) shows that the noise gain $\lambda_{\max}$ drops quic
 A second important prediction from fig.~\ref{fig:v123gain}, considering (more realistic) small to moderate amounts of MLV shifts $\theta_e \leq 40^\circ$, is that conditioning will improve very little for data capture intervals above 3 hours ($45^\circ$ solar arcs). Reducing data capture from 3 to 2 hours would lead to an additional increase in uncertainty ($\lambda_{\max}$) of less than $30\%$ (from about 2.8 to nearly 3.6). Still, 2-hour outdoor PS with noise gains under $4\times$ may be possible if an MLV shift of $\theta_e > 20^\circ$ is introduced by atmospheric events during capture. Uncertainty in the results of 1-hour outdoor PS would be about 5 to 7 times that of full-day (6-hour) outdoor PS.
 
 
-\section{MLV shifts in real sky probes}
+\subsection{MLV shifts in real sky probes}
 
 % how much MLV shift is expected?
 % but how much uncertainty can we expect? look into real sky probes...
@@ -584,22 +584,22 @@ A second important prediction from fig.~\ref{fig:v123gain}, considering (more re
 % does enough shift really happen? how much shift and for which normals?
 % average/pattern over multiple days?
 
-While the analysis above suggests that outdoor PS may be possible with a capture interval of only about 1 to 3 hours, it does not answer whether it is possible to observe an adequate amount of MLV shift (elevation away from solar plane) within a single partly cloudy day. In the following, we analyze the shifting (coplanarity) of real MLVs obtained from a database of real environment maps (sky probes)~\cite{holdgeoffroy-iccp-15}.
+While the analysis above suggests that outdoor PS may be possible with a capture interval of only about 1 to 3 hours, it does not answer whether it is possible to observe an adequate amount of MLV shift (elevation away from solar plane) within a single partly cloudy day. In the following, we analyze the shifting (coplanarity) of real MLVs obtained from the database of real environment maps (sky probes) presented in sec.~\ref{sec:hdrdb}.
 
 % MLV shifting depends on which portion of the sky the normal (patch) sees.
 % shifting varies with normal (examples, more in suppl video)
 % dimming in overcast (early morning/afternoon) affects conditioning too (explain)
 
-First, it is important to note that surface patches of different orientations (normals) are exposed to different hemispheres of illumination, with light arriving from above (sky) and below (ground). This fact is illustrated in fig.~\ref{fig:realShiftNormal} for three different normal vectors (rows) and two different days (columns). Each globe represents the coordinate system for the environment maps captured in a day. For each combination normal-day, the time-trajectory of computed MLV directions (dots) and intensities (colors) are shown on the globe. Brighter MLVs lie closely to the solar arc, while darker MLVs may shift away from it. 
+First, it is important to note that surface patches of different orientations (normals) are exposed to different hemispheres of illumination, with light arriving from above (sky) and below (ground). This fact is illustrated in fig.~\ref{fig:realShiftNormal} for three different normal vectors (rows) and two different days (columns). Each globe represents the coordinate system for the environment maps captured in a day. For each combination normal-day, the time-trajectory of computed MLV directions (dots) and intensities (colors) are shown on the globe. Brighter MLVs lie closely to the solar arc, while darker MLVs may shift away from it. Note that we present normals that are mainly southward as they receives the most direct sunlight throughout the day in the Northern hemisphere. Surfaces with normals pointing north, for example, would be in shadow throughout the day in latitudes higher than the Tropic of Cancer around the winter solstice. As such, for the remainder of this chapter, we consider a camera that points toward north.
 
-To more closely match the scenario considered above, we scale these real MLVs so that the brightest one over all days (\ie, for the most clear sky) has unit-length. From fig.~\ref{fig:realShiftNormal}, also note that some MLVs are shifted very far from the solar arc but, as indicated by the darker colors, their intensity is dimmed considerably by cloud coverage; little improvement in conditioning is obtained from these MLVs.
+To more closely match the scenario considered above, we scale these real MLVs so that the brightest one over all days (\ie, for the most clear sky) has unit-length. From fig.~\ref{fig:realShiftNormal}, also note that some MLVs are shifted very far from the solar arc but, as indicated by the darker colors, their intensity is dimmed considerably by cloud coverage; little improvement in conditioning is obtained from these MLVs. 
 
-Most important, fig.~\ref{fig:realShiftNormal} shows that the amount of out-of-plane MLV shift (elevation) relative to the solar arc also depends on the orientation ${\bf n}$ of the surface patch. This suggest that outdoor PS reconstruction may present different amounts of uncertainty (conditioning) depending on the normal of each patch. Indeed, the noise gain ($\lambda_{\max}$) values in fig.~\ref{fig:realShiftAll} show that patches with nearly horizontal normals (orthogonal to the zenith direction) are associated with sets of MLVs that are closer to being coplanar throughout the day. As expected, patches oriented towards the bottom also present worse conditioning since they receive less light.
+Most important, fig.~\ref{fig:realShiftNormal} shows that the amount of out-of-plane MLV shift (elevation) relative to the solar arc also depends on the orientation ${\bf n}$ of the surface patch. This suggest that outdoor PS reconstruction may present different amounts of uncertainty (conditioning) depending on the normal of each patch. Indeed, the noise gain ($\lambda_{\max}$) values in fig.~\ref{fig:realShiftAll} show that patches with nearly horizontal normals (orthogonal to the zenith direction) are associated with sets of MLVs that are closer to being coplanar throughout the day. As expected, patches oriented towards the bottom also present worse conditioning since they receive less light. 
 
 % Normals nearly horizontal are worse, why? Interesting!
 % Uncertainty is higher, more errors, suggest direction for future investigation
 
-Although these MLVs were computed from environment maps captured in the Northern hemisphere (Pittsburgh, USA, and Quebec City, Canada~\cite{holdgeoffroy-iccp-15}), similar conclusions can be drawn for the Southern hemisphere. Finally, note that this section has considered MLV shifts in whole-day datasets. Next, we look at subsets of MLVs from time intervals of varying lengths and analyze some of the atmospheric events associated with improved conditioning.
+Although these MLVs were computed from environment maps captured in the Northern hemisphere (Pittsburgh, USA, and Quebec City, Canada~\cite{holdgeoffroy-iccp-15}), similar conclusions can be drawn for the Southern hemisphere. Finally, note that this section has considered MLV shifts in whole-day datasets. Next, we look at subsets of MLVs from time intervals of varying lengths and analyze some of the atmospheric events associated with improved conditioning. 
 
 % Next, we look into real datasets of partly cloudy skies and measure the actual amount of MLV shifting for hypothetical capture sessions of varying duration, from 1 to 6 hours. 
 
@@ -633,7 +633,7 @@ Although these MLVs were computed from environment maps captured in the Northern
 % -----------------------------------------------------------------------------
 
 
-\section{Evolution of noise gain over time}
+\subsection{Evolution of noise gain over time}
 
 In this section, we show how the conditioning of outdoor PS evolves over time. Analyzing the patterns in its evolution will allow us to isolate important ``events''---points at which uncertainty suddenly drops---and investigate whether such events occur in close succession.
 
@@ -663,7 +663,7 @@ Of course, this could be due to a simple fact: the first interval is longer than
 \label{fig:events}
 \end{figure*}
 
-\section{Overall performance of $x$-hour PS}  
+\subsection{Overall performance of $x$-hour PS} 
 
 We noted in fig.~\ref{fig:events}(d) that sufficient conditions for low uncertainty could be met in as little as 2 hours. In this section, we evaluate how often one can achieve low uncertainty in short time intervals. This is done by assessing the distribution of noise gains from short time intervals, and aggregating results over multiple days.
 
@@ -788,7 +788,7 @@ In short, our analysis revealed the following important observations of direct p
 Furthermore, we showed that, assuming Lambertian reflectance, the effective incident light to a surface can be summarized as a single vector which we call the mean light vector (MLV). Those MLVs are shifted from the solar plane when the sun is occluded by clouds. We demonstrate, through an extensive empirical analysis, that the atmospheric events causing that shift occur often in practice, and that they can be observed within a short time interval. In addition, we found that this shifting is often sufficient to constrain the PS problem significantly and reduce uncertainty in normal estimation. However, we also show that the shift is not the same for every normal; for some normals, shifting may not reduce uncertainty sufficiently.
 While these observations might seem intuitive to an experienced practitioner, as far as we know, our work is the first attempt to confirm or contradict such intuition in outdoor PS. For instance, a common belief has been that clear days were preferable~\cite{yu-iccp-13,inose-tcva-13,ackermann-cvpr-12,abrams-eccv-12}, instead of mixed weather. Finally, we validate our analysis by running calibrated outdoor PS on synthetic and real data.
 
-Another goal of this chapter has been to lay the foundation for a surface reconstruction algorithm specialized in short-term outdoor PS. Clearly, a better understanding of the sources of uncertainty is useful in developing better reconstruction algorithms (\eg, better informed regularization). Despite the interesting observations above, this work still has some limitations that also open the way to interesting future work. First, it would be interesting to explore the correlation between the predicted reconstruction performance (\eg, fig.~\ref{fig:objects}) and the performance of an actual outdoor photometric stereo algorithm such as~\cite{yu-iccp-13}. Second, our analysis assumes white Gaussian noise, for practical purposes; more realistic noise models for HDR photography should be investigated. Third, our current analysis does not model random perturbations in the light probes themselves (\ie,~${\bf L}$). These are interesting extensions that increase the complexity of our derivations above and, thus, are left as future work. %Finally, some seasons are not well represented in our dataset yet. We plan on continuing data capture to further enrich this database of outdoor environment maps.
+Another goal of this chapter has been to lay the foundation for a surface reconstruction algorithm specialized in short-term outdoor PS. Clearly, a better understanding of the sources of uncertainty is useful in developing better reconstruction algorithms (\eg, better informed regularization). Despite the interesting observations above, this work still has some limitations that also open the way to interesting future work. First, our analysis assumes white Gaussian noise, for practical purposes; more realistic noise models for HDR photography should be investigated. Second, our current analysis does not model random perturbations in the light probes themselves (\ie,~${\bf L}$). These are interesting extensions that increase the complexity of our derivations above and, thus, are left as future work. %Finally, some seasons are not well represented in our dataset yet. We plan on continuing data capture to further enrich this database of outdoor environment maps.
 
 
 %One limitation of our work is that we consider only contiguous time intervals. It would be interesting to explore how non-consecutive images could be selected, from a given interval, with the goal of achieving additional improvements in performance. Presently, we are using the setup in fig.~\ref{fig:real-data-setup} to collect a database of real objects observed outdoors, and extending our analysis considering more elaborate shading and ground models.
