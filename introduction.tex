@@ -9,9 +9,9 @@ As we begin to better understand our own visual system, it becomes clear that, j
 
 This is the main topic of this dissertation: modeling priors through machine learning to understand and solve problems that are ill-posed when considering them exclusively from a physics or geometric perspective. Specifically, three problems will be covered: 
 \begin{enumerate}
-\item understanding 3D surface reconstruction using photometric cues under outdoor lighting conditions;
-\item outdoor lighting estimation, where we are interested in modeling outdoor lighting by observing it \emph{indirectly}, through the scene;
-\item performing geometric camera calibration using a single image of generic scenes.
+\item understanding and performing 3D surface reconstruction using photometric cues under outdoor lighting conditions;
+\item modeling outdoor lighting by observing it \emph{indirectly}, through the scene;
+\item estimating geometric camera calibration using a single image of generic scenes.
 \end{enumerate}
 For all those scenarios, we are interested in cases when the environment is mostly uncontrolled, resulting in ambiguous situations, impossible to solve robustly with classical approaches. 
 
@@ -39,7 +39,7 @@ In this dissertation, we demonstrate that machine learning can be used to model 
 \textbf{Single Image Outdoor Lighting Estimation} We present a single-image learning-based approach to perform outdoor lighting estimation on generic scenes under natural daylight. 
 \end{quotation}
 
-Estimating the sun position from shading cues or the sky (when present in the image) is a hard task that requires the estimation of the scene geometry and the segmentation of the sky. While we have no formal proof that our method performs those tasks (it is implicit in the network), our experiments and overall performance indicates that our method understands basic photometric cues, even though we never explicitly provided it information about light physics. This implicit understanding of light allows our method to yield state-of-the-art illumination estimation performance, enabling photorealistic virtual object insertions and automatic relighting.
+Estimating the sun position from shading cues or the sky (when present in the image) is a hard task that requires the estimation of the scene geometry and the segmentation of the sky. While we have no formal proof that our method performs those tasks (it is implicit in the network), our experiments and overall performance indicates that our method understands basic photometric cues, even though we never explicitly provided it information about light physics. This implicit understanding of light allows our method to yield state-of-the-art illumination estimation performance, enabling photorealistic virtual object insertions and automatic relighting. 
 
 The last research axis focuses on geometric camera calibration from a single image of a generic scene. This task usually requires some specific object to be inserted in the scene, like a checkerboard pattern on a planar surface. Then, around a dozen images are taken, where this checkerboard is positioned in various locations and orientations in the image. Having to insert an object in the scene and capturing multiple images makes this process tedious. Furthermore, the large corpus of images that have already been taken typically does not contain such a specific object, making them inappropriate for classical geometric camera calibration. To simplify geometric calibration, one could perform it using the content present in a single image. However, this setup turns the calibration process into a severely ill-posed problem. 
 
