@@ -1,7 +1,8 @@
 %!TEX root = main.tex
 \chapter{Related Work}
+\label{ch:rw}
 
-In this chapter, we will cover the literature common to the research axes presented in this thesis. First, an overview of the recent literature on photometric stereo is discussed. An emphasis is put on dealing with various illumination conditions, from controlled laboratory conditions to the harder case of outdoor lighting. Then, a review of prior and current art in lighting modeling and estimation is presented. 
+In this chapter, we will cover the literature common to the research axes presented in this thesis. First, an overview of the recent literature on photometric stereo is discussed. An emphasis is put on dealing with various illumination conditions, from controlled laboratory conditions to the harder case of outdoor lighting. Then, a review of prior and current art in lighting modeling and estimation is presented. Since single image camera calibration is somewhat orthogonal to the other two research axes, we will review its literature in chapter~\ref{ch4}.
 %, followed by a review of camera calibration approaches. For the latter, we will mainly focus on field of view and horizon line estimation, which provides the main extrinsic parameters with respect to the earth.
 
 
@@ -70,11 +71,11 @@ Finally, under more extreme ambiguity, techniques for shape-from-shading (SfS)~\
 
 Lighting is the fundamental element that makes up all images. As Paul Cézanne said, ``there is no model; there is only color.'' Knowing the lighting of a scene allows for a deeper understanding of the camera, the scene and its materials, and enables a myriad of applications like automatic virtual object insertion and relighting.
 
-In this section, we present the most notable physically-based and analytical outdoor illumination models as well as the methods used to estimate their parameters from images.
+In this section, we present the most notable physically-based and analytical outdoor illumination models as well as methods used to estimate their parameters from images.
 
-\subsection{Physically-based outdoor illumination models}
+\subsection{Simulation-based outdoor illumination models}
 
-Physically-based models seek to generate accurate representations of the sky. They are based on physical simulations to provide the luminance distribution of the sky in function of the sun position and some atmospheric characteristics. They are usually slow to evaluate, but typically closer to real sky luminance measurements than analytical models.
+Physically-based models seek to generate accurate representations of the sky. They are based on physical simulations to provide the luminance distribution of the sky as a function of the sun position and some atmospheric characteristics. They are usually slow to evaluate, but typically closer to real sky luminance measurements than analytical models.
 
 The first model to explain the main physical phenomenons coming into play to form daylight was published by Nishita et al. in their seminal work of 1993~\cite{nishita1993display}. They explain that the most important physical phenomenon affecting the appearance of the sky is the Rayleigh scattering. It models interactions of the electromagnetic field (visible light, in this case) with small aerosols. Specifically, it encompasses interactions with particles having a radius $r$ significantly smaller than the light wavelength $\lambda$. This domain of interactions, characterized by $\frac{2\pi r}{\lambda} \ll 1$, predicts the behavior of light when it interacts with nitrogen and oxygen, the major constituents of air. According to this theory, the amount of scattering happening in the atmosphere decreases proportionally to the fourth power of the wavelength $\left(\lambda^4\right)$. In the visible spectrum, this translates in small wavelengths (blues) being much more scattered than large wavelengths (reds), explaining why the sky is perceived blue by the human eye.
 
@@ -108,11 +109,11 @@ Most published physically-based models are variants of the Rayleigh and Mie scat
 
 Daylight is not the only phenomenon that received attention in the literature. A night sky model has also been developed~\cite{jensen2001nightskymodel}, taking into consideration the sun's reflection on the moon as well as the light emitted from the stars.
 
-\subsection{Analytical outdoor illumination models}
+\subsection{Physically-based analytic outdoor illumination models}
 
 Contrarily to physically-based models, analytical sky models are composed of a single empirically-derived closed-form equation to obtain the luminance of the sky. While they are typically used for rendering and for real-time applications because of their high evaluation speed, their accuracy is somewhat worse than physically-based models, giving skies that agree less with real skies measurements.
 
-The first weather condition that was modeled in the literature is the overcast sky. Kimball and Hand~\cite{kimball1921sky} were the firsts to report in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Two decades later, Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky. This work has been revisited and adopted as the CIE overcast sky model in 1996~\cite{cie1996s}. In this model, the luminance of the sky $Y_z$ in function of the zenith angle of a sky element $\theta$ is defined as
+The first weather condition that was modeled in the literature is the overcast sky. Kimball and Hand~\cite{kimball1921sky} were the first to report in 1921 that cloudy days had higher luminosity near their zenith, and decreasing luminosity toward the horizon. Two decades later, Moon and Spencer~\cite{moon1942illumination} formulated the first luminance distribution model for the overcast sky. This work has been revisited and adopted as the CIE overcast sky model in 1996~\cite{cie1996s}. In this model, the luminance of the sky $Y_z$ in function of the zenith angle of a sky element $\theta$ is defined as
 \begin{equation}
 Y_z = \frac{1 + 2 \; \cos\left( \theta \right)}{3} \quad.
 \end{equation}
