@@ -3,7 +3,7 @@
 
 \label{ch1}
 
-\section{Introduction}
+%\section{Introduction}
 
 Photometric stereo has been studied extensively in the past decades, especially on how to deal with various lighting conditions~\cite{alldrin-cvpr-08,basri-ijcv-07,johnson-cvpr-11,oxholm-eccv-12,ackermann-cvpr-12,abrams-eccv-12}. Most of the work on this topic has been done in the laboratory, where illumination is controlled. When trying to apply the technique outdoor, where the illumination is uncontrolled,
 (\eg,~\cite{sun-ivc-07,jiang-bunke-sp-91,klaudiny-prl-14,shen-pg-14})
@@ -221,28 +221,28 @@ The marginal distributions in~\eqref{eqn:normal-distrib} allow us to derive conf
 \label{eqn:confidence-xyz}
 \end{equation}
 %
-where $\lambda_k$ is the square root of the $k$th element on the diagonal of $({\bf L}^T{\bf L})^{-1}$. As expected, the sensor-dependent noise level $\sigma$ is not the only factor that determines uncertainty. The noise gain factor $\lambda_k/\rho$ in \eqref{eqn:confidence-xyz} reveals how outdoor illumination (the conditioning of ${\bf L}$) and albedo can amplify the effect of noise on the solution ${\bf \hat n}$. The lower the albedo $\rho$ is, the larger is the variance in the obtained estimate $\bf \hat n$ (as less light is reflected towards the camera). Our goal is then to answer the remaining question: how do natural changes in outdoor illumination affect this noise gain factor ($\lambda_k$) and, therefore, uncertainty?
+where $\lambda_k$ is the square root of the $k$th element on the diagonal of $({\bf L}^T{\bf L})^{-1}$. As expected, the sensor-dependent noise level $\sigma$ is not the only factor that determines uncertainty. The noise gain factor $\lambda_k$ in~\eqref{eqn:confidence-xyz} reveals how outdoor illumination (the conditioning of ${\bf L}$) can amplify the effect of noise on the solution ${\bf \hat n}$. The albedo $\rho$ also impacts the solution stability, where a lower albedo translates in a larger variance in the obtained estimate $\bf \hat n$ (as less light is reflected towards the camera). Our goal is then to answer the remaining question: how do natural changes in outdoor illumination affect this noise gain factor ($\lambda_k$) and, therefore, uncertainty?
 
 %\subsection{An intuitive measure of uncertainty}
-\label{subsec:measure_uncertainty}
+%\label{subsec:measure_uncertainty}
 
 %To provide a measure of uncertainty that is more intuitive than~\eqref{eqn:confidence-xyz}, we consider angular distances in degrees,
 
 %
-\begin{equation}
-\theta^\pm = \cos^{-1}(\mathbf{n}^T{\bf \hat n}^\pm)\,,
-\quad \text{where }
-{\bf \hat n}^\pm = \frac{{\bf \hat n} \pm \bolddelta}{\lVert{\bf \hat n} \pm \bolddelta \rVert}\,.
-\label{eqn:angular-dist}
-\end{equation}
+%\begin{equation}
+%\theta^\pm = \cos^{-1}(\mathbf{n}^T{\bf \hat n}^\pm)\,,
+%\quad \text{where }
+%{\bf \hat n}^\pm = \frac{{\bf \hat n} \pm \bolddelta}{\lVert{\bf \hat n} \pm \bolddelta \rVert}\,.
+%\label{eqn:angular-dist}
+%\end{equation}
 %
-The uncertainty in the estimate of ${\bf n}$ is then summarized in a single confidence interval, in degrees,
+%The uncertainty in the estimate of ${\bf n}$ is then summarized in a single confidence interval, in degrees,
 %
-\begin{equation}
-\mathcal{C}_{\bf n} = [ \ 0, \ \max (\theta^\pm) \ ]\,,
-\label{eqn:confidence-degrees}
-\end{equation}
-which indicates the expected accuracy of the estimated surface orientation ${\bf \hat n}$.
+%\begin{equation}
+%\mathcal{C}_{\bf n} = [ \ 0, \ \max (\theta^\pm) \ ]\,,
+%\label{eqn:confidence-degrees}
+%\end{equation}
+%which indicates the expected accuracy of the estimated surface orientation ${\bf \hat n}$.
 
 Note that the condition number, determinant, and trace of matrix $(\mathbf{L}^T\mathbf{L})^{-1}$ can also be used as measures of total variance in the estimated solutions---as done in~\cite{sun-ivc-07}---to find the optimal location of point light sources in PS. These measures are closely related to the rank of matrix $\mathbf{L}$, which must be three for a solution to exist; that is, $\mathbf{L}^T\mathbf{L}$ must be nonsingular. In practice, this matrix is always full-rank, although it is often poorly conditioned~\cite{shen-pg-14}. In the following sections, we consider the noise gain factor $\lambda_k$ as a measure of uncertainty independent of albedo and sensor noise. In this chapter, we focus on analyzing our ability to recover geometry and will assume that the albedo is constant.
 
