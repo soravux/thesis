@@ -623,7 +623,7 @@ Although these MLVs were computed from environment maps captured in the Northern
 \includegraphics[height=1.43in]{sphereShift20141011_n3} \\[2mm]
 {\footnotesize {\verb| |} \hspace{0.5cm} (a) Mixed clouds (06-NOV-13) \hspace{0.25cm} (b) Mixed clouds (11-OCT-14) }\\
 %\vspace{-2mm}
-\caption[Examples of mean light vectors in function of the normal studied]{Globes representing the coordinate system of sky probes. Each normal (blue arrow) defines a shaded hemisphere in the environmental map that does not contribute light to the computed MLVs (dots). All MLVs in two particular partly cloudy days (columns) were computed from real environment maps~\cite{holdgeoffroy-iccp-15} for 3 example normal vectors (rows). Relative MLV intensities are shown in the color bar on the left. See also video in~\cite{webpageXhourPS}.}
+\caption[Examples of mean light vectors in function of the normal studied]{Globes representing the coordinate system of sky probes. Each normal (blue arrow) defines a shaded hemisphere in the environmental map that does not contribute light to the computed MLVs (dots). All MLVs in two particular partly cloudy days (columns) were computed from real environment maps~\cite{holdgeoffroy-iccp-15} for 3 example normal vectors (rows). Relative MLV intensities are shown in the color bar on the left.\footnote{See also video in~\url{http://jflalonde.ca/projects/xHourPS/}}}
 \label{fig:realShiftNormal}
 \end{figure}
 % -----------------------------------------------------------------------------
@@ -634,7 +634,7 @@ Although these MLVs were computed from environment maps captured in the Northern
 \includegraphics[height=1.46in]{sphereGain20141011} \\[1mm]
 {\footnotesize {\verb| |} \hspace{.6cm} (a) 06-NOV-13 \hspace{1cm} (b) 11-OCT-14 }\\[3mm]
 %\vspace{-2mm}
-\caption[Noise gain over the sphere]{Noise gain for each normal direction ${\bf n}$ visible to the camera; the colors indicate the shifting (coplanarity) of the associated MLVs. The camera is assumed to lie to the South of this hypothetical target object. For both days, normals that are nearly horizontal are associated with more coplanar MLVs (smaller shifts, higher gains). These normals define a {\em zero-crossing region} between positive and negative out-of-plane shifts (mid row in fig.~\ref{fig:realShiftNormal}), where occlusion of the sun results in shifts that are predominantly {\em along} the solar arc. See also video available in~\cite{webpageXhourPS}.}
+\caption[Noise gain over the sphere]{Noise gain for each normal direction ${\bf n}$ visible to the camera; the colors indicate the shifting (coplanarity) of the associated MLVs. The camera is assumed to lie to the South of this hypothetical target object. For both days, normals that are nearly horizontal are associated with more coplanar MLVs (smaller shifts, higher gains). These normals define a {\em zero-crossing region} between positive and negative out-of-plane shifts (mid row in fig.~\ref{fig:realShiftNormal}), where occlusion of the sun results in shifts that are predominantly {\em along} the solar arc.\footnote{See also video in~\url{http://jflalonde.ca/projects/xHourPS/}}}
 \label{fig:realShiftAll}
 \end{figure}
 % -----------------------------------------------------------------------------
@@ -746,7 +746,7 @@ We validate the analyses in sec.~\ref{sec:modeling_uncertainty} and \ref{sec:ch1
 %
 \subsection{Synthetic data}%
 %
-We first consider synthetic images of an owl model rendered with real sky probes. The rendered images were perturbed with additive Gaussian noise at 1\% the median pixel intensity. For each image, one real-world environment map from the database was used as the sole light source. Cast shadows were not simulated to isolate the analysis to the photometric cue alone (see~\cite{webpageXhourPS} for more realistic results with a physically-based rendering engine). 
+We first consider synthetic images of an owl model rendered with real sky probes. The rendered images were perturbed with additive Gaussian noise at 1\% the median pixel intensity. For each image, one real-world environment map from the database was used as the sole light source. Cast shadows were not simulated to isolate the analysis to the photometric cue alone (see our project page~\url{http://jflalonde.ca/projects/xHourPS/} for more realistic results with a physically-based rendering engine). 
 
 % \begin{figure}
 % \centering
@@ -763,7 +763,7 @@ We ran calibrated outdoor PS on all time intervals starting at 12:00 or 13:30 fo
 
 \subsection{Real data}%
 %
-Another similar experiment considered real photos of a real owl statuette. To capture this data, we set up two cameras on the roof of a tall building as shown in fig.~\ref{fig:real-data-setup}. The first camera, dubbed ``sky camera'', captures omnidirectional photos of the sky using the approach proposed by Stumpfel \etal~\cite{stumpfel-afrigraph-04}. The second, ``object'' camera is equipped with a telephoto zoom lens and captures photos of the statuette. Both cameras capture exposure-bracketed HDR photos simultaneously, once every two minutes\footnote{Data and source code are available on our project webpage~\cite{webpageXhourPS}.}. Ground truth surface normals were obtained by aligning a 3D model of the object (obtained with a 3D scanner) to the image using POSIT~\cite{dementhon-ijcv-95}. 
+Another similar experiment considered real photos of a real owl statuette. To capture this data, we set up two cameras on the roof of a tall building as shown in fig.~\ref{fig:real-data-setup}. The first camera, dubbed ``sky camera'', captures omnidirectional photos of the sky using the approach proposed by Stumpfel \etal~\cite{stumpfel-afrigraph-04}. The second, ``object'' camera is equipped with a telephoto zoom lens and captures photos of the statuette. Both cameras capture exposure-bracketed HDR photos simultaneously, once every two minutes\footnote{Data and source code are available on our project webpage~\url{http://jflalonde.ca/projects/xHourPS/}.}. Ground truth surface normals were obtained by aligning a 3D model of the object (obtained with a 3D scanner) to the image using POSIT~\cite{dementhon-ijcv-95}. 
 
 The validation results with real data are shown in fig.~\ref{fig:real-results}. As predicted by the noise gain values of fig.~\ref{fig:real-results}~(left), similar reconstruction performance is obtained from three different time intervals shown in the top three rows of fig.~\ref{fig:real-results}~(right). Once again, the performances of 1-hour (15:30--16:30) and 3.5-hour (13:00--16:30) outdoor PS are indeed quite close to that of ``full-day'' outdoor PS (10:30--16:30). However, not all one-hour intervals are equally good, as shown for the interval 12:00--13:00 at the bottom of fig.~\ref{fig:real-results}.
 
