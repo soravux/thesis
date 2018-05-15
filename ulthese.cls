@@ -74,7 +74,7 @@
 \DeclareOption{PhD}{%
   \UL@isthesistrue
   \renewcommand*{\UL@typenum}{0}
-  \newcommand*{\UL@degree}{Philosophi{\ae} doctor (Ph.~D.)}}
+  \newcommand*{\UL@degree}{\textbf{Doctorat en g\'enie \'electrique}\\Philosophi{\ae} doctor (Ph.~D.)}}
 \DeclareOption{MATDR}{%
   \UL@isthesisfalse
   \renewcommand*{\UL@typenum}{0}
