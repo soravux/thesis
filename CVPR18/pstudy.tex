@@ -12,7 +12,7 @@ In particular, we aim to understand the sensitivity of humans to camera calibrat
 
 To understand human perception of geometric camera calibration errors, we show pairs of images containing a virtual object to multiple users, one aligned according to the ground truth camera calibration and the second with some parameter(s) distorted to some extent. To generate this dataset, we use the same process as described in~\ref{sec:dataset_generation} to obtain images with their ground truth calibration. We randomly selected 530 panoramas (79 indoor and 451 outdoor) from this dataset, resulting in 10,638 images with realistic camera parameters. 
 
-An insertion point on the ground was manually selected for each image. The Cycles renderer was used to realistically insert virtual objects at that point in the images. The ground plane was set at $y=0$ using the shadow catcher feature. The virtual camera was placed at a height of 1.6m. Automatic lighting estimates were obtained by leveraging recent work in single image lighting estimation for the outdoor~\cite{holdgeoffroy-cvpr-17} and indoor~\cite{gardner-sigasia-17} cases. 
+An insertion point on the ground was manually selected for each image. The Cycles renderer was used to realistically insert virtual objects at that point in the images. The ground plane was set at $y=0$ using the shadow catcher feature. The virtual camera was placed at a height of 1.6m. Automatic lighting estimates were obtained by leveraging recent work in single image lighting estimation for the outdoor (chapter~\ref{ch3}) and indoor~\cite{gardner-sigasia-17} cases. 
 
 Two renders are generated for each image. The first one is obtained by setting the parameters of the virtual (rendering) camera to the ground truth parameters of the background image. This should thus yield a realistic composition. The second render is obtained by distorting the virtual camera parameters, yielding a virtual object that does not have the same camera parameters as the background. For this second render, either pitch, roll, field of view or a combination of these parameters were modified. The parameters were altered by randomly adding or subtracting values sampled from a uniform distribution in $\left[ 1, 30 \right]\degree$ for pitch, $ \left[ 0.5, 20 \right]\degree$ for roll and $\left[ 5, 55\right]\degree$ for field of view. In the distorted renders, the object was moved and scaled in order to appear at the same location and have the same size in the image as the ground truth render. This step is needed as apparent size is a function of field of view. The virtual objects were laid vertically on the ground plane and were randomly rotated about their vertical axis.
 
@@ -74,7 +74,7 @@ Evaluating sensitivity to errors in each parameter is interesting, but does not 
 
 First, our results suggest that human sensitivity to pitch error does not correlate strongly with horizon position in the image. Similarly, sensitivity to errors in field of view seems to be constant across all fields of view used in the study. However, the camera roll appears to have an influence on our perception of roll error. Indeed, images with high roll (in either direction) allow more room for roll estimation errors. 
 
-\paragraph{}Please see the supplementary material for additional analysis, including joint modeling of distortions on multiple parameters.
+\paragraph{}Please see annex~\ref{annex5} for additional analysis, including joint modeling of distortions on multiple parameters.
 
 
 \newcommand{\retrievalwidth}{0.12}
