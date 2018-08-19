@@ -4,7 +4,7 @@
 
 We first present the geometric camera model used in this chapter. 
 %As explained below, our simplified model represents the camera using the focal length $f_\mathrm{px}$, pitch $\theta$ and roll $\psi$ angles.
-Under the pinhole camera model, the pixel coordinates $\mathbf{p}_\mathrm{im}$ of a 3D point $\mathbf{p}_\mathrm{w}$ is given by
+Under the pinhole camera model, the pixel coordinates $\mathbf{p}_\mathrm{im}$ of a 3D point $\mathbf{p}_\mathrm{w}$ are given by
 %
 \begin{equation}
 \mathbf{p}_{\mathrm{im}} = [\lambda u \; \lambda v \; \lambda]^T = \mathbf{K} \left[\mathbf{R} | \mathbf{t}\right] \left[ \mathbf{p}_{\mathrm{w}} | 1 \right]^T
@@ -15,14 +15,14 @@ in homogeneous coordinates, where $\mathbf{K}$ is the camera projection matrix (
 Since the camera parameters are to be estimated from a single image, we first express them as a function of image features. Let us first consider the focal length $f_\mathrm{px}$. Since it has no direct interpretation in the image, we instead estimate the vertical field of view $h_\theta$, a more intuitive measure:
 %
 \begin{equation}
-h_{\theta} = 2 \arctan \left( \nicefrac{ h }{ 2f{_\mathrm{px}} } \right) \,,
+h_{\theta} = 2 \arctan \left( \frac{ h }{ 2f{_\mathrm{px}} } \right) \,,
 \end{equation}
 %
 where $h$ is the image height.
 
 We next consider the rotation matrix $\mathbf{R}$, which can be parameterized by roll $\psi$, pitch $\theta$, and yaw $\varphi$ angles. There exists no natural reference frame to estimate $\varphi$ (left vs right) from an arbitrary image. Therefore, we constrain the rotation to only pitch and roll components, simplifying the extrinsic rotation matrix to $\mathbf{R} = \mathbf{R}_z(\psi) \mathbf{R}_x(\theta)$. We can use the horizon line as an intuitive representation for these angles. We define the horizon line midpoint $b_{\mathrm{p}}$ as the $y$-coordinate of its intersection with the vertical axis in the image and roll $\psi$ with respect to horizontal.
 
-The midpoint $b_{\mathrm{p}}$ can be derived from $\theta$ and $f_{\mathrm{px}}$ as
+The midpoint $b_{\mathrm{p}}$ can be derived from pitch angle $\theta$ and focal length $f_{\mathrm{px}}$ as
 %
 \begin{equation}
 b_{\mathrm{p}} = 2 f_{\mathrm{px}} \tan\theta \,.

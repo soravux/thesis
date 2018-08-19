@@ -25,7 +25,7 @@ In this section, we detail the steps taken to augment the SUN360 dataset~\cite{x
 
 \subsection{Sky lighting model}
 
-We employ the model proposed by Ho\v{s}ek and Wilkie~\cite{hosek-siggraph-12}, which has been shown~\cite{kider-tog-14} to more accurately represent skylight than the popular Preetham model~\cite{preetham-siggraph-99}. The model has also been extended to include a solar radiance function~\cite{hosek-cga-13}, which we also exploit.
+We employ the model proposed by Ho\v{s}ek and Wilkie~\cite{hosek-siggraph-12}, which has been shown~\cite{kider-tog-14} to represent skylight more accurately than the popular Preetham model~\cite{preetham-siggraph-99}. The model has also been extended to include a solar radiance function~\cite{hosek-cga-13}, which we also exploit.
 
 In its simplest form, the Ho\v{s}ek-Wilkie (HW) model expresses the spectral radiance $L_\lambda$ of a lighting direction along the sky hemisphere $\mathbf{l} \in \Omega_\text{sky}$ as a function of several parameters:
 %
@@ -33,9 +33,9 @@ In its simplest form, the Ho\v{s}ek-Wilkie (HW) model expresses the spectral rad
 L_\lambda(\mathbf{l}) = f_\text{HW}(\mathbf{l}, \lambda, t, \sigma_g, \mathbf{l}_s) \,,
 \end{equation}
 %
-where $\lambda$ is the wavelength, $t$ the atmospheric turbidity (a measure of the amount of aerosols in the air), $\sigma_g$ the ground albedo, and $\mathbf{l}_s$ the sun position. Here, we fix $\sigma_g = 0.3$ (approximate average albedo of the Earth~\cite{goode-grl-01}). 
+where $\lambda$ is the wavelength, $t$ the atmospheric turbidity (a measure of the amount of aerosols in the air), $\sigma_g$ the ground albedo, and $\mathbf{l}_s$ the sun position. Here, we set $\sigma_g = 0.3$ (approximate average albedo of the Earth~\cite{goode-grl-01}). 
 
-From this spectral model, we obtain RGB values by rendering it at a discrete set wavelengths spanning the 360--700nm spectrum, convert to CIE XYZ via the CIE standard observer color matching functions, and finally convert again from XYZ to CIE RGB~\cite{hosek-siggraph-12}. Referring to this conversion process as $f_\text{RGB}(\cdot)$, we express the RGB color $C_\text{RGB}(\mathbf{l})$ of a sky direction $\mathbf{l}$ as the following expression:
+While this sky model outputs radiance in function of light wavelength, we are interested in a camera response of the image as captured by our dataset. To convert from this spectral model to RGB, we perform three steps: 1) render the model at a discrete set of wavelengths spanning the 360--700nm spectrum, 2) convert to CIE XYZ via the CIE standard observer color matching functions, and finally 3) convert from XYZ to CIE RGB~\cite{hosek-siggraph-12}. Those three steps are standard procedure to convert spectral radiance to RGB space, as a direct conversion is not available in the literature and spectrum response functions are typically defined in CIE XYZ space. Referring to this conversion process as $f_\text{RGB}(\cdot)$, we express the RGB color $C_\text{RGB}(\mathbf{l})$ of a sky direction $\mathbf{l}$ as the following expression:
 %
 \begin{equation}
 C_\text{RGB}(\mathbf{l}) = \omega f_\text{RGB}(\mathbf{l}, t, \mathbf{l}_s)\,.
@@ -47,7 +47,7 @@ In this equation, $\omega$ is a scale factor applied to all three color channels
 % YAHOG: I removed this sentence as HW explicitly said not to do that :(
 %If no such pixel exists (due to coarse discretization), the closest pixel is assigned to the maximum sun color according to the model.
 
-Thus, we are left with three important parameters: the sun position $\mathbf{l}_s$, which indicate where the main directional light source is located in the sky, the exposure $\omega$, and the turbidity $t$. The turbidity is of paramount importance as it controls the relative sun color (and intensity) with respect to that of the sky. As illustrated in fig.~\ref{fig:turbidity-comparison}, a low turbidity indicates a clear sky with a very bright sun, and a high turbidity represents a sky closer that is closer to overcast situations, where the sun is much dimmer. 
+Thus, we are left with three important parameters: the sun position $\mathbf{l}_s$, which indicates where the main directional light source is located in the sky, the exposure $\omega$, and the turbidity $t$. The turbidity is of paramount importance as it controls the relative sun color (and intensity) with respect to that of the sky. As illustrated in fig.~\ref{fig:turbidity-comparison}, a low turbidity indicates a clear sky with a very bright sun, and a high turbidity represents a sky that is closer to overcast situations, where the sun is much dimmer. 
 
 \subsection{Optimization procedure}
 \label{sec:optimization}
@@ -63,9 +63,9 @@ Given a panorama $P$ in latitude-longitude format and a set of pixels indices $p
 \end{split}
 \end{equation}
 %
-where $f_\text{RGB}(\cdot)$ is defined in (\ref{eqn:rgb-model}) and $\mathbf{l}_p$ is the light direction corresponding to pixel $p \in \Omega_s$ (according to the latitude-longitude mapping). Here, we model the inverse response function of the camera with a simple gamma curve ($\gamma = 2.2$). Optimizing for gamma was found to be unstable and keeping it fixed yielded much more robust results. 
+where $f_\text{RGB}(\cdot)$ is defined in (\ref{eqn:rgb-model}) and $\mathbf{l}_p$ is the light direction corresponding to pixel $p \in \Omega_s$ (according to the latitude-longitude mapping). Here, we model the inverse response function of the camera with a simple gamma curve ($\gamma = 2.2$). Optimizing for gamma was found to be unstable and keeping it constant yielded much more robust results. 
 
-We solve (\ref{eq:optim_1omega}) in a 2-step procedure. First, the sun position $\mathbf{l}_s$ is estimated by finding the largest connected component of the sky above a threshold (98th percentile), and by computing its centroid. The sun position is fixed at this value, as it was determined that optimizing for its position at the next stage too often made the algorithm converge to undesirable local minima. 
+We solve (\ref{eq:optim_1omega}) in a 2-step procedure. First, the sun position $\mathbf{l}_s$ is estimated by finding the largest connected component of the sky above a threshold (98th percentile), and by computing its centroid. The sun position is set at this value, as it was determined that optimizing for its position at the next stage too often made the algorithm converge to undesirable local minima. 
 
 Second, the turbidity $t$ is initialized to $\{1, 2, 3, ..., 10\}$ and (\ref{eq:optim_1omega}) is optimized using the Trust Region Reflective algorithm (a variant of the Levenberg-Marquardt algorithm which supports bounds) for each of these starting points. The parameters resulting in the lowest error are kept as the final result. During the optimization loop, for the current value of $t$, $\omega^*$ is obtained through the closed-form solution
 \begin{equation}
@@ -73,7 +73,7 @@ Second, the turbidity $t$ is initialized to $\{1, 2, 3, ..., 10\}$ and (\ref{eq:
 \omega^* = \frac{\sum_{p \in \mathcal{S}} P(p) f_\text{RGB}(\mathbf{l}_p, t, \mathbf{l}_{s})}{\sum_{p \in \mathcal{S}} f_\text{RGB}(\mathbf{l}_p, t, \mathbf{l}_s)^2} \,.
 \end{equation}
 %
-Finally, the sky mask $\mathcal{S}$ is obtained with the sky segmentation method of~\cite{tsai-siggraph-16}, followed by a CRF refinement~\cite{krahenbuhl-nips-12}.
+Finally, the sky mask $\mathcal{S}$ is obtained by executing a coarse learning-based sky segmentation method~\cite{tsai-siggraph-16}, followed by a CRF refinement~\cite{krahenbuhl-nips-12} to better follow the edges present in the image.
 
 %% CNN architecture
 \begin{figure}

@@ -5,7 +5,7 @@ We now demonstrate three different uses for camera parameter estimation from a s
 
 \paragraph{Image retrieval}
 
-Our technique can be used to retrieve images in large databases based on their camera geometric properties like viewpoint and field of view. To demonstrate this, we estimated the camera parameters using our technique on a subset of 10,000 images randomly selected from the Places2 dataset~\cite{Zhou2017}, computed the intersection of the horizon line with the left and right image boundaries, and ordered images in the dataset based on the L2 distance of these points to ones in the query image. Fig.~\ref{fig:applications_retrieval} presents the 4 closest matches for three query images.
+Our technique can be used to retrieve images in large databases based on their camera geometric properties like viewpoint and field of view. To demonstrate this, we estimated the camera parameters using our technique on a subset of 10,000 images randomly selected from the Places2 dataset~\cite{Zhou2017} and used our estimated intersection of the horizon line with the left and right image boundaries to order images in the dataset based on the L2 distance of these points to ones in the query image. Fig.~\ref{fig:applications_retrieval} presents the 4 closest matches for three query images.
 
 %\vspace{-1.3em}
 \paragraph{Geometrically-consistent object transfer}
