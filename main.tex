@@ -99,6 +99,11 @@
 
 \newcommand\degr[0]{^{\circ}}
 
+% https://tex.stackexchange.com/questions/427451/dot-between-chapter-number-and-figure-number-disapear-after-update
+\makeatletter
+\renewcommand{\counterwithin}{\@ifstar{\@csinstar}{\@csin}}
+\makeatother
+
 
 %\let\cite\citep
 

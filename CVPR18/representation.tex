@@ -23,7 +23,7 @@ where $h$ is the image height.
 We next consider the rotation matrix $\mathbf{R}$, which can be parameterized by roll $\psi$, pitch $\theta$, and yaw $\varphi$ angles. There exists no natural reference frame to estimate $\varphi$ (left vs right) from an arbitrary image. Therefore, we constrain the rotation to only pitch and roll components, simplifying the extrinsic rotation matrix to $\mathbf{R} = \mathbf{R}_z(\psi) \mathbf{R}_x(\theta)$. We can use the horizon line as an intuitive representation for these angles. As in~\cite{Workman2016}, we define the horizon line offset $\rho$ as the perpendicular distance between the horizon and the center of the image. This offset can be derived from pitch angle $\theta$, roll angle $\psi$ and focal length $f$ as 
 %
 \begin{equation}
-\rho = \frac{2 f} \tan\theta}{\sqrt{\tan^2\left( \psi \right) + 1}} \,.
+\rho = \frac{2 f \tan\theta}{\sqrt{\tan^2\left( \psi \right) + 1}} \,.
 \label{eq:horizon_offset}
 \end{equation}
 %
@@ -39,4 +39,11 @@ We next consider the rotation matrix $\mathbf{R}$, which can be parameterized by
 %
 In this image units representation, the top and bottom of the image have coordinates 1 and $-1$ respectively. 
 
-Throughout this chapter, camera calibration refers to the vertical field of view $h_{\theta}$, roll $\psi$ (also called slope) and offset $\rho$ from this simplified geometric camera model.
+Throughout this chapter, camera calibration refers to the vertical field of view $h_{\theta}$, roll $\psi$ (also called slope) and offset $\rho$ from this simplified geometric camera model. A summary of these parameters is shown in fig.~\ref{fig:camera_parameters_summary}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/cvpr18_parameters.png}
+\caption[Camera parameters]{Representation of the three parameters used to represent camera calibration in image space.}
+\label{fig:camera_parameters_summary}
+\end{figure}
