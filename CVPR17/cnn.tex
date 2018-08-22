@@ -21,7 +21,7 @@ We define the loss to be optimized as the sum of two losses, one for each head:
 \label{eqn:ch3_loss}
 \end{equation}
 %
-where $\beta = 160$ to compensate for the number of bins in $\mathbf{s}$. The target sun position $\mathbf{s}^*$ is computed for each bin $\mathbf{s}_j$ as 
+where $\beta = 160$ to compensate for the number of bins in $\mathbf{s}$. We experimentally validated that this value provides gradients with equal magnitude between both neural network heads. The target sun position $\mathbf{s}^*$ is computed for each bin $\mathbf{s}_j$ as 
 %
 \begin{equation}
 \mathbf{s}^*_j = \exp(\kappa \mathbf{l}_s^{*\mathsf{T}} \mathbf{l}_j) \,,
