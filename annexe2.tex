@@ -2,12 +2,12 @@
 \chapter{Photometric Stereo proof of convexity}     % numérotée
 \label{annex2}
 
-In this annex, we prove that the photometric stereo problem is convex.
+In this annex, we prove that the calibrated photometric stereo problem is convex.
 
 Under the Lambertian assumption, the photometric stereo problem can be posed as
 \begin{equation}
 %\arg\min_n \sum_{i \in \mathcal{I}} \left[\sum_j \max\left(0, \mathbf{l}_{ij}^T \mathbf{n} \right) - b_i \right]^2 \quad ,
-\arg\min_n \sum_{i \in \mathcal{I}} \left[ \max\left(0, \mathbf{l}_{i}^T \mathbf{n} \right) - b_i \right]^2 \quad ,
+\arg\min_\mathbf{n} \sum_{i \in \mathcal{I}} \left[ \max\left(0, \mathbf{l}_{i}^T \mathbf{n} \right) - b_i \right]^2 \quad ,
 \label{eq:init} 
 \end{equation}
 for a set of images $\mathcal{I}$ having pixel intensities $b_{i}$ for a (albedo-scaled) normal $\mathbf{n}$ lit by its mean light vector $\mathbf{l}_{i}^T$.

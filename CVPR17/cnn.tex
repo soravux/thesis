@@ -6,7 +6,7 @@
 
 To train the CNN, we first apply the optimization procedure from sec.~\ref{sec:optimization} to 38,814 high resolution outdoor panoramas in the SUN360~\cite{xiao-cvpr-12} database. We then extract 7 photos from each panorama using a standard pinhole camera model and randomly sampling its parameters: its elevation with respect to the horizon in $[-20^\circ, 20^\circ]$, azimuth in $[-180^\circ, 180^\circ]$, and vertical field of view in $[35^\circ, 68^\circ]$. The resulting photos are bilinearly interpolated from the panorama to a resolution $320 \times 240$, and used directly to train the CNN described in the next section. This results in a dataset of 271,698 pairs of photos and their corresponding lighting parameters, which is split into (261,288 / 1,751 / 8,659) subsets for (train / validation / test). These splits were computed on the panoramas to ensure that photos taken from the same panorama do not end up in training and test. Example panoramas and corresponding photos are shown in fig.~\ref{fig:evaluation_example_sun_position}. 
 
-\subsection{CNN architecture}
+\subsection{Architecture}
 
 We adopt a standard feed-forward convolutional neural network to learn the relationship between the input image $I$ and the lighting parameters. As shown in fig.~\ref{fig:cnn-architecture}, its architecture is composed of 7 convolutional layers, followed by a fully-connected layer. It then splits into two separate heads: one for estimating the sun position (left in fig.~\ref{fig:cnn-architecture}), and one for the sky and camera parameters (right in fig.~\ref{fig:cnn-architecture}). 
 

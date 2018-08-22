@@ -10,20 +10,20 @@ Under the pinhole camera model, the pixel coordinates $\mathbf{p}_\mathrm{im}$ o
 \mathbf{p}_{\mathrm{im}} = [\lambda u \; \lambda v \; \lambda]^T = \mathbf{K} \left[\mathbf{R} | \mathbf{t}\right] \left[ \mathbf{p}_{\mathrm{w}} | 1 \right]^T
 \end{equation}
 %
-in homogeneous coordinates, where $\mathbf{K}$ is the camera projection matrix (camera intrinsics), $\mathbf{R}$ and $\mathbf{t}$ are the camera rotation and translation in the world reference frame (camera extrinsics). Simplifying the model further to square pixels, no skew, and image center at the principal point, the projection matrix $\mathbf{K}$ is given by $\mathbf{K} = \mathrm{diag}([f_{\mathrm{px}} \; f_{\mathrm{px}} \; 1])$, where $f_{\mathrm{px}}$ is the focal length in pixels. We further assume the camera to be at the origin by using $\mathbf{t} = \left[0, 0, 0\right]^T$. 
+in homogeneous coordinates, where $\mathbf{K}$ is the camera projection matrix (camera intrinsics), $\mathbf{R}$ and $\mathbf{t}$ are the camera rotation and translation in the world reference frame (camera extrinsics). Simplifying the model further to square pixels, no skew, and image center at the principal point, the projection matrix $\mathbf{K}$ is given by $\mathbf{K} = \mathrm{diag}([f \; f \; 1])$, where $f$ is the focal length in pixels. We further assume the camera to be at the origin by using $\mathbf{t} = \left[0, 0, 0\right]^T$. 
 
-Since the camera parameters are to be estimated from a single image, we first express them as a function of image features. Let us first consider the focal length $f_\mathrm{px}$. Since it has no direct interpretation in the image, we instead estimate the vertical field of view $h_\theta$, a more intuitive measure: 
+Since the camera parameters are to be estimated from a single image, we first express them as a function of image features. Let us first consider the focal length $f$. Since it has no direct interpretation in the image, we instead estimate the vertical field of view $h_\theta$, a more intuitive measure: 
 %
 \begin{equation}
-h_{\theta} = 2 \arctan \left( \frac{ h }{ 2f{_\mathrm{px}} } \right) \,,
+h_{\theta} = 2 \arctan \left( \frac{ h }{ 2f } \right) \,,
 \end{equation}
 %
 where $h$ is the image height.
 
-We next consider the rotation matrix $\mathbf{R}$, which can be parameterized by roll $\psi$, pitch $\theta$, and yaw $\varphi$ angles. There exists no natural reference frame to estimate $\varphi$ (left vs right) from an arbitrary image. Therefore, we constrain the rotation to only pitch and roll components, simplifying the extrinsic rotation matrix to $\mathbf{R} = \mathbf{R}_z(\psi) \mathbf{R}_x(\theta)$. We can use the horizon line as an intuitive representation for these angles. As in~\cite{Workman2016}, we define the horizon line offset $\rho$ as the perpendicular distance between the horizon and the center of the image. This offset can be derived from pitch angle $\theta$, roll angle $\psi$ and focal length $f_{\mathrm{px}}$ as 
+We next consider the rotation matrix $\mathbf{R}$, which can be parameterized by roll $\psi$, pitch $\theta$, and yaw $\varphi$ angles. There exists no natural reference frame to estimate $\varphi$ (left vs right) from an arbitrary image. Therefore, we constrain the rotation to only pitch and roll components, simplifying the extrinsic rotation matrix to $\mathbf{R} = \mathbf{R}_z(\psi) \mathbf{R}_x(\theta)$. We can use the horizon line as an intuitive representation for these angles. As in~\cite{Workman2016}, we define the horizon line offset $\rho$ as the perpendicular distance between the horizon and the center of the image. This offset can be derived from pitch angle $\theta$, roll angle $\psi$ and focal length $f$ as 
 %
 \begin{equation}
-\rho = \frac{2 f_{\mathrm{px}} \tan\theta}{\sqrt{\tan^2\left( \psi \right) + 1}} \,.
+\rho = \frac{2 f} \tan\theta}{\sqrt{\tan^2\left( \psi \right) + 1}} \,.
 \label{eq:horizon_offset}
 \end{equation}
 %
